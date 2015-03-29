@@ -89,7 +89,7 @@ public class PlayGame extends JApplet
         destinationDeck.addCard(new DestinationCard(new String[] {"Emmen", "Antwerpen",}, 33));
         destinationDeck.addCard(new DestinationCard(new String[] {"Groningen", "Middelburg",}, 34));         
     }
-    
+
     /**
      * creates the game board
      */
@@ -230,34 +230,41 @@ public class PlayGame extends JApplet
         for(int i = 0; i < numPlayers; i++) {
             String inputValue = JOptionPane.showInputDialog("Please choose a color"); 
         }
-        
-        
-    }
 
+    }
     /**
      * Gives players train cards, gives them destination cards to choose from
      * lets them choose 
      */
     private void setupGame() {
-        for (int i=0; i<numPlayers; i++) {
-            DestinationCard[] draw = new DestinationCard[5];
-            for (int c=0; c<5; c++)
-                draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
-            // display the cards in draw
-            Path[] imagePaths = new Path[5];
-            for (Card c : draw) {
-                // display the card
-                // new window?
-                // 
-                Path imagePath = c.getImagePath();
+        try {
+            for (int i=0; i<numPlayers; i++) {
+                DestinationCard[] draw = new DestinationCard[5];
+                for (int c=0; c<5; c++)
+                    draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
+                // display the cards in draw
+                //Path[] imagePaths = new Path[5];
+                // temporary manually add paths
+                draw[0].setImagePath(new File("images/7.jpg").toPath()); 
+                draw[1].setImagePath(new File("images/9.jpg").toPath()); 
+                draw[2].setImagePath(new File("images/12.jpg").toPath()); 
+                draw[3].setImagePath(new File("images/13.jpg").toPath());  
+                draw[4].setImagePath(new File("images/14.jpg").toPath()); 
+                for (Card c : draw) {
+                    // display the card
+                    BufferedImage cardImage = ImageIO.read(c.getImagePath().toFile());
+                    Image cardImageScaled = cardImage.getScaledInstance(216, 345, Image.SCALE_SMOOTH);
+                    //Path imagePath = c.getImagePath();
+                }
+                // pop up window for cards to appear
+                for (int d=0; d<draw.length; d++) {
+                    // in window display(imagePaths[d], ...
+                    // 1050 window height 670 * 5 window width
+                    //display location = (670*numberofcardsonscreen,0)
+                }
+
             }
-            // pop up window for cards to appear
-            for (int d=0; d<imagePaths.length; d++) {
-                // in window display(imagePaths[d], ...
-                // 1050 window height 670 * 5 window width
-                //display location = (670*numberofcardsonscreen,0)
-            }
-            
         }
+        catch (IOException e) {};
     }
 }
