@@ -19,6 +19,15 @@ public class DestinationCard extends Card
         cities[0] = c[0]; cities[1] = c[1];
         value = v;
     }
+    
+    /**
+     * Constructor for DestinationCard class with path
+     * 
+     */
+    public DestinationCard(String c[], int v, Path p) {
+        this(c,v);
+        imagePath = p;
+    }
 
     /**
      * Returns this Card's value
