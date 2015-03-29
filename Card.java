@@ -14,4 +14,7 @@ public abstract class Card
         return imagePath;
     }
     
+    public void setImagePath(Path p) {
+        imagePath = p;
+    }
 }
