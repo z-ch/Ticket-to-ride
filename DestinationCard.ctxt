@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=c\ v
+comment0.target=DestinationCard(java.lang.String[],\ int)
+comment0.text=\r\n\ Constructor\ for\ DestinationCard\ Class\ \r\n\ @param\ c[]\ 2\ element\ \ array\ of\ cities\r\n
+comment1.params=
+comment1.target=int\ getValue()
+comment1.text=\r\n\ Returns\ this\ Card's\ value\r\n\ @return\ this.value\r\n
+numComments=2

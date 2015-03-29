@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=n\ c
+comment0.target=Player(java.lang.String,\ java.lang.String)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ type\ Player\r\n\ @param\ n\ name\ of\ Player\r\n\ @param\ c\ color\ of\ Player\r\n
+comment1.params=d
+comment1.target=void\ drawDestinationCard(Deck)
+comment1.text=\r\n\ draws\ a\ destination\ card\r\n\ @param\ d\ Deck\ of\ DestinationCards\r\n
+comment2.params=d
+comment2.target=void\ drawTrainCarCard(Deck)
+comment2.text=\r\n\ draws\ a\ train\ card\r\n\ @param\ d\ Deck\ of\ TrainCarCards\r\n
+numComments=3

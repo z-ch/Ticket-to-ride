@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=c
+comment0.target=Deck(java.util.ArrayList)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Deck\r\n\ @param\ c\ ArrayList\ of\ Cards\r\n
+comment1.params=
+comment1.target=Card\ drawCard()
+comment1.text=\r\n\ Draws\ a\ Card\ from\ this.cards\r\n\ @return\ the\ randomly-drawn\ Card\r\n
+comment2.params=c
+comment2.target=void\ addCard(Card)
+comment2.text=\r\n\ Adds\ a\ Card\ to\ this.cards\ in\ a\ random\ location\r\n\ @param\ c\ Card\ to\ add\ to\ this.cards\r\n
+numComments=3

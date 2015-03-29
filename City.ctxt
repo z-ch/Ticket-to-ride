@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=n
+comment0.target=City(java.lang.String)
+comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ City\r\n\ @param\ n\ name\ to\ set\r\n
+comment1.params=
+comment1.target=java.lang.String\ getName()
+comment1.text=\r\n\ returns\ this\ City's\ name\r\n\ @return\ this.name\r\n
+numComments=2
