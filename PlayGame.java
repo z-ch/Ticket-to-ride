@@ -5,6 +5,8 @@ import java.io.*;
 import javax.imageio.*;
 import java.util.ArrayList;
 import java.nio.file.*;
+import java.util.*;
+import java.awt.event.*;
 /**
  * PlayGame class.
  * 
@@ -12,6 +14,7 @@ import java.nio.file.*;
  * @version 3.27.2015
  */
 public class PlayGame extends JApplet
+implements MouseListener
 {
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!
     public Graph graph;
@@ -23,7 +26,15 @@ public class PlayGame extends JApplet
     private ArrayList<TrainCarCard>[] playerTrainCarCardHands;
     private ArrayList<DestinationCard>[] playerDestinationCardHands;
     private Board gameBoard;
-
+    protected Image img;
+    int startGame = 0;
+    boolean paintDest = false;
+    private Image[] firstDest= new Image[5];
+    private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
+                "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
+    boolean high = false;
+    boolean click = false;
+    int clickX, clickY;
     /**
      * Create all the TrainCarCards
      */
@@ -44,6 +55,7 @@ public class PlayGame extends JApplet
      * TODO: line wrapping by adding method
      */
     private void createDestinationDeck(){
+        destinationDeck = new Deck();
         destinationDeck.addCard(new DestinationCard(new String[] {"Breda", "Eindhoven",}, 7));
         destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "‘s-Gravenhage",}, 9));
         destinationDeck.addCard(new DestinationCard(new String[] {"Arnhem", "‘s-Hertogenbosch",}, 10));
@@ -117,11 +129,29 @@ public class PlayGame extends JApplet
 
         try {
             backgroundImage = ImageIO.read(new File("images/finishedBoard.png"));
-            //boardImage = ImageIO.read(new File("images/board.jpg"));
+            //img = backgroundImage.getScaledInstance(860, 645, Image.SCALE_SMOOTH);
+            img = backgroundImage.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            //boardImage = ImageIO.read(new File("images/board.jpg"));            
         } catch (IOException e) {
         }
     }
 
+    public void mouseEntered( MouseEvent e ) { }
+
+    public void mouseExited( MouseEvent e ) { }
+
+    public void mousePressed( MouseEvent e ) { }
+
+    public void mouseReleased( MouseEvent e ) { }
+
+    public void mouseClicked( MouseEvent e ) {
+        clickX = e.getX();
+        clickY = e.getY();
+        click = true;
+        repaint();
+        e.consume();
+    }
+    
     /**
      * Called by the browser or applet viewer to inform this JApplet that it 
      * should start its execution. It is called after the init method and 
@@ -131,7 +161,6 @@ public class PlayGame extends JApplet
     {
         // provide any code requred to run each time 
         // web page is visited
-        getGameOptions();
     }
 
     /** 
@@ -153,14 +182,27 @@ public class PlayGame extends JApplet
      */
     public void paint(Graphics g)
     {
-        // simple text displayed on applet
-        //         g.setColor(Color.white);
-        //         g.fillRect(0, 0, 200, 100);
-        //         g.setColor(Color.black);
-        //         g.drawString("Sample Applet", 20, 20);
-        //         g.setColor(Color.blue);
-        //         g.drawString("created by BlueJ", 20, 40);
-        g.drawImage(backgroundImage, 0, 0, this); // I don't know if this is right
+        if(paintDest) {
+            // JOptionPane.showConfirmDialog(this, "hello");
+            g.drawImage(firstDest[0], 640, 40, this);
+            g.drawImage(firstDest[1], 980, 40, this);
+            g.drawImage(firstDest[2], 640, 470, this);
+            g.drawImage(firstDest[3], 980, 470, this);
+            g.drawImage(firstDest[4], 800, 280, this);
+            if(click)
+            {
+                // check the position, highlight card
+                // add it to player hand at the end
+            }
+            paintDest = false;
+        }
+        if (startGame == 0){
+            gameOpening(g);
+            setUpGame();
+        }
+        if(high) {
+            g.drawImage(img, 0, 0, this);
+        }
     }
 
     /**
@@ -209,6 +251,16 @@ public class PlayGame extends JApplet
     /// end pasted stuff
 
     /**
+     * Does the start up for the game
+     * @param g The graphics object for the applet
+     */
+    private void gameOpening(Graphics g) {
+        g.drawImage(img, 0, 0, this);
+        startGame++;
+        getGameOptions();
+    }
+
+    /**
      * Gets user input to set up the game (number of players, etc)
      * TODO get the player hands working
      */
@@ -228,43 +280,49 @@ public class PlayGame extends JApplet
         }
 
         for(int i = 0; i < numPlayers; i++) {
-            String inputValue = JOptionPane.showInputDialog("Please choose a color"); 
-        }
+            //String inputValue = JOptionPane.showInputDialog("Please choose a color"); 
+            String player1Color = (String) JOptionPane.showInputDialog(
+                    null, "What color what you like to be",
+                    "Message to " + name[i], JOptionPane.QUESTION_MESSAGE, null,
+                    availableColors.toArray(), availableColors.get(0));
 
+            availableColors.remove(player1Color);
+        }
+        return;
     }
+
     /**
      * Gives players train cards, gives them destination cards to choose from
-     * lets them choose 
+     * lets them choose
      */
-    private void setupGame() {
+    private void setUpGame() {
+        createDestinationDeck();
+        paintDest = true;
         try {
             for (int i=0; i<numPlayers; i++) {
+
                 DestinationCard[] draw = new DestinationCard[5];
                 for (int c=0; c<5; c++)
                     draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
                 // display the cards in draw
                 //Path[] imagePaths = new Path[5];
                 // temporary manually add paths
-                draw[0].setImagePath(new File("images/7.jpg").toPath()); 
-                draw[1].setImagePath(new File("images/9.jpg").toPath()); 
-                draw[2].setImagePath(new File("images/12.jpg").toPath()); 
+                draw[0].setImagePath(new File("images/7.jpg").toPath());
+                draw[1].setImagePath(new File("images/9.jpg").toPath());
+                draw[2].setImagePath(new File("images/12.jpg").toPath());
                 draw[3].setImagePath(new File("images/13.jpg").toPath());  
-                draw[4].setImagePath(new File("images/14.jpg").toPath()); 
-                for (Card c : draw) {
+                draw[4].setImagePath(new File("images/14.jpg").toPath());
+                for (int k = 0; k < draw.length; k++) {
                     // display the card
-                    BufferedImage cardImage = ImageIO.read(c.getImagePath().toFile());
-                    Image cardImageScaled = cardImage.getScaledInstance(216, 345, Image.SCALE_SMOOTH);
-                    //Path imagePath = c.getImagePath();
-                }
-                // pop up window for cards to appear
-                for (int d=0; d<draw.length; d++) {
-                    // in window display(imagePaths[d], ...
-                    // 1050 window height 670 * 5 window width
-                    //display location = (670*numberofcardsonscreen,0)
-                }
-
+                    BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
+                    //Scales the destination cards
+                    Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
+                    firstDest[k] = cardImageScaled;
+                }                
+                repaint();
+                JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
             }
         }
-        catch (IOException e) {};
+        catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
 }
