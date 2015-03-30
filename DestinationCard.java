@@ -31,7 +31,7 @@ public class DestinationCard extends Card
     }
 
     public DestinationCard(String c[], int v, String p) {
-        this(c,f);
+        this(c,v);
         imagePath = (new File(p)).toPath();
     }
 
