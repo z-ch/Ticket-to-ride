@@ -1,4 +1,5 @@
 import java.nio.file.Path;
+import java.io.File;
 /**
  * DestinationCard class
  * 
@@ -27,6 +28,11 @@ public class DestinationCard extends Card
     public DestinationCard(String c[], int v, Path p) {
         this(c,v);
         imagePath = p;
+    }
+
+    public DestinationCard(String c[], int v, String p) {
+        this(c,f);
+        imagePath = (new File(p)).toPath();
     }
 
     /**

@@ -11,6 +11,8 @@ public class Deck
     // instance variables - replace the example below with your own
     protected ArrayList<Card> cards = new ArrayList<>();
     protected Random r = new Random();
+    
+    public Deck() {};
 
     /**
      * Constructor for objects of class Deck

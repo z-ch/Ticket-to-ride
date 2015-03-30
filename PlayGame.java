@@ -56,51 +56,56 @@ implements MouseListener
      */
     private void createDestinationDeck(){
         destinationDeck = new Deck();
-        destinationDeck.addCard(new DestinationCard(new String[] {"Breda", "Eindhoven",}, 7));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "‘s-Gravenhage",}, 9));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Arnhem", "‘s-Hertogenbosch",}, 10));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "Rotterdam",}, 10));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Rotterdam", "Turnhout",}, 12));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Liege", "Duisburg",}, 12));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Haarlem", "Breda",}, 12));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Rotterdam", "Antwerpen",}, 13));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "Nijemgen",}, 13));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Emmen", "Lelystad",}, 13));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Lingen", "Duisburg",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"‘s-Gravenhage", "Antwerpen",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Groningen", "Enschede",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Zwolle", "Haarlem",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Arnhem", "‘s-Gravenhage",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"DenHelder", "Rotterdam",}, 14));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Enschede", "Amsterdam",}, 15));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Enschede", "Eindhoven",}, 15));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Leeuwarden", "Haarlem",}, 15));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Emden", "Waddeneilanden",}, 16));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Sneek", "Utrecht",}, 16));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Zwolle", "Rotterdam",}, 17));
-        destinationDeck.addCard(new DestinationCard(new String[] {"‘s-Gravenhage", "Liege",}, 18));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Zwolle", "Maastricht",}, 18));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "Antwerpen",}, 19));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Utrecht", "Middelburg",}, 19));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Waddeneilanden", "‘s-Gravenhage",}, 20));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Amsterdam", "Maastricht",}, 20));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Roermond", "Middelburg",}, 21));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Groningen", "Amsterdam",}, 21));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Nijmegen", "Antwerpen",}, 21));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Utrecht", "Hasselt",}, 22));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Emden", "Utrecht",}, 22));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Duisburg", "Rotterdam",}, 23));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Leeuwarden", "‘s-Herlogenbosch",}, 24));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Lelystad", "Aarschot",}, 24));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Lingen", "‘s-Gravenhage",}, 26));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Sneek", "Eindhoven",}, 26));
-        destinationDeck.addCard(new DestinationCard(new String[] {"DenHelder", "Liege",}, 29));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Groningen", "Breda",}, 31));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Waddeneilanden", "Duisburg",}, 31));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Leeuwarden", "Antwerpen",}, 32));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Emmen", "Antwerpen",}, 33));
-        destinationDeck.addCard(new DestinationCard(new String[] {"Groningen", "Middelburg",}, 34));         
+        addCardToDestinationDeck(new String[] {"Breda", "Eindhoven"}, 7, "images/Breda-Eindhoven.jpg"));
+        addCardToDestinationDeck(new String[] {"Amsterdam", "'sGravenhage"}, 9, "images/Amsterdam-'sGravenhage.jpg"));
+        addCardToDestinationDeck(new String[] {"Arnhem", "'sHertogenbosch"}, 10, "images/Arnhem-'sHertogenbosch.jpg"));
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Rotterdam"}, 10, "images/Amsterdam-Rotterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"Rotterdam", "Turnhout"}, 12, "images/Rotterdam-Turnhout.jpg"));
+        addCardToDestinationDeck(new String[] {"Liege", "Duisburg"}, 12, "images/Liege-Duisburg.jpg"));
+        addCardToDestinationDeck(new String[] {"Haarlem", "Breda"}, 12, "images/Haarlem-Breda.jpg"));
+        addCardToDestinationDeck(new String[] {"Rotterdam", "Antwerpen"}, 13, "images/Rotterdam-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Nijemgen"}, 13, "images/Amsterdam-Nijemgen.jpg"));
+        addCardToDestinationDeck(new String[] {"Emmen", "Lelystad"}, 13, "images/Emmen-Lelystad.jpg"));
+        addCardToDestinationDeck(new String[] {"Lingen", "Duisburg"}, 14, "images/Lingen-Duisburg.jpg"));
+        addCardToDestinationDeck(new String[] {"'sGravenhage", "Antwerpen"}, 14, "images/'sGravenhage-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Groningen", "Enschede"}, 14, "images/Groningen-Enschede.jpg"));
+        addCardToDestinationDeck(new String[] {"Zwolle", "Haarlem"}, 14, "images/Zwolle-Haarlem.jpg"));
+        addCardToDestinationDeck(new String[] {"Arnhem", "'sGravenhage"}, 14, "images/Arnhem-'sGravenhage.jpg"));
+        addCardToDestinationDeck(new String[] {"DenHelder", "Rotterdam"}, 14, "images/DenHelder-Rotterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"}, 15, "images/Enschede-Amsterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"}, 15, "images/Enschede-Eindhoven.jpg"));
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"}, 15, "images/Leeuwarden-Haarlem.jpg"));
+        addCardToDestinationDeck(new String[] {"Emden", "Waddeneilanden"}, 16, "images/Emden-Waddeneilanden.jpg"));
+        addCardToDestinationDeck(new String[] {"Sneek", "Utrecht"}, 16, "images/Sneek-Utrecht.jpg"));
+        addCardToDestinationDeck(new String[] {"Zwolle", "Rotterdam"}, 17, "images/Zwolle-Rotterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"'sGravenhage", "Liege"}, 18, "images/'sGravenhage-Liege.jpg"));
+        addCardToDestinationDeck(new String[] {"Zwolle", "Maastricht"}, 18, "images/Zwolle-Maastricht.jpg"));
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Antwerpen"}, 19, "images/Amsterdam-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Utrecht", "Middelburg"}, 19, "images/Utrecht-Middelburg.jpg"));
+        addCardToDestinationDeck(new String[] {"Waddeneilanden", "'sGravenhage"}, 20, "images/Waddeneilanden-'sGravenhage.jpg"));
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Maastricht"}, 20, "images/Amsterdam-Maastricht.jpg"));
+        addCardToDestinationDeck(new String[] {"Roermond", "Middelburg"}, 21, "images/Roermond-Middelburg.jpg"));
+        addCardToDestinationDeck(new String[] {"Groningen", "Amsterdam"}, 21, "images/Groningen-Amsterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"Nijmegen", "Antwerpen"}, 21, "images/Nijmegen-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Utrecht", "Hasselt"}, 22, "images/Utrecht-Hasselt.jpg"));
+        addCardToDestinationDeck(new String[] {"Emden", "Utrecht"}, 22, "images/Emden-Utrecht.jpg"));
+        addCardToDestinationDeck(new String[] {"Duisburg", "Rotterdam"}, 23, "images/Duisburg-Rotterdam.jpg"));
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "'sHerlogenbosch"}, 24, "images/Leeuwarden-'sHerlogenbosch.jpg", "images/"));
+        addCardToDestinationDeck(new String[] {"Lelystad", "Aarschot"}, 24, "images/Lelystad-Aarschot.jpg"));
+        addCardToDestinationDeck(new String[] {"Lingen", "'sGravenhage"}, 26, "images/Lingen-'sGravenhage.jpg"));
+        addCardToDestinationDeck(new String[] {"Sneek", "Eindhoven"}, 26, "images/Sneek-Eindhoven.jpg"));
+        addCardToDestinationDeck(new String[] {"DenHelder", "Liege"}, 29, "images/DenHelder-Liege.jpg"));
+        addCardToDestinationDeck(new String[] {"Groningen", "Breda"}, 31, "images/Groningen-Breda.jpg"));
+        addCardToDestinationDeck(new String[] {"Waddeneilanden", "Duisburg"}, 31, "images/Waddeneilanden-Duisburg.jpg"));
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "Antwerpen"}, 32, "images/Leeuwarden-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Emmen", "Antwerpen"}, 33, "images/Emmen-Antwerpen.jpg"));
+        addCardToDestinationDeck(new String[] {"Groningen", "Middelburg"}, 34,"images/Groningen-Middelburg.jpg"));         
     }
+
+    private void addCardToDestinationDeck(String[] c, int scr, String imgpth) {
+        destinationDeck.addCard(new DestinationCard(c, scr, imgpth));
+    }
+                                
 
     /**
      * creates the game board
