@@ -15,7 +15,7 @@ public class Player
     /**
      * Constructor for objects of type Player
      * @param n name of Player
-     * @param c color of Player
+     * @param c color of Play
      */
     public Player(String n, String c) {
         cars = 40; tokens = 30;
@@ -39,6 +39,12 @@ public class Player
     public void drawTrainCarCard(Deck d) {
         // maybe add a instanceof check?
         TrainCarCard c = (TrainCarCard) d.drawCard();
+        trainCards.add(c);
+    }
+    
+    public void drawTrainCarCard(ArrayList<TrainCarCard> river, int clickedCard) {
+        // maybe add a instanceof check?
+        TrainCarCard c = river.remove(clickedCard);
         trainCards.add(c);
     }
 }

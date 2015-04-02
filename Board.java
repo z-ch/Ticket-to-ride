@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * Write a description of class Board here.
  * 
@@ -8,7 +8,9 @@
 public class Board
 {
     // instance variables - replace the example below with your own
-    Deck destinationCardDeck; // default (package) for now  
+    Deck destinationCardDeck; // default (package) for now
+    ArrayList<TrainCarCard> river = new ArrayList<>();
+    
 
     /**
      * Constructor for objects of class Board

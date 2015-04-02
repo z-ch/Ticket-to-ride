@@ -16,15 +16,16 @@ import java.awt.event.*;
 public class PlayGame extends JApplet 
 implements MouseListener
 {
-    public Deck destinationDeck, trainDeck; // TODO: put these in the board!
+    public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
     public Graph graph;
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
     private int numPlayers = 0;
     protected String[] colors;
     protected String[] name;
     // maybe not have these next two ?? since they're in player
-    private ArrayList<TrainCarCard>[] playerTrainCarCardHands;
-    private ArrayList<DestinationCard>[] playerDestinationCardHands;
+    //private ArrayList<TrainCarCard>[] playerTrainCarCardHands;
+    //private ArrayList<DestinationCard>[] playerDestinationCardHands;
+    // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
     private Board gameBoard;
     protected Image img;
     int startGame = 0;
@@ -105,7 +106,6 @@ implements MouseListener
     private void addCardToDestinationDeck(String[] c, int scr, String imgpth) {
         destinationDeck.addCard(new DestinationCard(c, scr, imgpth));
     }
-                                
 
     /**
      * creates the game board
@@ -156,7 +156,7 @@ implements MouseListener
         repaint();
         e.consume();
     }
-    
+
     /**
      * Called by the browser or applet viewer to inform this JApplet that it 
      * should start its execution. It is called after the init method and 
@@ -312,11 +312,11 @@ implements MouseListener
                 // display the cards in draw
                 //Path[] imagePaths = new Path[5];
                 // temporary manually add paths
-                draw[0].setImagePath(new File("images/7.jpg").toPath());
-                draw[1].setImagePath(new File("images/9.jpg").toPath());
-                draw[2].setImagePath(new File("images/12.jpg").toPath());
-                draw[3].setImagePath(new File("images/13.jpg").toPath());  
-                draw[4].setImagePath(new File("images/14.jpg").toPath());
+                //                 draw[0].setImagePath(new File("images/7.jpg").toPath());
+                //                 draw[1].setImagePath(new File("images/9.jpg").toPath());
+                //                 draw[2].setImagePath(new File("images/12.jpg").toPath());
+                //                 draw[3].setImagePath(new File("images/13.jpg").toPath());  
+                //                 draw[4].setImagePath(new File("images/14.jpg").toPath());
                 for (int k = 0; k < draw.length; k++) {
                     // display the card
                     BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
@@ -330,4 +330,58 @@ implements MouseListener
         }
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
+
+    private void playerTurn(Player currentPlayer) {
+        boolean trainDeckDraw, trainRiverDraw = false, destinationDeckDraw = false, purchaseRoute = false;
+        trainDeckDraw = true;
+        if (trainDeckDraw) 
+            for (int i=0; i<2; i++) 
+                currentPlayer.drawTrainCarCard(trainDeck);
+        if (trainRiverDraw) {
+            int clickedCard = 0; // 0-4 inclusive
+            if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
+                currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+            }
+            else {
+                currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                repaint(); //??
+                clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
+                currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
+            }
+        }
+        else if (destinationDeckDraw) {
+            //do the draw method from setupgame but 4 and 1
+        }
+        else if (purchaseRoute) {
+            // somehow the GUI will get two cities
+            //start temp
+            City city1, city2; 
+            city1 = CityList.getCity("cityname");
+            city2 = CityList.getCity("othercity");
+            //end temp
+            if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
+                // draw the edge on the board
+                // add the edge to the "taken" edges
+                // know which player got the edge
+            }
+        }
+    }
+
+        
+    // draw train cards from deck, or from river
+
+    // draw destination cards
+    // OR you can buy a route
 }
+
+
+
+
+
+
+
+
+
