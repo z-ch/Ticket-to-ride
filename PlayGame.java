@@ -317,7 +317,6 @@ implements MouseListener
                 JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString());
                 JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString());
                 JCheckBox   card5 = new JCheckBox(draw[4].getImagePath().toString());
-                JOptionPane.showConfirmDialog(this, "lel");
                 String msg = "Choose your destination cards " + name[i]; 
 
                 Object[] choices = {msg, card1, card2, card3, card4, card5};
