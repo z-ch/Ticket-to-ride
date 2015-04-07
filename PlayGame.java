@@ -33,9 +33,9 @@ implements MouseListener
     private Image[] firstDest= new Image[5];
     private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
-    boolean high = false;
-    boolean click = false;
-    int clickX, clickY;
+    protected Player[] playerList;
+    int currPlayer = 0;
+    
     /**
      * Create all the TrainCarCards
      */
@@ -187,26 +187,9 @@ implements MouseListener
      */
     public void paint(Graphics g)
     {
-        if(paintDest) {
-            // JOptionPane.showConfirmDialog(this, "hello");
-            g.drawImage(firstDest[0], 640, 40, this);
-            g.drawImage(firstDest[1], 980, 40, this);
-            g.drawImage(firstDest[2], 640, 470, this);
-            g.drawImage(firstDest[3], 980, 470, this);
-            g.drawImage(firstDest[4], 800, 280, this);
-            if(click)
-            {
-                // check the position, highlight card
-                // add it to player hand at the end
-            }
-            paintDest = false;
-        }
         if (startGame == 0){
             gameOpening(g);
             setUpGame();
-        }
-        if(high) {
-            g.drawImage(img, 0, 0, this);
         }
     }
 
@@ -273,6 +256,9 @@ implements MouseListener
         while (numPlayers < 2 || numPlayers > 5) {
             String numPlayerString = JOptionPane.showInputDialog("Input Number of players (2-5)");
             numPlayers = Integer.parseInt(numPlayerString);
+            playerList = new Player[numPlayers];
+            for (int i=0; i<numPlayers; i++)
+                playerList[i] = new Player();
         }
 
         name = new String[numPlayers];
@@ -299,8 +285,9 @@ implements MouseListener
     /**
      * Gives players train cards, gives them destination cards to choose from
      * lets them choose
+     * @param g The graphics object for the applet 
      */
-    private void setUpGame() {
+    private void setUpGame(Graphics g) {
         createDestinationDeck();
         paintDest = true;
         try {
@@ -310,24 +297,54 @@ implements MouseListener
                 for (int c=0; c<5; c++)
                     draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
                 // display the cards in draw
-                //Path[] imagePaths = new Path[5];
-                // temporary manually add paths
-                //                 draw[0].setImagePath(new File("images/7.jpg").toPath());
-                //                 draw[1].setImagePath(new File("images/9.jpg").toPath());
-                //                 draw[2].setImagePath(new File("images/12.jpg").toPath());
-                //                 draw[3].setImagePath(new File("images/13.jpg").toPath());  
-                //                 draw[4].setImagePath(new File("images/14.jpg").toPath());
                 for (int k = 0; k < draw.length; k++) {
                     // display the card
+                    //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
                     BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
                     //Scales the destination cards
                     Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                     firstDest[k] = cardImageScaled;
                 }                
-                repaint();
-                JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
+
+                g.drawImage(firstDest[0], 640, 40, this);
+                g.drawImage(firstDest[1], 980, 40, this);
+                g.drawImage(firstDest[2], 640, 470, this);
+                g.drawImage(firstDest[3], 980, 470, this);
+                g.drawImage(firstDest[4], 800, 280, this);
+
+                JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString());
+                JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString());
+                JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString());
+                JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString());
+                JCheckBox   card5 = new JCheckBox(draw[4].getImagePath().toString());
+                JOptionPane.showConfirmDialog(this, "lel");
+                String msg = "Choose your destination cards " + name[i]; 
+
+                Object[] choices = {msg, card1, card2, card3, card4, card5};
+
+                int numSelectedCards = 0; boolean selected[] = new boolean[5];
+                while (numSelectedCards < 3) {
+                    numSelectedCards = 0;
+                    int n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 3 or more Cards, " + name[i], JOptionPane.YES_NO_OPTION); 
+                    selected = new boolean[] { card1.isSelected(), card2.isSelected(), card3.isSelected(), card4.isSelected(), card5.isSelected() };
+                    for (boolean b : selected)
+                        if (b)
+                            ++numSelectedCards;
+                }
+
+                for (int bool=0; bool<5; bool++) {
+                    //If the card is selected, puts it in the players hand
+                    if (selected[bool]) {
+                        playerList[i].addDestinationCard(draw[bool]);
+                    }
+                    else {
+                        destinationDeck.addCard(draw[bool]);    //Adds back the cards into the deck
+                    }
+                }
             }
+            //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
+
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
 
