@@ -189,7 +189,7 @@ implements MouseListener
     {
         if (startGame == 0){
             gameOpening(g);
-            setUpGame();
+            setUpGame(g);
         }
     }
 
