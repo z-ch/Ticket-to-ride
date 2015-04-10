@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 /**
- * Write a description of class Board here.
+ * Write a description of class Board here....
  * 
  * @author (your name) 
  * @version (a version number or a date)
