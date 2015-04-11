@@ -15,39 +15,37 @@ public class CityList
      */
     public CityList() {
         citylist = new Hashtable<String, City>();
-        citylist.put("name", new City("name"));
-        /*
-        citylist.add(new City("Aarschot"));
-        citylist.add(new City("Amsterdam"));
-        citylist.add(new City("Arnhem"));
-        citylist.add(new City("Antwerpen"));
-        citylist.add(new City("Breda"));
-        citylist.add(new City("DenHelder"));
-        citylist.add(new City("Duisburg"));
-        citylist.add(new City("Eindhoven"));
-        citylist.add(new City("Emmen"));
-        citylist.add(new City("Enschede"));
-        citylist.add(new City("Emden"));
-        citylist.add(new City("Groningen"));
-        citylist.add(new City("Haarlem"));
-        citylist.add(new City("Hasselt"));        
-        citylist.add(new City("Lingen"));
-        citylist.add(new City("Liege"));
-        citylist.add(new City("Lelystad"));
-        citylist.add(new City("Leeuwarden"));
-        citylist.add(new City("Maastricht"));
-        citylist.add(new City("Middelburg"));
-        citylist.add(new City("Nijmegen"));
-        citylist.add(new City("Rotterdam"));
-        citylist.add(new City("Roermond"));
-        citylist.add(new City("'s'Gravenhage"));
-        citylist.add(new City("'s-Hertogenbosch"));
-        citylist.add(new City("Sneek"));
-        citylist.add(new City("Turnhout"));
-        citylist.add(new City("Utrecht"));
-        citylist.add(new City("Waddeneilanden"));
-        citylist.add(new City("Zwolle"));
-        */
+        //citylist.put("name", new City("name"));
+        citylist.put("Aarschot", new City("Aarschot"));
+        citylist.put("Amsterdam", new City("Amsterdam"));
+        citylist.put("Arnhem", new City("Arnhem"));
+        citylist.put("Antwerpen", new City("Antwerpen"));
+        citylist.put("Breda", new City("Breda"));
+        citylist.put("DenHelder", new City("DenHelder"));
+        citylist.put("Duisburg", new City("Duisburg"));
+        citylist.put("Eindhoven", new City("Eindhoven"));
+        citylist.put("Emmen", new City("Emmen"));
+        citylist.put("Enschede", new City("Enschede"));
+        citylist.put("Emden", new City("Emden"));
+        citylist.put("Groningen", new City("Groningen"));
+        citylist.put("Haarlem", new City("Haarlem"));
+        citylist.put("Hasselt", new City("Hasselt"));        
+        citylist.put("Lingen", new City("Lingen"));
+        citylist.put("Liege", new City("Liege"));
+        citylist.put("Lelystad", new City("Lelystad"));
+        citylist.put("Leeuwarden", new City("Leeuwarden"));
+        citylist.put("Maastricht", new City("Maastricht"));
+        citylist.put("Middelburg", new City("Middelburg"));
+        citylist.put("Nijmegen", new City("Nijmegen"));
+        citylist.put("Rotterdam", new City("Rotterdam"));
+        citylist.put("Roermond", new City("Roermond"));
+        citylist.put("'s'Gravenhage", new City("'s'Gravenhage"));
+        citylist.put("'s-Hertogenbosch", new City("'s-Hertogenbosch"));
+        citylist.put("Sneek", new City("Sneek"));
+        citylist.put("Turnhout", new City("Turnhout"));
+        citylist.put("Utrecht", new City("Utrecht"));
+        citylist.put("Waddeneilanden", new City("Waddeneilanden"));
+        citylist.put("Zwolle", new City("Zwolle"));
     }
     
     /**
