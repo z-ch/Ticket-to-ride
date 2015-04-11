@@ -35,6 +35,10 @@ implements MouseListener
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
     int currPlayer = 0;
+    
+    public PlayGame() {
+        createDestinationDeck();
+    }
 
     /**
      * Create all the TrainCarCards
@@ -73,7 +77,8 @@ implements MouseListener
         addCardToDestinationDeck(new String[] {"Zwolle", "Haarlem"}, 14, "images/Zwolle-Haarlem.jpg");
         addCardToDestinationDeck(new String[] {"Arnhem", "'sGravenhage"}, 14, "images/Arnhem-'sGravenhage.jpg");
         addCardToDestinationDeck(new String[] {"DenHelder", "Rotterdam"}, 14, "images/DenHelder-Rotterdam.jpg");
-        addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"}, 15, "images/Enschede-Amsterdam.jpg");
+        // need to scan next file
+        //addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"}, 15, "images/Enschede-Amsterdam.jpg");
         addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"}, 15, "images/Enschede-Eindhoven.jpg");
         addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"}, 15, "images/Leeuwarden-Haarlem.jpg");
         addCardToDestinationDeck(new String[] {"Emden", "Waddeneilanden"}, 16, "images/Emden-Waddeneilanden.jpg");
@@ -314,6 +319,22 @@ implements MouseListener
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
 
+    public static void test() {
+        try {
+            PlayGame pg = new PlayGame();
+            if (pg.destinationDeck == null) System.out.println("deck");
+            if (pg.destinationDeck.cards == null) System.out.println("cards");
+            for (Card c : pg.destinationDeck.cards) {
+                System.out.print(c.getImagePath() + " ");
+                BufferedImage cardImage = ImageIO.read(c.getImagePath().toFile());
+                System.out.println("OK");
+            }
+            System.out.println("ALL OK");
+
+        } catch (IOException e) { System.out.println("AAAAAHHHHH"); }
+        catch (NullPointerException e) { System.out.println(e); }
+    }
+
     //80 chars**********************************************************************
     /**
      * Allows the currentPlayer to take their turn. Once gameplay starts, this 
@@ -321,53 +342,49 @@ implements MouseListener
      * 
      * @param currentPlayer the player who's turn it is
      */
-    
-//     private void playerTurn(Player currentPlayer) {
-//         boolean trainDeckDraw, trainRiverDraw = false;
-//         boolean destinationDeckDraw = false, purchaseRoute = false;
-//         trainDeckDraw = true;
-//         if (trainDeckDraw) 
-//             for (int i=0; i<2; i++) 
-//                 currentPlayer.drawTrainCarCard(trainDeck);
-//         if (trainRiverDraw) {
-//             int clickedCard = 0; // 0-4 inclusive
-//             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
-//                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-//                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
-//             }
-//             else {
-//                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-//                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
-//                 repaint(); //??
-//                 clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
-//                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-//                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
-//             }
-//         }
-//         else if (destinationDeckDraw) {
-//             //do the draw method from setupgame but 4 and 1
-//         }
-//         else if (purchaseRoute) {
-//             // somehow the GUI will get two cities
-//             //start temp
-//             City city1, city2; 
-//             city1 = CityList.getCity("cityname");
-//             city2 = CityList.getCity("othercity");
-//             //end temp
-//             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
-//                 // draw the edge on the board
-//                 // add the edge to the "taken" edges
-//                 // know which player got the edge
-//             }
-//         }
-//     }
+
+    //     private void playerTurn(Player currentPlayer) {
+    //         boolean trainDeckDraw, trainRiverDraw = false;
+    //         boolean destinationDeckDraw = false, purchaseRoute = false;
+    //         trainDeckDraw = true;
+    //         if (trainDeckDraw) 
+    //             for (int i=0; i<2; i++) 
+    //                 currentPlayer.drawTrainCarCard(trainDeck);
+    //         if (trainRiverDraw) {
+    //             int clickedCard = 0; // 0-4 inclusive
+    //             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
+    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+    //             }
+    //             else {
+    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+    //                 repaint(); //??
+    //                 clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
+    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
+    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
+    //             }
+    //         }
+    //         else if (destinationDeckDraw) {
+    //             //do the draw method from setupgame but 4 and 1
+    //         }
+    //         else if (purchaseRoute) {
+    //             // somehow the GUI will get two cities
+    //             //start temp
+    //             City city1, city2; 
+    //             city1 = CityList.getCity("cityname");
+    //             city2 = CityList.getCity("othercity");
+    //             //end temp
+    //             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
+    //                 // draw the edge on the board
+    //                 // add the edge to the "taken" edges
+    //                 // know which player got the edge
+    //             }
+    //         }
+    //     }
 
     // draw train cards from deck, or from river
     // draw destination cards
     // OR you can buy a route
 }
-
-
-
-
 
