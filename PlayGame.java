@@ -158,29 +158,6 @@ implements MouseListener
     }
 
     /**
-     * Called by the browser or applet viewer to inform this JApplet that it 
-     * should start its execution. It is called after the init method and 
-     * each time the JApplet is revisited in a Web page. 
-     */
-    public void start()
-    {
-        // provide any code requred to run each time 
-        // web page is visited
-    }
-
-    /** 
-     * Called by the browser or applet viewer to inform this JApplet that
-     * it should stop its execution. It is called when the Web page that
-     * contains this JApplet has been replaced by another page, and also
-     * just before the JApplet is to be destroyed. 
-     */
-    public void stop()
-    {
-        // provide any code that needs to be run when page
-        // is replaced by another page or before JApplet is destroyed 
-    }
-
-    /**
      * Paint method for applet.
      * 
      * @param  g   the Graphics object for this applet
@@ -191,16 +168,6 @@ implements MouseListener
             gameOpening(g);
             setUpGame(g);
         }
-    }
-
-    /**
-     * Called by the browser or applet viewer to inform this JApplet that it
-     * is being reclaimed and that it should destroy any resources that it
-     * has allocated. The stop method will always be called before destroy. 
-     */
-    public void destroy()
-    {
-        // provide code to be run when JApplet is about to be destroyed.
     }
 
     /**
