@@ -18,7 +18,7 @@ public class Graph
     public Graph()
     {
         numCities = 29+1;
-        // fill hashtable with empty cities
+        // fill hashtable with empty LinkedLists
         for (int i=0; i<numCities; i++) {
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
                           new LinkedList<City>());
