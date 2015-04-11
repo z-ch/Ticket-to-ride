@@ -313,9 +313,17 @@ implements MouseListener
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
-
+    
+//80 chars**********************************************************************
+    /**
+     * Allows the currentPlayer to take their turn. Once gameplay starts, this 
+     * will run on consecutive players until someone runs out of train tokens.
+     * 
+     * @param currentPlayer the player who's turn it is
+     */
     private void playerTurn(Player currentPlayer) {
-        boolean trainDeckDraw, trainRiverDraw = false, destinationDeckDraw = false, purchaseRoute = false;
+        boolean trainDeckDraw, trainRiverDraw = false;
+        boolean destinationDeckDraw = false, purchaseRoute = false;
         trainDeckDraw = true;
         if (trainDeckDraw) 
             for (int i=0; i<2; i++) 
