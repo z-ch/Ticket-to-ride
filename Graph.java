@@ -18,6 +18,11 @@ public class Graph
     public Graph()
     {
         numCities = 29+1;
+        // fill hashtable with empty cities
+        for (int i=0; i<numCities; i++) {
+            adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
+                          new LinkedList<City>());
+        }
         adjMatrix.put("CityName", new LinkedList<City>());
         //adjMatrix.get("CityName").add(CityList.getCity("CityOther"));
         addEdge("CityName", "OtherCity"); // ONLY DO THIS ONCE FOR EACH EDGE
