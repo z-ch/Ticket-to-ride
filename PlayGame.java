@@ -368,7 +368,7 @@ implements MouseListener
         catch (NullPointerException e) { System.out.println(e); }
     }
 
-    //80 chars**********************************************************************
+    //80 chars******************************************************************
     /**
      * Allows the currentPlayer to take their turn. Once gameplay starts, this 
      * will run on consecutive players until someone runs out of train tokens.

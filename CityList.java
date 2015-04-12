@@ -10,12 +10,13 @@ public class CityList
 {
     private Hashtable<String, City> citylist;
     private static CityList cL = new CityList();
-    private static ArrayList<City> cityArrayList = new ArrayList<City>();
+    private ArrayList<City> cityArrayList;
 
     /**
      * Constructor for objects of class CityList
      */
     public CityList() {
+        cityArrayList = new ArrayList<City>();
         citylist = new Hashtable<String, City>();
         //citylist.put("name", new City("name"));
         citylist.put("Aarschot", new City("Aarschot"));
@@ -41,8 +42,8 @@ public class CityList
         citylist.put("Nijmegen", new City("Nijmegen"));
         citylist.put("Rotterdam", new City("Rotterdam"));
         citylist.put("Roermond", new City("Roermond"));
-        citylist.put("'s'Gravenhage", new City("'s'Gravenhage"));
-        citylist.put("'s-Hertogenbosch", new City("'s-Hertogenbosch"));
+        citylist.put("'sGravenhage", new City("'sGravenhage"));
+        citylist.put("'sHertogenbosch", new City("'sHertogenbosch"));
         citylist.put("Sneek", new City("Sneek"));
         citylist.put("Turnhout", new City("Turnhout"));
         citylist.put("Utrecht", new City("Utrecht"));
@@ -50,6 +51,7 @@ public class CityList
         citylist.put("Zwolle", new City("Zwolle"));
 
         // construct city array list
+        //System.out.println(citylist.get("Aarschot"));
         cityArrayList.add(citylist.get("Aarschot"));
         cityArrayList.add(citylist.get("Amsterdam"));
         cityArrayList.add(citylist.get("Arnhem"));
@@ -73,8 +75,8 @@ public class CityList
         cityArrayList.add(citylist.get("Nijmegen"));
         cityArrayList.add(citylist.get("Rotterdam"));
         cityArrayList.add(citylist.get("Roermond"));
-        cityArrayList.add(citylist.get("'s'Gravenhage"));
-        cityArrayList.add(citylist.get("'s-Hertogenbosch"));
+        cityArrayList.add(citylist.get("'sGravenhage"));
+        cityArrayList.add(citylist.get("'sHertogenbosch"));
         cityArrayList.add(citylist.get("Sneek"));
         cityArrayList.add(citylist.get("Turnhout"));
         cityArrayList.add(citylist.get("Utrecht"));
@@ -95,7 +97,7 @@ public class CityList
      * @param i index to get city from
      */
     public static City getCityFromArrayList(int i) {
-        if (i > 1 && i < cL.cityArrayList.size())
+        if (i > -1 && i < cL.cityArrayList.size())
             return cL.cityArrayList.get(i);
         else return null;
     }
