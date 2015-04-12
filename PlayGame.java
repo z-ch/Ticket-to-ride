@@ -19,6 +19,7 @@ implements MouseListener
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
     public Graph graph;
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
+    protected BufferedImage backgroundImage2 = null;
     private int numPlayers = 0;
     protected String[] colors;
     protected String[] name;
@@ -27,15 +28,16 @@ implements MouseListener
     //private ArrayList<DestinationCard>[] playerDestinationCardHands;
     // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
     private Board gameBoard;
-    protected Image img;
+    protected Image img, img2;
     int startGame = 0;
     boolean paintDest = false;
     private Image[] firstDest= new Image[5];
     private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
-    int currPlayer = 0;
-    
+    int currentPlayer = 0;
+    boolean now = false;
+
     public PlayGame() {
         createDestinationDeck();
     }
@@ -139,8 +141,10 @@ implements MouseListener
 
         try {
             backgroundImage = ImageIO.read(new File("images/finishedBoard.png"));
+            backgroundImage2 = ImageIO.read(new File("images/sample3.png"));
             //img = backgroundImage.getScaledInstance(860, 645, Image.SCALE_SMOOTH);
             img = backgroundImage.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            img2 = backgroundImage2.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
             //boardImage = ImageIO.read(new File("images/board.jpg"));            
         } catch (IOException e) {
         }
@@ -172,6 +176,11 @@ implements MouseListener
         if (startGame == 0){
             gameOpening(g);
             setUpGame(g);
+        }
+        if(now){
+
+            g.drawImage(img2, 0, 0, this);
+            drawTrains(g);
         }
     }
 
@@ -209,6 +218,28 @@ implements MouseListener
         return paramInfo;
     }
     /// end pasted stuff
+
+    /**
+     * Draws the tarins on the board
+     * @param g The graphics object for the applet
+     */
+    public void drawTrains(Graphics g) {
+        g.setColor(new Color(255,0,255, 128));
+        //draw Polygons for trains
+        g.fillPolygon(new int[]{428, 439, 443, 433}, new int[]{101, 102, 211, 210}, 4);
+        g.fillPolygon(new int[]{453, 458,  484, 506, 525, 541, 553, 558, 548, 543, 531, 518, 499, 477}, new int[]{92, 83, 97, 115, 136, 161, 188, 216, 218, 191, 167, 143, 123, 105}, 14);
+        g.fillPolygon(new int[]{444, 448, 475, 497, 517, 531, 543, 548, 539, 534, 523, 508, 491, 469}, new int[]{100, 90, 105, 123, 145, 169, 195, 223, 225, 200, 175, 152, 131, 113}, 14);
+        g.fillPolygon(new int[]{423, 352, 347, 419}, new int[]{100, 141, 133, 91}, 4);
+        g.fillPolygon(new int[]{413, 418, 346, 341}, new int[]{82, 90, 131, 124}, 4);
+        g.fillPolygon(new int[]{364, 425, 418, 358}, new int[]{152, 206, 213, 159}, 4);
+        g.fillPolygon(new int[]{357, 417, 411, 350}, new int[]{160, 214, 222, 168}, 4);
+        g.fillPolygon(new int[]{315, 312, 286, 258, 230, 204, 179, 158, 152, 174, 200, 229, 258, 287}, new int[]{135, 144, 139, 138, 142, 150, 163, 179, 171, 155, 141, 132, 128, 129}, 14);
+        g.fillPolygon(new int[]{306, 310, 239, 233}, new int[]{146, 154, 196, 189}, 4);
+        g.fillPolygon(new int[]{311, 316, 244, 239}, new int[]{156, 164, 207, 198}, 4);
+        g.fillPolygon(new int[]{453, 535, 533, 451}, new int[]{217, 228, 237, 226}, 4);
+        g.fillPolygon(new int[]{451, 533, 532, 450}, new int[]{228, 239, 249, 236}, 4);
+
+    }
 
     /**
      * Does the start up for the game
@@ -313,10 +344,12 @@ implements MouseListener
                     }
                 }
             }
+            now = true;
             //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
+        playerTurn(playerList[currentPlayer]);
     }
 
     public static void test() {
@@ -343,45 +376,104 @@ implements MouseListener
      * @param currentPlayer the player who's turn it is
      */
 
-    //     private void playerTurn(Player currentPlayer) {
-    //         boolean trainDeckDraw, trainRiverDraw = false;
-    //         boolean destinationDeckDraw = false, purchaseRoute = false;
-    //         trainDeckDraw = true;
-    //         if (trainDeckDraw) 
-    //             for (int i=0; i<2; i++) 
-    //                 currentPlayer.drawTrainCarCard(trainDeck);
-    //         if (trainRiverDraw) {
-    //             int clickedCard = 0; // 0-4 inclusive
-    //             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
-    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
-    //             }
-    //             else {
-    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
-    //                 repaint(); //??
-    //                 clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
-    //                 currentPlayer.drawTrainCarCard(gameBoard.river, clickedCard);
-    //                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
-    //             }
-    //         }
-    //         else if (destinationDeckDraw) {
-    //             //do the draw method from setupgame but 4 and 1
-    //         }
-    //         else if (purchaseRoute) {
-    //             // somehow the GUI will get two cities
-    //             //start temp
-    //             City city1, city2; 
-    //             city1 = CityList.getCity("cityname");
-    //             city2 = CityList.getCity("othercity");
-    //             //end temp
-    //             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
-    //                 // draw the edge on the board
-    //                 // add the edge to the "taken" edges
-    //                 // know which player got the edge
-    //             }
-    //         }
-    //     }
+    private void playerTurn(Player currentPlayer) {
+        boolean trainDeckDraw, trainRiverDraw = false;
+        boolean destinationDeckDraw = true, purchaseRoute = false;
+        trainDeckDraw = false;
+        if (trainDeckDraw) 
+            for (int i=0; i<2; i++) 
+                currentPlayer.drawTrainCarCard(trainDeck);
+        if (trainRiverDraw) {
+            int clickedCard = 0; // 0-4 inclusive
+            if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
+                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+            }
+            else {
+                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                repaint(); //??
+                clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
+                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
+            }
+        }
+        else if (destinationDeckDraw) {
+            //do the draw method from setupgame but 4 and 1
+            drawDestinationCardsInGame();
+        }
+        else if (purchaseRoute) {
+            // somehow the GUI will get two cities
+            //start temp
+            City city1, city2; 
+            city1 = CityList.getCity("cityname");
+            city2 = CityList.getCity("othercity");
+            //end temp
+            if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
+                // draw the edge on the board
+                // add the edge to the "taken" edges
+                // know which player got the edge
+            }
+        }
+    }
+
+    /**
+     * Drawing destination cards during the game, copied from setupgame
+     */
+    private void drawDestinationCardsInGame() {
+        try {
+            Graphics g = getGraphics();
+            for (int i=0; i<numPlayers; i++) {
+
+                DestinationCard[] draw = new DestinationCard[4];
+                for (int c=0; c<4; c++)
+                    draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
+                // display the cards in draw
+                for (int k = 0; k < draw.length; k++) {
+                    // display the card
+                    //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
+                    BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
+                    //Scales the destination cards
+                    Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
+                    firstDest[k] = cardImageScaled;
+                }                
+
+                g.drawImage(firstDest[0], 640, 40, this);
+                g.drawImage(firstDest[1], 980, 40, this);
+                g.drawImage(firstDest[2], 640, 470, this);
+                g.drawImage(firstDest[3], 980, 470, this);
+
+                JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString());
+                JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString());
+                JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString());
+                JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString());
+                String msg = "Choose your destination cards " + name[i]; 
+
+                Object[] choices = {msg, card1, card2, card3, card4};
+
+                int numSelectedCards = 0; boolean selected[] = new boolean[4];
+                while (numSelectedCards < 1) {
+                    numSelectedCards = 0;
+                    int n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[i], JOptionPane.YES_NO_OPTION); 
+                    selected = new boolean[] { card1.isSelected(), card2.isSelected(), card3.isSelected(), card4.isSelected() };
+                    for (boolean b : selected)
+                        if (b)
+                            ++numSelectedCards;
+                }
+
+                for (int bool=0; bool<4; bool++) {
+                    //If the card is selected, puts it in the players hand
+                    if (selected[bool]) {
+                        playerList[i].addDestinationCard(draw[bool]);
+                    }
+                    else {
+                        destinationDeck.addCard(draw[bool]);    //Adds back the cards into the deck
+                    }
+                }
+            }
+        }
+        catch (IOException e) {}
+    }
 
     // draw train cards from deck, or from river
     // draw destination cards
