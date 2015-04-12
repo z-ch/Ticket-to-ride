@@ -37,6 +37,8 @@ implements MouseListener
     protected Player[] playerList;
     int currentPlayer = 0;
     boolean now = false;
+    //     int clickX, clickY;
+    //     boolean click = false;
 
     public PlayGame() {
         createDestinationDeck();
@@ -182,6 +184,7 @@ implements MouseListener
             g.drawImage(img2, 0, 0, this);
             drawTrains(g);
         }
+
     }
 
     /**
@@ -380,10 +383,11 @@ implements MouseListener
         boolean trainDeckDraw, trainRiverDraw = false;
         boolean destinationDeckDraw = true, purchaseRoute = false;
         trainDeckDraw = false;
+        // need to check somewhere if the decks are empty
         if (trainDeckDraw) 
             for (int i=0; i<2; i++) 
                 currentPlayer.drawTrainCarCard(trainDeck);
-        if (trainRiverDraw) {
+        if (trainRiverDraw) { // maybe checkboxes instead?
             int clickedCard = 0; // 0-4 inclusive
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
                 currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
@@ -406,8 +410,8 @@ implements MouseListener
             // somehow the GUI will get two cities
             //start temp
             City city1, city2; 
-            city1 = CityList.getCity("cityname");
-            city2 = CityList.getCity("othercity");
+            city1 = CityList.getCity("Leeuwarden");
+            city2 = CityList.getCity("Sneek");
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
