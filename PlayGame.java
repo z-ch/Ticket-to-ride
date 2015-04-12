@@ -410,6 +410,29 @@ implements MouseListener
             city2 = CityList.getCity("othercity");
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
+                boolean isDouble = graph.isDouble(city1, city2);
+                int ownerCount = 0;
+                for (Player pr : playerList) 
+                    if (pr.hasRoute(city1, city2)) ++ownerCount;
+                if (!isDouble) {
+                    if (ownerCount > 0) {
+                        // don't let them buy the route
+                    }
+                    else {
+                        // buy route from bank
+                    }
+                }
+                else {
+                    if (ownerCount == 0) {
+                        // buy route from bank
+                    }
+                    if (ownerCount == 1) {
+                        // buy route from owner
+                    }
+                    else {
+                        // don't let them buy the route
+                    }
+                }
                 // draw the edge on the board
                 // add the edge to the "taken" edges
                 // know which player got the edge

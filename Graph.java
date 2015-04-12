@@ -113,6 +113,10 @@ public class Graph
         int occurrences = Collections.frequency(adjMatrix.get(cityOne), CityList.getCity(cityTwo));
         return occurrences == 2;
     }
+    
+    public boolean isDouble(City cityOne, City cityTwo) {
+        return isDouble(cityOne.getName(), cityTwo.getName());
+    }
 
     public static void test() {
         Graph g = new Graph();
