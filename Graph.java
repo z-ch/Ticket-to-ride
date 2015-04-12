@@ -21,13 +21,10 @@ public class Graph
         numCities = 29+1;
         // fill hashtable with empty LinkedLists
         for (int i=0; i<numCities; i++) {
-            //CityList.getCityFromArrayList(i).getClass();
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
                 new LinkedList<City>());
         }
         adjMatrix.put("CityName", new LinkedList<City>());
-        //adjMatrix.get("CityName").add(CityList.getCity("CityOther"));
-        //addEdge("CityName", "OtherCity"); // ONLY DO THIS ONCE FOR EACH EDGE
         addEdge("Groningen", "Emden"); addEdge("Groningen", "Emden");
         addEdge("Groningen", "Emmen"); addEdge("Groningen", "Emmen");
         addEdge("Groningen", "Zwolle"); addEdge("Groningen", "Zwolle");
@@ -89,17 +86,17 @@ public class Graph
      * @param cityTwo second city
      */
     private void addEdge(String cityOne, String cityTwo) {
-         //System.out.println(cityOne + " " + cityTwo);
-         adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
-         adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
-//         try {
-//             System.out.print(cityOne + " " + cityTwo + " ");
-//             adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
-//             System.out.print("Got cityTwo from CityList, ");
-//             adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
-//             System.out.print("Got cityOne from CityList, ");
-//             System.out.println("OK");
-//         } catch (NullPointerException e) { System.out.println("AAAHHHH"); }
+        //System.out.println(cityOne + " " + cityTwo);
+        adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
+        adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
+        //         try {
+        //             System.out.print(cityOne + " " + cityTwo + " ");
+        //             adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
+        //             System.out.print("Got cityTwo from CityList, ");
+        //             adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
+        //             System.out.print("Got cityOne from CityList, ");
+        //             System.out.println("OK");
+        //         } catch (NullPointerException e) { System.out.println("AAAHHHH"); }
     }
 
     /**
