@@ -35,11 +35,9 @@ implements MouseListener
     private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
-    int currentPlayer = 0;
+    int currPlayer = 0;
     boolean now = false;
-    //     int clickX, clickY;
-    //     boolean click = false;
-
+    
     public PlayGame() {
         createDestinationDeck();
     }
@@ -183,9 +181,10 @@ implements MouseListener
 
             g.drawImage(img2, 0, 0, this);
             drawTrains(g);
+            showCards(g);
         }
-
-    }
+     }
+    
 
     /**
      * Returns information about this applet. 
@@ -221,7 +220,44 @@ implements MouseListener
         return paramInfo;
     }
     /// end pasted stuff
-
+    
+    /**
+     * Shows the number of each type of cards the player has
+     * @param g The graphics object for the applet
+     */
+    private void showCards(Graphics g) {
+        int[] numCards = new int[9];
+        try {
+            Player curPlayer = playerList[currPlayer];
+            String[] colors = new String[] {"black", "blue", "green", 
+                    "orange", "rainbow", "red", "purple", "white", "yellow" };
+            //Counts the cards for the current player
+            for(int i = 0; i <  colors.length; i++) {
+                for(int j = 0; j < curPlayer.trainCards.size(); j++) {
+                    if(curPlayer.trainCards.get(j).getColor().equals(colors[i]))
+                        numCards[i] = numCards[i] + 1;
+                }
+            }
+        } catch (NullPointerException e) { showStatus(e.toString()); }
+        g.setColor(new Color(102, 0, 0));
+        g.fillRect(800, 475, 30, 30); g.fillRect(945, 475, 30, 30);
+        g.fillRect(1090, 475, 30, 30); g.fillRect(800, 570, 30, 30);
+        g.fillRect(945, 570, 30, 30); g.fillRect(1090, 570, 30, 30);
+        g.fillRect(800, 665, 30, 30); g.fillRect(945, 665, 30, 30);
+        g.fillRect(1090, 665, 30, 30);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        g.drawString(Integer.toString(numCards[0]), 807, 496);
+        g.drawString(Integer.toString(numCards[0]), 952, 496);
+        g.drawString(Integer.toString(numCards[0]), 1097, 496);
+        g.drawString(Integer.toString(numCards[0]), 807, 591);
+        g.drawString(Integer.toString(numCards[0]), 952, 591);
+        g.drawString(Integer.toString(numCards[0]), 1097, 591);
+        g.drawString(Integer.toString(numCards[0]), 807, 686);
+        g.drawString(Integer.toString(numCards[0]), 952, 686);
+        g.drawString(Integer.toString(numCards[0]), 1097, 686);
+    }
+    
     /**
      * Draws the tarins on the board
      * @param g The graphics object for the applet
@@ -352,7 +388,7 @@ implements MouseListener
         }
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
-        playerTurn(playerList[currentPlayer]);
+        playerTurn(playerList[currPlayer]);
     }
 
     public static void test() {
@@ -381,6 +417,7 @@ implements MouseListener
 
     private void playerTurn(Player currentPlayer) {
         boolean trainDeckDraw, trainRiverDraw = false;
+
         boolean destinationDeckDraw = true, purchaseRoute = false;
         trainDeckDraw = false;
         // need to check somewhere if the decks are empty
@@ -388,6 +425,7 @@ implements MouseListener
             for (int i=0; i<2; i++) 
                 currentPlayer.drawTrainCarCard(trainDeck);
         if (trainRiverDraw) { // maybe checkboxes instead?
+
             int clickedCard = 0; // 0-4 inclusive
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
                 currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
@@ -405,11 +443,13 @@ implements MouseListener
         else if (destinationDeckDraw) {
             //do the draw method from setupgame but 4 and 1
             drawDestinationCardsInGame();
+
         }
         else if (purchaseRoute) {
             // somehow the GUI will get two cities
             //start temp
             City city1, city2; 
+
             city1 = CityList.getCity("Leeuwarden");
             city2 = CityList.getCity("Sneek");
             //end temp
@@ -437,12 +477,11 @@ implements MouseListener
                         // don't let them buy the route
                     }
                 }
-                // draw the edge on the board
-                // add the edge to the "taken" edges
-                // know which player got the edge
+
             }
         }
     }
+
 
     /**
      * Drawing destination cards during the game, copied from setupgame
@@ -501,6 +540,7 @@ implements MouseListener
         }
         catch (IOException e) {}
     }
+
 
     // draw train cards from deck, or from river
     // draw destination cards
