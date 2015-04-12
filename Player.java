@@ -11,6 +11,19 @@ public class Player
     protected int cars, tokens;
     protected ArrayList<DestinationCard> destCards;
     protected ArrayList<TrainCarCard> trainCards;
+    protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
+    
+    private class Route
+    {
+        private ArrayList<String> cities = new ArrayList<String>();
+        public Route(String cityOne, String cityTwo) {
+            cities.add(cityOne); cities.add(cityTwo);
+        }
+        
+        public boolean equals(Route r) {
+            return this.cities.contains(r.cities.get(0)) && this.cities.contains(r.cities.get(1));
+        }
+    }
 
     public Player() {
         cars = 40; tokens = 30; // fix this so name and color can be final
@@ -54,5 +67,13 @@ public class Player
     public void addTrainCarCard(Card c) {
         // maybe add a instanceof check?
         trainCards.add((TrainCarCard) c);
+    }
+    
+    public boolean hasRoute(String cityOne, String cityTwo) {
+        return this.capturedRoutes.contains(new Route(cityOne, cityTwo));
+    }
+    
+    public boolean hasRoute(City cityOne, City cityTwo) {
+        return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
 }
