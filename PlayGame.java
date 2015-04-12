@@ -19,6 +19,7 @@ implements MouseListener
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
     public Graph graph;
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
+    protected BufferedImage backgroundImage2 = null;
     private int numPlayers = 0;
     protected String[] colors;
     protected String[] name;
@@ -27,7 +28,7 @@ implements MouseListener
     //private ArrayList<DestinationCard>[] playerDestinationCardHands;
     // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
     private Board gameBoard;
-    protected Image img;
+    protected Image img, img2;
     int startGame = 0;
     boolean paintDest = false;
     private Image[] firstDest= new Image[5];
@@ -140,8 +141,10 @@ implements MouseListener
 
         try {
             backgroundImage = ImageIO.read(new File("images/finishedBoard.png"));
+            backgroundImage2 = ImageIO.read(new File("images/sample3.png"));
             //img = backgroundImage.getScaledInstance(860, 645, Image.SCALE_SMOOTH);
             img = backgroundImage.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            img2 = backgroundImage2.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
             //boardImage = ImageIO.read(new File("images/board.jpg"));            
         } catch (IOException e) {
         }
