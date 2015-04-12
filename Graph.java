@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Hashtable;
+import java.util.Collections;
 /**
  * Graph class.
  * 
@@ -20,14 +21,10 @@ public class Graph
         numCities = 29+1;
         // fill hashtable with empty LinkedLists
         for (int i=0; i<numCities; i++) {
-            System.out.println(i);
-            //CityList.getCityFromArrayList(i).getClass();
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
                 new LinkedList<City>());
         }
         adjMatrix.put("CityName", new LinkedList<City>());
-        //adjMatrix.get("CityName").add(CityList.getCity("CityOther"));
-        addEdge("CityName", "OtherCity"); // ONLY DO THIS ONCE FOR EACH EDGE
         addEdge("Groningen", "Emden"); addEdge("Groningen", "Emden");
         addEdge("Groningen", "Emmen"); addEdge("Groningen", "Emmen");
         addEdge("Groningen", "Zwolle"); addEdge("Groningen", "Zwolle");
@@ -89,6 +86,7 @@ public class Graph
      * @param cityTwo second city
      */
     private void addEdge(String cityOne, String cityTwo) {
+        //System.out.println(cityOne + " " + cityTwo);
         adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
         adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
         //         try {
@@ -111,8 +109,14 @@ public class Graph
         return adjMatrix.get(cityOne).contains(CityList.getCity(cityTwo));
     }
 
+    public boolean isDouble(String cityOne, String cityTwo) {
+        int occurrences = Collections.frequency(adjMatrix.get(cityOne), CityList.getCity(cityTwo));
+        return occurrences == 2;
+    }
+
     public static void test() {
         Graph g = new Graph();
         System.out.println(g.hasEdge("Hasselt", "Liege") + "\n" + g.hasEdge("Hasselt","Amsterdam"));
+        System.out.println(g.isDouble("Hasselt","Liege") + "\n" + g.isDouble("Hasselt", "Maastricht"));
     }
 }
