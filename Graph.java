@@ -11,7 +11,7 @@ public class Graph
 {
     protected Hashtable<String, LinkedList<City>> adjMatrix = new Hashtable<>();
     public final int numCities;
-    
+
     /**
      * Constructor for objects of class Graph
      */
@@ -20,8 +20,10 @@ public class Graph
         numCities = 29+1;
         // fill hashtable with empty LinkedLists
         for (int i=0; i<numCities; i++) {
+            System.out.println(i);
+            //CityList.getCityFromArrayList(i).getClass();
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
-                          new LinkedList<City>());
+                new LinkedList<City>());
         }
         adjMatrix.put("CityName", new LinkedList<City>());
         //adjMatrix.get("CityName").add(CityList.getCity("CityOther"));
@@ -50,24 +52,24 @@ public class Graph
         addEdge("Enschede", "Arnhem"); addEdge("Enschede", "Arnhem");
         addEdge("Enschede", "Duisburg"); addEdge("Enschede", "Duisburg");
         addEdge("Haarlem","Amsterdam"); addEdge("Haarlem","Amsterdam");
-        addEdge("Haarlem", "‘s-Gravenhage"); addEdge("Haarlem", "‘s-Gravenhage");
+        addEdge("Haarlem", "'sGravenhage"); addEdge("Haarlem", "'sGravenhage");
         addEdge("Amsterdam", "Utrecht"); addEdge("Amsterdam", "Utrecht"); 
         addEdge("Utrecht", "Arnhem"); addEdge("Utrecht", "Arnhem");
         addEdge("Arnhem", "Nijmegen"); addEdge("Arnhem", "Nijmegen");
         addEdge("Amsterdam", "Rotterdam"); addEdge("Amsterdam", "Rotterdam");
         addEdge("Rotterdam", "Utrecht");
-        addEdge("Utrecht", "‘s-Hertogenbosch"); addEdge("Utrecht", "‘s-Hertogenbosch");
+        addEdge("Utrecht", "'sHertogenbosch"); addEdge("Utrecht", "'sHertogenbosch");
         addEdge("Nijmegen", "Duisburg"); addEdge("Nijmegen", "Duisburg");
         addEdge("Nijmegen","Eindhoven"); addEdge("Nijmegen","Eindhoven");
         addEdge("Duisburg", "Roermond"); addEdge("Duisburg", "Roermond"); 
         addEdge("Eindhoven", "Roermond"); addEdge("Eindhoven", "Roermond");
         addEdge("Eindhoven", "Maastricht"); addEdge("Eindhoven", "Maastricht");
-        addEdge("Eindhoven", "‘s-Hertogenbosch"); addEdge("Eindhoven", "‘s-Hertogenbosch");
-        addEdge("‘s-Hertogenbosch", "Breda");  addEdge("‘s-Hertogenbosch", "Breda");
+        addEdge("Eindhoven", "'sHertogenbosch"); addEdge("Eindhoven", "'sHertogenbosch");
+        addEdge("'sHertogenbosch", "Breda");  addEdge("'sHertogenbosch", "Breda");
         addEdge("Breda", "Rotterdam"); addEdge("Breda", "Rotterdam"); 
         addEdge("Breda", "Turnhout"); addEdge("Breda", "Turnhout");
-        addEdge("‘s-Gravenhage", "Rotterdam"); addEdge("‘s-Gravenhage", "Rotterdam");
-        addEdge("‘s-Gravenhage", "Middelburg"); addEdge("‘s-Gravenhage", "Middelburg");
+        addEdge("'sGravenhage", "Rotterdam"); addEdge("'sGravenhage", "Rotterdam");
+        addEdge("'sGravenhage", "Middelburg"); addEdge("'sGravenhage", "Middelburg");
         addEdge("Middelburg", "Antwerpen"); addEdge("Middelburg", "Antwerpen");
         addEdge("Antwerpen", "Rotterdam"); addEdge("Antwerpen", "Rotterdam");
         addEdge("Roermond", "Maastricht"); addEdge("Roermond", "Maastricht"); 
@@ -80,7 +82,7 @@ public class Graph
         addEdge("Hasselt", "Liege");
         addEdge("Aarschot","Liege");
     }
-    
+
     /**
      * adds an edge from cityOne to cityTwo AND from cityTwo to cityOne
      * @param cityOne first city
@@ -89,8 +91,16 @@ public class Graph
     private void addEdge(String cityOne, String cityTwo) {
         adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
         adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
+        //         try {
+        //             System.out.print(cityOne + " " + cityTwo + " ");
+        //             adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
+        //             System.out.print("Got cityTwo from CityList, ");
+        //             adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
+        //             System.out.print("Got cityOne from CityList, ");
+        //             System.out.println("OK");
+        //         } catch (NullPointerException e) { System.out.println("AAAHHHH"); }
     }
-    
+
     /**
      * Checks if there is an edge from cityOne to cityTwo
      * @param cityOne first city
@@ -99,5 +109,10 @@ public class Graph
      */
     public boolean hasEdge(String cityOne, String cityTwo) {
         return adjMatrix.get(cityOne).contains(CityList.getCity(cityTwo));
+    }
+
+    public static void test() {
+        Graph g = new Graph();
+        System.out.println(g.hasEdge("Hasselt", "Liege") + "\n" + g.hasEdge("Hasselt","Amsterdam"));
     }
 }
