@@ -181,6 +181,7 @@ implements MouseListener
 
             g.drawImage(img2, 0, 0, this);
             drawTrains(g);
+            showCards(g);
         }
     }
 
@@ -239,6 +240,43 @@ implements MouseListener
         g.fillPolygon(new int[]{453, 535, 533, 451}, new int[]{217, 228, 237, 226}, 4);
         g.fillPolygon(new int[]{451, 533, 532, 450}, new int[]{228, 239, 249, 236}, 4);
         
+    }
+    
+    /**
+     * Shows the number of each type of cards the player has
+     * @param g The graphics object for the applet
+     */
+    private void showCards(Graphics g) {
+        int[] numCards = new int[9];
+        try {
+            Player curPlayer = playerList[currPlayer];
+            String[] colors = new String[] {"black", "blue", "green", 
+                    "orange", "rainbow", "red", "purple", "white", "yellow" };
+            //Counts the cards for the current player
+            for(int i = 0; i <  colors.length; i++) {
+                for(int j = 0; j < curPlayer.trainCards.size(); j++) {
+                    if(curPlayer.trainCards.get(j).getColor().equals(colors[i]))
+                        numCards[i] = numCards[i] + 1;
+                }
+            }
+        } catch (NullPointerException e) { showStatus(e.toString()); }
+        g.setColor(new Color(102, 0, 0));
+        g.fillRect(800, 475, 30, 30); g.fillRect(945, 475, 30, 30);
+        g.fillRect(1090, 475, 30, 30); g.fillRect(800, 570, 30, 30);
+        g.fillRect(945, 570, 30, 30); g.fillRect(1090, 570, 30, 30);
+        g.fillRect(800, 665, 30, 30); g.fillRect(945, 665, 30, 30);
+        g.fillRect(1090, 665, 30, 30);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        g.drawString(Integer.toString(numCards[0]), 807, 496);
+        g.drawString(Integer.toString(numCards[0]), 952, 496);
+        g.drawString(Integer.toString(numCards[0]), 1097, 496);
+        g.drawString(Integer.toString(numCards[0]), 807, 591);
+        g.drawString(Integer.toString(numCards[0]), 952, 591);
+        g.drawString(Integer.toString(numCards[0]), 1097, 591);
+        g.drawString(Integer.toString(numCards[0]), 807, 686);
+        g.drawString(Integer.toString(numCards[0]), 952, 686);
+        g.drawString(Integer.toString(numCards[0]), 1097, 686);
     }
     
     /**
