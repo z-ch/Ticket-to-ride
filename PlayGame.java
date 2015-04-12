@@ -35,6 +35,7 @@ implements MouseListener
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
     int currPlayer = 0;
+    boolean now = false;
     
     public PlayGame() {
         createDestinationDeck();
@@ -173,6 +174,11 @@ implements MouseListener
             gameOpening(g);
             setUpGame(g);
         }
+        if(now){
+
+            g.drawImage(img2, 0, 0, this);
+            drawTrains(g);
+        }
     }
 
     /**
@@ -210,6 +216,28 @@ implements MouseListener
     }
     /// end pasted stuff
 
+/**
+     * Draws the tarins on the board
+     * @param g The graphics object for the applet
+     */
+    public void drawTrains(Graphics g) {
+        g.setColor(new Color(255,0,255, 128));
+        //draw Polygons for trains
+        g.fillPolygon(new int[]{428, 439, 443, 433}, new int[]{101, 102, 211, 210}, 4);
+        g.fillPolygon(new int[]{453, 458,  484, 506, 525, 541, 553, 558, 548, 543, 531, 518, 499, 477}, new int[]{92, 83, 97, 115, 136, 161, 188, 216, 218, 191, 167, 143, 123, 105}, 14);
+        g.fillPolygon(new int[]{444, 448, 475, 497, 517, 531, 543, 548, 539, 534, 523, 508, 491, 469}, new int[]{100, 90, 105, 123, 145, 169, 195, 223, 225, 200, 175, 152, 131, 113}, 14);
+        g.fillPolygon(new int[]{423, 352, 347, 419}, new int[]{100, 141, 133, 91}, 4);
+        g.fillPolygon(new int[]{413, 418, 346, 341}, new int[]{82, 90, 131, 124}, 4);
+        g.fillPolygon(new int[]{364, 425, 418, 358}, new int[]{152, 206, 213, 159}, 4);
+        g.fillPolygon(new int[]{357, 417, 411, 350}, new int[]{160, 214, 222, 168}, 4);
+        g.fillPolygon(new int[]{315, 312, 286, 258, 230, 204, 179, 158, 152, 174, 200, 229, 258, 287}, new int[]{135, 144, 139, 138, 142, 150, 163, 179, 171, 155, 141, 132, 128, 129}, 14);
+        g.fillPolygon(new int[]{306, 310, 239, 233}, new int[]{146, 154, 196, 189}, 4);
+        g.fillPolygon(new int[]{311, 316, 244, 239}, new int[]{156, 164, 207, 198}, 4);
+        g.fillPolygon(new int[]{453, 535, 533, 451}, new int[]{217, 228, 237, 226}, 4);
+        g.fillPolygon(new int[]{451, 533, 532, 450}, new int[]{228, 239, 249, 236}, 4);
+        
+    }
+    
     /**
      * Does the start up for the game
      * @param g The graphics object for the applet
@@ -313,6 +341,7 @@ implements MouseListener
                     }
                 }
             }
+            now = true;
             //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
 
