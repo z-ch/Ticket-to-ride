@@ -38,6 +38,22 @@ public class Player
         this();
         color = c; name = n;
     }
+    
+    /**
+     * Sets the name of the player
+     * @param n Name of player
+     */
+    public void setN(String n) {
+        name = n;
+    }
+    
+    /**
+     * Sets the color of the player
+     * @param c Color of player
+     */
+    public void setC(String c) {
+        color = c;
+    }
 
     /**
      * draws a destination card
