@@ -1,5 +1,4 @@
 
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.*;
@@ -215,7 +214,7 @@ implements MouseListener
                 g.setColor(Color.black);
                 g.drawString("HERE", 950, 800);
                 g.setFont(new Font("TimesRoman", Font.BOLD, 12));
-                
+
             }
             whatCardsIHave(g);
         }
@@ -564,15 +563,14 @@ implements MouseListener
         else if (purchaseRoute) {
             // somehow the GUI will get two cities
             //start temp
-            City city1, city2; 
-
+            City city1, city2;
             city1 = CityList.getCity("Leeuwarden");
             city2 = CityList.getCity("Sneek");
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
-                for (Player pr : playerList) 
+                for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) ++ownerCount;
                 if (!isDouble) {
                     if (ownerCount > 0) {
@@ -580,14 +578,17 @@ implements MouseListener
                     }
                     else {
                         // buy route from bank
+                        currentPlayer.addRoute(city1,city2);
                     }
                 }
                 else {
                     if (ownerCount == 0) {
                         // buy route from bank
+                        currentPlayer.addRoute(city1,city2);
                     }
                     if (ownerCount == 1) {
                         // buy route from owner
+                        currentPlayer.addRoute(city1,city2);
                     }
                     else {
                         // don't let them buy the route
