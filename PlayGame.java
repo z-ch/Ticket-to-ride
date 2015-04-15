@@ -478,7 +478,6 @@ implements MouseListener
             // somehow the GUI will get two cities
             //start temp
             City city1, city2; 
-
             city1 = CityList.getCity("Leeuwarden");
             city2 = CityList.getCity("Sneek");
             //end temp
@@ -493,14 +492,17 @@ implements MouseListener
                     }
                     else {
                         // buy route from bank
+                        currentPlayer.addRoute(city1,city2);
                     }
                 }
                 else {
                     if (ownerCount == 0) {
                         // buy route from bank
+                        currentPlayer.addRoute(city1,city2);
                     }
                     if (ownerCount == 1) {
                         // buy route from owner
+                        currentPlayer.addRoute(city1,city2);
                     }
                     else {
                         // don't let them buy the route

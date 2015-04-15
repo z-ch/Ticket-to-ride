@@ -76,4 +76,13 @@ public class Player
     public boolean hasRoute(City cityOne, City cityTwo) {
         return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
+    
+    public void addRoute(String cityOne, String cityTwo) {
+        if (hasRoute(cityOne,cityTwo) && !hasRoute(cityOne,cityTwo))
+            capturedRoutes.add(new Route(cityOne, cityTwo));
+    }
+    
+    public void addRoute(City cityOne, City cityTwo) {
+        addRoute(cityOne.getName(), cityTwo.getName());
+    }
 }
