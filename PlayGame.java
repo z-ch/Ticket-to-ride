@@ -28,7 +28,7 @@ implements MouseListener
     //private ArrayList<TrainCarCard>[] playerTrainCarCardHands;
     //private ArrayList<DestinationCard>[] playerDestinationCardHands;
     // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
-    private Board gameBoard;
+    private Board gameBoard = new Board();
     protected Image img, img2;
     protected Image backDestCard;
     int startGame = 0;
@@ -543,8 +543,20 @@ implements MouseListener
             }
             now = true;
 
-            for(int i = 0; i < 5; i++) {
-                gameBoard.river.add((TrainCarCard) trainDeck.drawCard());
+            int rainbowCount = 3;
+            while (rainbowCount > 2) {
+                while (!gameBoard.river.isEmpty()) {
+                    Card c = gameBoard.river.remove(0);
+                    trainDeck.addCard(c);
+                }
+
+                rainbowCount = 0;
+                for(int i = 0; i < 5; i++) {
+                    TrainCarCard cardToAdd = (TrainCarCard) trainDeck.drawCard();
+                    if (cardToAdd.getColor().equals("rainbow")) ++rainbowCount;
+                    gameBoard.river.add(cardToAdd);    
+                }
+
             }
             //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
