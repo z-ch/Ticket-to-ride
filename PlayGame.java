@@ -21,6 +21,7 @@ implements MouseListener
     public Graph graph;
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
     protected BufferedImage backgroundImage2 = null;
+    protected BufferedImage cardBack = null;
     private int numPlayers = 0;
     protected String[] colors;
     protected String[] name;
@@ -30,6 +31,7 @@ implements MouseListener
     // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
     private Board gameBoard;
     protected Image img, img2;
+    protected Image backDestCard;
     int startGame = 0;
     boolean paintDest = false;
     private Image[] firstDest= new Image[5];
@@ -148,9 +150,11 @@ implements MouseListener
         try {
             backgroundImage = ImageIO.read(new File("images/finishedBoard.png"));
             backgroundImage2 = ImageIO.read(new File("images/sample3.png"));
+            cardBack = ImageIO.read(new File("images/cardback.jpg"));
             //img = backgroundImage.getScaledInstance(860, 645, Image.SCALE_SMOOTH);
             img = backgroundImage.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
             img2 = backgroundImage2.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            backDestCard = cardBack.getScaledInstance(79, 50, Image.SCALE_SMOOTH);
             //boardImage = ImageIO.read(new File("images/board.jpg"));            
         } catch (IOException e) {
         }
@@ -182,25 +186,46 @@ implements MouseListener
         if (startGame == 0){
             gameOpening(g);
             setUpGame(g);
-
         }
+
         if(now){
             g.drawImage(img2, 0, 0, this);
-            showCards(g);
-            //drawTrains(g);
+            //drawRiver(g); //Here will be the first five train cards drawn
+            showCards(g);            
+            drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
+            drawTrains(g); // This was used here to make sure the trains on the
+            //actual board were being drawn correctly
             now = false;
-            //playerTurn(playerList[currPlayer]);
-        }//playerTurn(playerList[currPlayer]);
-
-        if(click) {
-
-            click = false;
-            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175){
-                destinationDeckDraw = true;
-            }
-            playerTurn(playerList[currPlayer]);
+            whatCardsIHave(g);
         }
-        
+        //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
+        if(click) {
+            click = false;
+            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175) {
+                destinationDeckDraw = true;
+                playerTurn(playerList[currPlayer]);
+                g.drawImage(img2, 0, 0, this);
+                showCards(g);
+                drawPlayerNameAndCars(g); 
+            }
+            //Show the players current destination cards
+            if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
+                //showDestinationCards();   HAVE TO IMPLEMENT
+                g.setColor(Color.black);
+                g.drawString("HERE", 950, 800);
+                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+
+            }
+            whatCardsIHave(g);
+        }
+    }
+
+    //TEST FOR CARDS I HAVE : DESTINATION CARDS
+    private void whatCardsIHave(Graphics g) {
+        g.drawString("Player: " +playerList[currPlayer].name, 700, 320 );
+        for(int i = 0; i < playerList[currPlayer].destCards.size(); i++) {
+            g.drawString("" +playerList[currPlayer].destCards.get(i).toString(), 700, 350 + i*15 );
+        }
     }
 
     /**
@@ -237,6 +262,13 @@ implements MouseListener
         return paramInfo;
     }
     /// end pasted stuff
+
+    /**
+     * Shows the destination cards the current player has
+     */
+    private void showDestinationCards() {
+        //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
+    }
 
     /**
      * Shows the number of each type of cards the player has
@@ -276,11 +308,52 @@ implements MouseListener
     }
 
     /**
-     * Draws the tarins on the board
+     * Draws the players name, their dest cards and train cars on the board
+     * @param g The graphics object for the applet
+     */
+    private void drawPlayerNameAndCars(Graphics g) {
+        //showStatus(playerList[currPlayer].color);
+        if((playerList[currPlayer].color).equals("GREEN")) 
+            g.setColor(Color.GREEN);
+        if((playerList[currPlayer].color).equals("YELLOW")) 
+            g.setColor(Color.YELLOW);
+        if((playerList[currPlayer].color).equals("RED")) 
+            g.setColor(Color.RED);
+        if((playerList[currPlayer].color).equals("BLUE")) 
+            g.setColor(Color.BLUE);
+        if((playerList[currPlayer].color).equals("BLACK")) 
+            g.setColor(Color.BLACK);
+
+        int lcX = 1030, lcY = 780;
+        int lookAtTen = 0;
+        for(int i = 0; i < playerList[currPlayer].cars; i++) {
+            g.fillRect(lcX, lcY, 5, 10);
+            lcX = lcX + 7;
+            lookAtTen++;
+            if(lookAtTen == 10){
+                lcX = 1030;
+                lcY = lcY + 13;
+                lookAtTen = 0;
+            }
+        }
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+        g.drawString("Trains: " +playerList[currPlayer].cars, 1035, 775 );
+
+        g.setFont(new Font("TimesRoman", Font.BOLD, 11));
+        g.drawString("Your Dest Cards", 928, 775);
+        g.drawImage(backDestCard, 930, 780, this);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g.drawString("Player: " +playerList[currPlayer].name, 700, 820 );
+    }
+
+    /**
+     * Draws the trains on the board
      * @param g The graphics object for the applet
      */
     public void drawTrains(Graphics g) {
-        g.setColor(new Color(255,0,255, 128));
+        g.setColor(new Color(255,0,0, 217));
         //draw Polygons for trains
         g.fillPolygon(new int[]{428, 439, 443, 433}, new int[]{101, 102, 211, 210}, 4);
         g.fillPolygon(new int[]{453, 458,  484, 506, 525, 541, 553, 558, 548, 543, 531, 518, 499, 477}, new int[]{92, 83, 97, 115, 136, 161, 188, 216, 218, 191, 167, 143, 123, 105}, 14);
@@ -327,6 +400,7 @@ implements MouseListener
         for(int i = 0; i < numPlayers; i++) {
             String numPlayerName = JOptionPane.showInputDialog("Input Name of Player " +(i+1));
             name[i] = numPlayerName;
+            playerList[i].setN(numPlayerName);
         }
 
         for(int i = 0; i < numPlayers; i++) {
@@ -335,10 +409,20 @@ implements MouseListener
                     null, "What color what you like to be",
                     "Message to " + name[i], JOptionPane.QUESTION_MESSAGE, null,
                     availableColors.toArray(), availableColors.get(0));
-
+            playerList[i].setC(player1Color);
             availableColors.remove(player1Color);
         }
         return;
+    }
+
+    /**
+     * Draws the 5 train cards visible to the players
+     * @param g The graphics object for the applet
+     */
+    private void drawRiver(Graphics g) {
+        //HAVE TO DRAW THE 5 TRAIN CARDS FOR ALL PLAYERS
+        //This is not the method called to see if the new train
+        //card is added when selected from the river
     }
 
     /**
@@ -416,6 +500,7 @@ implements MouseListener
         //         }
     }
 
+    //Used to test if there are any cards that will throw an error
     public static void test() {
         try {
             PlayGame pg = new PlayGame();
@@ -431,6 +516,7 @@ implements MouseListener
         } catch (IOException e) { System.out.println("AAAAAHHHHH"); }
         catch (NullPointerException e) { System.out.println(e); }
     }
+
     //80 chars******************************************************************
     /**
      * Allows the currentPlayer to take their turn. Once gameplay starts, this 
@@ -477,14 +563,14 @@ implements MouseListener
         else if (purchaseRoute) {
             // somehow the GUI will get two cities
             //start temp
-            City city1, city2; 
+            City city1, city2;
             city1 = CityList.getCity("Leeuwarden");
             city2 = CityList.getCity("Sneek");
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
-                for (Player pr : playerList) 
+                for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) ++ownerCount;
                 if (!isDouble) {
                     if (ownerCount > 0) {
@@ -507,12 +593,12 @@ implements MouseListener
                     else {
                         // don't let them buy the route
                     }
-                }
+                 }
             }
         }
 
-        currPlayer++;
-        currPlayer = currPlayer % numPlayers;
+        //currPlayer++;
+        //currPlayer = currPlayer % numPlayers;
     }
 
     /**
@@ -546,14 +632,25 @@ implements MouseListener
             JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
             JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
             JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
-            String msg = "Choose your destination cards " + name[currPlayer]; 
+            String msg;
+            if(currPlayer-1 == -1) {
+                msg = "Choose your destination cards " + name[numPlayers-1];
+            }
+            else {
+                msg = "Choose your destination cards " + name[currPlayer-1];
+            }
 
             Object[] choices = {msg, card1, card2, card3, card4};
-
             int numSelectedCards = 0; boolean selected[] = new boolean[4];
             while (numSelectedCards < 1) {
                 numSelectedCards = 0;
-                int n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[currPlayer], JOptionPane.YES_NO_OPTION); 
+                int n;
+                if(currPlayer-1 == -1) {
+                    n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[numPlayers-1], JOptionPane.YES_NO_OPTION); 
+                }
+                else {
+                    n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[currPlayer-1], JOptionPane.YES_NO_OPTION); 
+                }
                 selected = new boolean[] { card1.isSelected(), card2.isSelected(), card3.isSelected(), card4.isSelected() };
                 for (boolean b : selected)
                     if (b)
@@ -563,7 +660,12 @@ implements MouseListener
             for (int bool=0; bool<4; bool++) {
                 //If the card is selected, puts it in the players hand
                 if (selected[bool]) {
-                    playerList[currPlayer].addDestinationCard(draw[bool]);
+                    if(currPlayer-1 == -1) {
+                        playerList[numPlayers-1].addDestinationCard(draw[bool]);
+                    }
+                    else {
+                        playerList[currPlayer-1].addDestinationCard(draw[bool]);
+                    }
                 }
                 else {
                     destinationDeck.addCard(draw[bool]);    //Adds back the cards into the deck
@@ -581,3 +683,4 @@ implements MouseListener
     // draw destination cards
     // OR you can buy a route
 }
+
