@@ -24,4 +24,8 @@ public class City
     public String getName() {
         return name;
     }
+    
+    public int compareTo(City c) {
+        return this.getName().compareTo(c.getName());
+    }
 }

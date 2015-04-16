@@ -13,17 +13,7 @@ public class Player
     protected ArrayList<TrainCarCard> trainCards;
     protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
     
-    private class Route
-    {
-        private ArrayList<String> cities = new ArrayList<String>();
-        public Route(String cityOne, String cityTwo) {
-            cities.add(cityOne); cities.add(cityTwo);
-        }
-        
-        public boolean equals(Route r) {
-            return this.cities.contains(r.cities.get(0)) && this.cities.contains(r.cities.get(1));
-        }
-    }
+
 
     public Player() {
         cars = 40; tokens = 30; // fix this so name and color can be final
@@ -94,8 +84,14 @@ public class Player
     }
     
     public void addRoute(String cityOne, String cityTwo) {
-        if (hasRoute(cityOne,cityTwo) && !hasRoute(cityOne,cityTwo))
+        if (hasRoute(cityOne,cityTwo) && !hasRoute(cityOne,cityTwo)) {
+            Route rte = new Route(cityOne, cityTwo);
+            int cost = rte.getWeight();
+            if (tokens >= cost) 
+                tokens -= cost;
+            else ;// SUBTRACT 5 POINTS
             capturedRoutes.add(new Route(cityOne, cityTwo));
+        }
     }
     
     public void addRoute(City cityOne, City cityTwo) {
