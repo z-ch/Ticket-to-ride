@@ -206,7 +206,7 @@ implements MouseListener
             //drawRiver(g); //Here will be the first five train cards drawn
             showCards(g);            
             drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
-            drawTrains(g); // This was used here to make sure the trains on the
+            //drawTrains(g); // This was used here to make sure the trains on the
             //actual board were being drawn correctly
             now = false;
             drawRiver(g);     //Draws the 5 train cards needed
@@ -248,7 +248,6 @@ implements MouseListener
             drawRiver(g);
             //whatCardsIHave(g);
         }
-        drawRiver(g);
     }
 
     //TEST FOR CARDS I HAVE : DESTINATION CARDS
@@ -455,10 +454,7 @@ implements MouseListener
         //HAVE TO DRAW THE 5 TRAIN CARDS FOR ALL PLAYERS
         //This is not the method called to see if the new train
         //card is added when selected from the river
-        showStatus("DRAWRIVER");
-        JOptionPane.showMessageDialog(this, gameBoard.river.get(0).getImagePath().toString());
         try {
-            
             BufferedImage cardImage1 = ImageIO.read(gameBoard.river.get(0).getImagePath().toFile());
             BufferedImage cardImage2 = ImageIO.read(gameBoard.river.get(1).getImagePath().toFile());
             BufferedImage cardImage3 = ImageIO.read(gameBoard.river.get(2).getImagePath().toFile());
