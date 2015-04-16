@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.image.*;
@@ -44,6 +43,8 @@ implements MouseListener
     boolean click = false;
     boolean destinationDeckDraw = false; 
     boolean chooseDestClicked = true;
+    boolean trainDeckDraw = false;
+    int trainDrawCount = 0;
 
     public PlayGame() {
         createDestinationDeck();
@@ -57,12 +58,24 @@ implements MouseListener
         String colors[] = new String[] {"purple", "white", "blue", 
                 "yellow", "orange", "black",
                 "red", "green" };
-        for (int i=0; i<colors.length; i++)
+        for (int i=0; i<colors.length; i++) {
+            String path = "images/";
+            if (colors[i].equals("purple")) path += "purple.jpg";
+            if (colors[i].equals("white")) path += "white.jpg";
+            if (colors[i].equals("blue")) path += "blue.jpg";
+            if (colors[i].equals("yellow")) path += "yellow.jpg";
+            if (colors[i].equals("orange")) path += "orange.jpg";
+            if (colors[i].equals("black")) path += "black.jpg";
+            if (colors[i].equals("red")) path += "red.jpg";
+            if (colors[i].equals("green")) path += "green.jpg";
             for (int j=0; j<12; j++)
-                trainDeck.addCard(new TrainCarCard(colors[i]));
+                trainDeck.addCard(new TrainCarCard(colors[i], path));
+        }
 
-        for (int i=0; i<14; i++)
-            trainDeck.addCard(new TrainCarCard("rainbow"));
+        for (int i=0; i<14; i++) {
+            String path = "images/rainbow.jpg";
+            trainDeck.addCard(new TrainCarCard("rainbow", path));
+        }
     }
 
     /**
@@ -185,7 +198,7 @@ implements MouseListener
     {
         if (startGame == 0){
             gameOpening(g);
-            setUpGame(g);
+            setUpGame(g);            
         }
 
         if(now){
@@ -196,28 +209,46 @@ implements MouseListener
             drawTrains(g); // This was used here to make sure the trains on the
             //actual board were being drawn correctly
             now = false;
-            whatCardsIHave(g);
+            drawRiver(g);     //Draws the 5 train cards needed
+            //whatCardsIHave(g);
         }
         //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
         if(click) {
             click = false;
-            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175) {
+            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175 && (trainDrawCount%2 == 0)) {
                 destinationDeckDraw = true;
                 playerTurn(playerList[currPlayer]);
                 g.drawImage(img2, 0, 0, this);
                 showCards(g);
                 drawPlayerNameAndCars(g); 
+                drawRiver(g);     //Draws the 5 train cards needed
             }
             //Show the players current destination cards
             if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
                 //showDestinationCards();   HAVE TO IMPLEMENT
                 g.setColor(Color.black);
                 g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
-
+                g.setFont(new Font("TimesRoman", Font.BOLD, 12));                
             }
-            whatCardsIHave(g);
+
+            if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
+                g.setColor(Color.red);
+                g.drawRect(911, 48, 202, 125);                
+                trainDeckDraw = true;
+                playerTurn(playerList[currPlayer]);
+                showCards(g);
+                drawRiver(g);     //Draws the 5 train cards needed
+                if(trainDrawCount%2 == 0) {
+                    g.drawImage(img2, 0, 0, this); 
+                    showCards(g);
+                    drawPlayerNameAndCars(g); 
+                    drawRiver(g);     //Draws the 5 train cards needed
+                }
+            }
+            drawRiver(g);
+            //whatCardsIHave(g);
         }
+        drawRiver(g);
     }
 
     //TEST FOR CARDS I HAVE : DESTINATION CARDS
@@ -416,13 +447,34 @@ implements MouseListener
     }
 
     /**
-     * Draws the 5 train cards visible to the players
+     * Draws the 5 train cards visible to the players in beginning 
+     * of the game
      * @param g The graphics object for the applet
      */
     private void drawRiver(Graphics g) {
         //HAVE TO DRAW THE 5 TRAIN CARDS FOR ALL PLAYERS
         //This is not the method called to see if the new train
         //card is added when selected from the river
+        showStatus("DRAWRIVER");
+        JOptionPane.showMessageDialog(this, gameBoard.river.get(0).getImagePath().toString());
+        try {
+            
+            BufferedImage cardImage1 = ImageIO.read(gameBoard.river.get(0).getImagePath().toFile());
+            BufferedImage cardImage2 = ImageIO.read(gameBoard.river.get(1).getImagePath().toFile());
+            BufferedImage cardImage3 = ImageIO.read(gameBoard.river.get(2).getImagePath().toFile());
+            BufferedImage cardImage4 = ImageIO.read(gameBoard.river.get(3).getImagePath().toFile());
+            BufferedImage cardImage5 = ImageIO.read(gameBoard.river.get(4).getImagePath().toFile());
+            Image one = cardImage1;
+            Image two = cardImage2;
+            Image three = cardImage3;
+            Image four = cardImage4;
+            Image five = cardImage5;
+            g.drawImage(one, 685, 295, this);
+            g.drawImage(two, 770, 295, this);
+            g.drawImage(three, 855, 295, this);
+            g.drawImage(four, 940, 295, this);
+            g.drawImage(five, 1025, 295, this);
+        } catch (Exception e) { showStatus("EXCEPTION THROWN IN DRAWRIVER"); showStatus(e.toString()); }
     }
 
     /**
@@ -490,6 +542,10 @@ implements MouseListener
                 }
             }
             now = true;
+
+            for(int i = 0; i < 5; i++) {
+                gameBoard.river.add((TrainCarCard) trainDeck.drawCard());
+            }
             //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
 
@@ -527,14 +583,20 @@ implements MouseListener
 
     private void playerTurn(Player currentPlayer) {
         showStatus(currPlayer + "");
-        boolean trainDeckDraw, trainRiverDraw = false;
+        boolean trainRiverDraw = false;
 
         boolean purchaseRoute = false;
-        trainDeckDraw = false;
+
         // need to check somewhere if the decks are empty
-        if (trainDeckDraw) 
-            for (int i=0; i<2; i++) 
-                currentPlayer.drawTrainCarCard(trainDeck);
+        if (trainDeckDraw) {
+            currentPlayer.drawTrainCarCard(trainDeck);
+            trainDrawCount++;
+            if(trainDrawCount%2 == 0) {
+                currPlayer++;
+                currPlayer = currPlayer % numPlayers;
+            }
+            trainDeckDraw = false;
+        }
         if (trainRiverDraw) { // maybe checkboxes instead?
 
             int clickedCard = 0; // 0-4 inclusive
@@ -563,14 +625,15 @@ implements MouseListener
         else if (purchaseRoute) {
             // somehow the GUI will get two cities
             //start temp
-            City city1, city2;
+            City city1, city2; 
+
             city1 = CityList.getCity("Leeuwarden");
             city2 = CityList.getCity("Sneek");
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
-                for (Player pr : playerList)
+                for (Player pr : playerList) 
                     if (pr.hasRoute(city1, city2)) ++ownerCount;
                 if (!isDouble) {
                     if (ownerCount > 0) {
@@ -591,7 +654,8 @@ implements MouseListener
                         currentPlayer.addRoute(city1,city2);
                     }
                     else {
-                        // don't let them buy the route
+                         // don't let them buy the route
+
                     }
                 }
             }
