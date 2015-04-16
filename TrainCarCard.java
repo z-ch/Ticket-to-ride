@@ -1,4 +1,5 @@
-
+import java.io.File;
+import java.nio.file.*;
 /**
  * Write a description of class TrainCarCard here.
  * 
@@ -23,6 +24,10 @@ public class TrainCarCard extends Card
     public TrainCarCard(String c) {
         this();
         color = c;
+    }
+    
+    public TrainCarCard(String c, String p) {
+        color = c; imagePath = (new File(p)).toPath();
     }
     
     /**
