@@ -44,7 +44,9 @@ implements MouseListener
     boolean destinationDeckDraw = false; 
     boolean chooseDestClicked = true;
     boolean trainDeckDraw = false;
+    boolean trainRiverDraw = false;
     int trainDrawCount = 0;
+    int clickedCard;   //0-4 inclusive
 
     public PlayGame() {
         createDestinationDeck();
@@ -245,6 +247,19 @@ implements MouseListener
                     drawRiver(g);     //Draws the 5 train cards needed
                 }
             }
+
+            if(riverClicked()) {
+                trainRiverDraw = true;
+                playerTurn(playerList[currPlayer]);
+                showCards(g);
+                drawRiver(g);     //Draws the 5 train cards needed
+                if(trainDrawCount%2 == 0) {
+                    g.drawImage(img2, 0, 0, this); 
+                    showCards(g);
+                    drawPlayerNameAndCars(g); 
+                    drawRiver(g);     //Draws the 5 train cards needed
+                }
+            }
             drawRiver(g);
             //whatCardsIHave(g);
         }
@@ -292,6 +307,45 @@ implements MouseListener
         return paramInfo;
     }
     /// end pasted stuff
+
+    /**
+     * Checks if the river is clicked and makes sure that the right 
+     * cards gets drawn back from the drawRiver() method
+     */
+    public boolean riverClicked() {
+        //Basically check where the person clicked and replace that card
+        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
+            clickedCard = 0;
+            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(0));
+            //gameBoard.river.add(0, (TrainCarCard) trainDeck.drawCard());
+            return true;
+        }
+        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418) {
+            clickedCard = 1;
+            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(1));
+            //gameBoard.river.add(1, (TrainCarCard) trainDeck.drawCard());
+            return true;
+        }
+        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418) {
+            clickedCard = 2;
+            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(2));
+            //gameBoard.river.add(2, (TrainCarCard) trainDeck.drawCard());
+            return true;
+        }
+        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418) {
+            clickedCard = 3;
+            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(3));
+            //gameBoard.river.add(3, (TrainCarCard) trainDeck.drawCard());
+            return true;
+        }
+        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418) {
+            clickedCard = 4;
+            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(4));
+            //gameBoard.river.add(4, (TrainCarCard) trainDeck.drawCard());
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Shows the destination cards the current player has
@@ -591,7 +645,6 @@ implements MouseListener
 
     private void playerTurn(Player currentPlayer) {
         showStatus(currPlayer + "");
-        boolean trainRiverDraw = false;
 
         boolean purchaseRoute = false;
 
@@ -606,19 +659,31 @@ implements MouseListener
             trainDeckDraw = false;
         }
         if (trainRiverDraw) { // maybe checkboxes instead?
-
-            int clickedCard = 0; // 0-4 inclusive
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
-                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
-                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                if(trainDrawCount%2 == 0) {
+                    currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                    gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                    trainDrawCount = trainDrawCount + 2;
+                    if(trainDrawCount%2 == 0) {
+                        currPlayer++;
+                        currPlayer = currPlayer % numPlayers;
+                    }
+                    trainRiverDraw = false;
+                }
             }
             else {
                 currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
                 gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
-                repaint(); //??
-                clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
-                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
-                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
+                trainDrawCount++;
+                if(trainDrawCount%2 == 0) {
+                    currPlayer++;
+                    currPlayer = currPlayer % numPlayers;
+                }
+                trainRiverDraw = false;
+                //repaint(); //??
+                //clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
+                //currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                //gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
             }
         }
         else if (destinationDeckDraw) {
@@ -661,10 +726,10 @@ implements MouseListener
                         currentPlayer.addRoute(city1,city2);
                     }
                     else {
-                         // don't let them buy the route
+                        // don't let them buy the route
 
                     }
-                 }
+                }
             }
         }
 
