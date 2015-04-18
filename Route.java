@@ -13,7 +13,7 @@ public class Route
         YELLOW, ORANGE, GREEN, BLUE, RED, 
         PINK, GRAY, WHITE, BLACK
     }
-
+    // cities is always in alphabetical order (String order)
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<RouteColor> colors = new ArrayList<RouteColor>();
     private int weight, length;
@@ -95,6 +95,7 @@ public class Route
                 length = 1; weight = 1;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLACK);
+                break;
             case "Rotterdam":
                 length = 4; weight = 2;
                 colors.add(RouteColor.RED);
@@ -137,6 +138,7 @@ public class Route
                 length = 5; weight = 2;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLACK);
+                break;
             case "Zwolle":
                 length = 4; weight = 2;
                 colors.add(RouteColor.PINK);
@@ -211,6 +213,7 @@ public class Route
                 length = 3; weight = 3;
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.RED);
+                break;
             case "Nijmegen":
                 length = 3; weight = 3;
                 colors.add(RouteColor.BLACK);
