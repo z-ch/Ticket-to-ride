@@ -151,89 +151,213 @@ public class Route
         }
         else if (str.equals("Breda")) {
             switch (cities.get(1)) {
-            case "Turnhout": weight = 2; break;
-            case "Rotterdam": weight = 4; break;
+            case "Turnhout":
+                length = 2; weight = 2;
+                colors.add(RouteColor.BLACK);
+                colors.add(RouteColor.BLUE);
+                break;
+            case "Rotterdam":
+                length = 2; weight = 4;
+                colors.add(RouteColor.PINK);
+                colors.add(RouteColor.YELLOW);
+                break;
             }
         }
         else if (str.equals("DenHelder")) {
             switch (cities.get(1)) {
-            case "Haarlem": weight = 2; break;
-            case "Sneek": weight = 3; break;
-            case "Waddeneilanden": weight = 4; break;
+            case "Haarlem":
+                length = 4; weight = 2;
+                colors.add(RouteColor.ORANGE);
+                colors.add(RouteColor.BLUE);
+                break;
+            case "Sneek":
+                length = 4; weight = 3;
+                colors.add(RouteColor.WHITE);
+                colors.add(RouteColor.RED);
+                break;
+            case "Waddeneilanden":
+                length = 5; weight = 4;
+                colors.add(RouteColor.PINK);
+                break;
             }
         }
         else if (str.equals("Duisburg")) {
             switch (cities.get(1)) {
-            case "Enschede": weight = 1; break;
-            case "Roermond": case "Nijmegen": weight = 2; break;
+            case "Enschede":
+                length = 6; weight = 1;
+                colors.add(RouteColor.WHITE);
+                colors.add(RouteColor.ORANGE);
+                break;
+            case "Roermond":
+                length = 3; weight = 2;
+                colors.add(RouteColor.YELLOW);
+                colors.add(RouteColor.GREEN);
+                break;
+            case "Nijmegen":
+                length = 4; weight = 2;
+                colors.add(RouteColor.BLUE);
+                colors.add(RouteColor.PINK);
+                break;
             }
         }
         else if (str.equals("Eindhoven")) {
             switch (cities.get(1)) {
-            case "Maastricht": weight = 2; break;
-            case "Roermond": case "Nijmegen": weight = 3; break;
+            case "Maastricht":
+                length = 4; weight = 2;
+                colors.add(RouteColor.PINK);
+                colors.add(RouteColor.YELLOW);
+                break;
+            case "Roermond":
+                length = 3; weight = 3;
+                colors.add(RouteColor.WHITE);
+                colors.add(RouteColor.RED);
+            case "Nijmegen":
+                length = 3; weight = 3;
+                colors.add(RouteColor.BLACK);
+                colors.add(RouteColor.ORANGE);
+                break;
             }
         }
         else if (str.equals("Emden")) {
             switch (cities.get(1)) {
-            case "Lingen": weight = 1; break;
-            case "Groningen": weight = 3; break;
-            case "Emmen": weight = 4; break;
+            case "Lingen":
+                length = 6; weight = 1;
+                colors.add(RouteColor.BLACK);
+                colors.add(RouteColor.GRAY);
+                break;
+            case "Groningen":
+                length = 3; weight = 3;
+                colors.add(RouteColor.GRAY);
+                colors.add(RouteColor.GRAY);
+                break;
+            case "Emmen":
+                length = 4; weight = 4;
+                colors.add(RouteColor.PINK);
+                break;
             }
         }
         else if (str.equals("Emmen")) {
             switch (cities.get(1)) {
-            case "Lingen": weight = 2; break;
-            case "Groningen": case "Zwolle": weight = 3; break;
+            case "Lingen":
+                length = 3; weight = 2;
+                colors.add(RouteColor.YELLOW);
+                colors.add(RouteColor.GREEN);
+                break;
+            case "Groningen":
+                length = 3; weight = 3;
+                colors.add(RouteColor.BLACK);
+                colors.add(RouteColor.RED);
+                break;
+            case "Zwolle":
+                length = 4; weight = 3;
+                colors.add(RouteColor.GRAY);
+                break;
             }
         }
         else if (str.equals("Enschede")) {
             switch (cities.get(1)) {
-            case "Zwolle": weight = 1; break;
-            case "Lingen": weight = 3; break;
+            case "Zwolle":
+                length = 4; weight = 1;
+                colors.add(RouteColor.BLUE);
+                colors.add(RouteColor.YELLOW);
+                break;
+            case "Lingen":
+                length = 3; weight = 3;
+                colors.add(RouteColor.PINK);
+                colors.add(RouteColor.RED);
+                break;
             }
         }
         else if (str.equals("Groningen")) {
             switch (cities.get(1)) {
-            case "Leeuwarden": weight = 2; break;
-            case "Waddeneilanden": case "Zwolle": weight = 4; break;
+            case "Leeuwarden":
+                length = 3; weight = 2;
+                colors.add(RouteColor.BLUE);
+                colors.add(RouteColor.ORANGE);
+                break;
+            case "Waddeneilanden":
+                length = 6; weight = 4;
+                colors.add(RouteColor.YELLOW);
+                break;
+            case "Zwolle":
+                length = 6; weight = 4;
+                colors.add(RouteColor.GREEN);
+                colors.add(RouteColor.WHITE);
+                break;
             }
         }
         else if (str.equals("Hasselt")) {
             switch (cities.get(1)) {
-            case "Liege": weight = 1; break;
-            case "Maastricht": weight = 2; break;
-            case "Turnhout": weight = 3; break;
+            case "Liege":
+                length = 2; weight = 1;
+                colors.add(RouteColor.GRAY);
+                break;
+            case "Maastricht":
+                length = 2; weight = 2;
+                colors.add(RouteColor.GREEN);
+                colors.add(RouteColor.RED);
+                break;
+            case "Turnhout":
+                length = 3; weight = 3;
+                colors.add(RouteColor.YELLOW);
+                colors.add(RouteColor.ORANGE);
+                break;
             }
         }
         else if (str.equals("Leeuwarden")) {
             switch (cities.get(1)) {
-            case "Sneek": weight = 1; break;
-            case "Waddeneilanden": weight = 3; break;
+            case "Sneek":
+                length = 1; weight = 1;
+                colors.add(RouteColor.BLACK);
+                colors.add(RouteColor.YELLOW);
+                break;
+            case "Waddeneilanden":
+                length = 3; weight = 3;
+                colors.add(RouteColor.GREEN);
+                break;
             }
         }
         else if (str.equals("Lelystad")) {
             switch (cities.get(1)) {
-            case "Sneek": weight = 2; break;
-            case "Zwolle": weight = 4; break;
+            case "Sneek":
+                length = 4; weight = 3;
+                colors.add(RouteColor.GREEN);
+                colors.add(RouteColor.BLUE);
+                break;
+            case "Zwolle":
+                length = 2; weight = 4;
+                colors.add(RouteColor.RED);
+                colors.add(RouteColor.BLACK);
+                break;
             }
         }
         else if (str.equals("Liege")) {
             switch (cities.get(1)) {
-            case "Maastricht": weight = 1; break;
+            case "Maastricht":
+                length = 2; weight = 1;
+                colors.add(RouteColor.BLUE);
+                colors.add(RouteColor.WHITE);
+                break;
             }
         }
         else if (str.equals("Maastricht")) {
             switch (cities.get(1)) {
-            case "Roermond": weight = 1; break;
+            case "Roermond":
+                length = 2; weight = 1;
+                colors.add(RouteColor.ORANGE);
+                colors.add(RouteColor.BLACK);
+                break;
             }
         }
         else if (str.equals("Sneek")) {
             switch (cities.get(1)) {
-            case "Waddeneilanden": weight = 4; break;
+            case "Waddeneilanden":
+                length = 3; weight = 4;
+                colors.add(RouteColor.GRAY);
+                break;
             }
         }        
-        weight = -1;
+        weight = -1; // should never happen
     }
 
     /**
