@@ -380,4 +380,40 @@ public class Route
     public int getWeight() {
         return weight;
     }
+    /**
+     * Returns the length of this route
+     * @return length of the route
+     */
+    public int getLength() {
+        return length;
+    }
+    /**
+     * Returns the color at index i of colors
+     * @param i index to get color from
+     * @return the RouteColor at index i of this.colors
+     */
+
+    public RouteColor getRouteColor(int i) {
+        return colors.get(i);
+    }
+    /**
+     * Checks to see if a given RouteColor is in this Route
+     * @param rc RouteColor to look for
+     * @return true if rc is in colors, false otherwise
+     */
+    public boolean containsRouteColor(RouteColor rc) {
+        return colors.contains(rc);
+    }
+
+    /**
+     * Returns the index of the given RouteColor
+     * @return index of rc in this.colors,
+     * @param rc RouteColor to look for
+     * -1 if it is not in this.colors
+     */
+    public int indexOfRouteColor(RouteColor rc) {
+        return colors.indexOf(rc);
+    }
+
+
 }
