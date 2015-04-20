@@ -11,7 +11,7 @@ public class Route
     public enum RouteColor 
     {
         YELLOW, ORANGE, GREEN, BLUE, RED, 
-        PINK, GRAY, WHITE, BLACK
+        PINK, GRAY, WHITE, BLACK, PURPLE
     }
     // cities is always in alphabetical order (String order)
     private ArrayList<String> cities = new ArrayList<String>();
