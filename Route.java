@@ -9,6 +9,11 @@ import java.util.Collections;
 public class Route
 {
     private ArrayList<String> cities = new ArrayList<String>();
+    public enum RouteColor
+    {
+        YELLOW, BLUE, ORANGE, GREEN, 
+        WHITE, BLACK, GRAY, PINK, RED
+    }
 
     /**
      * Constructor for Route objects

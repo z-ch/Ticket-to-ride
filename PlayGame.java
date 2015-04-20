@@ -18,6 +18,7 @@ implements MouseListener
 {
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
     public Graph graph;
+    public RouteTrains routeTrains = new RouteTrains();
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
     protected BufferedImage backgroundImage2 = null;
     protected BufferedImage cardBack = null;
@@ -45,8 +46,10 @@ implements MouseListener
     boolean chooseDestClicked = true;
     boolean trainDeckDraw = false;
     boolean trainRiverDraw = false;
+    boolean purchaseRoute = false;
     int trainDrawCount = 0;
     int clickedCard;   //0-4 inclusive
+    String cityNameRouteOne, cityNameRouteTwo;
 
     public PlayGame() {
         createDestinationDeck();
@@ -208,7 +211,7 @@ implements MouseListener
             //drawRiver(g); //Here will be the first five train cards drawn
             showCards(g);            
             drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
-            //drawTrains(g); // This was used here to make sure the trains on the
+            drawTrains(g); // This was used here to make sure the trains on the
             //actual board were being drawn correctly
             now = false;
             drawRiver(g);     //Draws the 5 train cards needed
@@ -225,6 +228,16 @@ implements MouseListener
                 drawPlayerNameAndCars(g); 
                 drawRiver(g);     //Draws the 5 train cards needed
             }
+
+            //Check if the place clicked was on-top of a route
+            if(routeClicked() != null) {
+                String[] cityRouteClickedOn = routeClicked();
+                cityNameRouteOne = cityRouteClickedOn[0];
+                cityNameRouteTwo = cityRouteClickedOn[1];
+                purchaseRoute = true;
+                playerTurn(playerList[currPlayer]);
+            }
+
             //Show the players current destination cards
             if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
                 //showDestinationCards();   HAVE TO IMPLEMENT
@@ -309,6 +322,21 @@ implements MouseListener
     /// end pasted stuff
 
     /**
+     * Checks if the routes on the map were clicked
+     * @return the cities of the route clicked, otherwise returns null
+     */
+    public String[] routeClicked() {
+        for(int i = 0; i < routeTrains.routeCars.size(); i++) {
+            if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
+                String[] rout = routeTrains.citiesLinked(i);
+                JOptionPane.showMessageDialog(this, rout[0]+ " " +rout[1]);                
+                return rout;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Checks if the river is clicked and makes sure that the right 
      * cards gets drawn back from the drawRiver() method
      */
@@ -316,32 +344,22 @@ implements MouseListener
         //Basically check where the person clicked and replace that card
         if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
             clickedCard = 0;
-            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(0));
-            //gameBoard.river.add(0, (TrainCarCard) trainDeck.drawCard());
             return true;
         }
         else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418) {
             clickedCard = 1;
-            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(1));
-            //gameBoard.river.add(1, (TrainCarCard) trainDeck.drawCard());
             return true;
         }
         else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418) {
             clickedCard = 2;
-            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(2));
-            //gameBoard.river.add(2, (TrainCarCard) trainDeck.drawCard());
             return true;
         }
         else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418) {
             clickedCard = 3;
-            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(3));
-            //gameBoard.river.add(3, (TrainCarCard) trainDeck.drawCard());
             return true;
         }
         else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418) {
             clickedCard = 4;
-            //playerList[currPlayer].trainCards.add(gameBoard.river.remove(4));
-            //gameBoard.river.add(4, (TrainCarCard) trainDeck.drawCard());
             return true;
         }
         return false;
@@ -420,6 +438,10 @@ implements MouseListener
                 lookAtTen = 0;
             }
         }
+        g.setColor(new Color(102, 0, 0));
+        g.setFont(new Font("TimesRoman", Font.BOLD, 25));
+        g.drawString("Player: " +playerList[currPlayer].name, 685, 240 );
+
         g.setColor(Color.WHITE);
         g.setFont(new Font("TimesRoman", Font.BOLD, 12));
         g.drawString("Trains: " +playerList[currPlayer].cars, 1035, 775 );
@@ -428,8 +450,11 @@ implements MouseListener
         g.drawString("Your Dest Cards", 928, 775);
         g.drawImage(backDestCard, 930, 780, this);
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g.drawString("Player: " +playerList[currPlayer].name, 700, 820 );
+        g.setFont(new Font("TimesRoman", Font.BOLD, 25));
+        g.drawString("TRAIN CARDS", 809, 279 );
+
+        g.setFont(new Font("TimesRoman", Font.BOLD, 25));
+        g.drawString("YOUR HAND", 827, 465 );
     }
 
     /**
@@ -451,7 +476,73 @@ implements MouseListener
         g.fillPolygon(new int[]{311, 316, 244, 239}, new int[]{156, 164, 207, 198}, 4);
         g.fillPolygon(new int[]{453, 535, 533, 451}, new int[]{217, 228, 237, 226}, 4);
         g.fillPolygon(new int[]{451, 533, 532, 450}, new int[]{228, 239, 249, 236}, 4);
-
+        g.fillPolygon(new int[]{113,120,157,149}, new int[]{369,365,468,471}, 4);
+        g.fillPolygon(new int[]{101,111,146,139}, new int[]{371,369,471,474}, 4);
+        g.fillPolygon(new int[]{256,264,216,208}, new int[]{391,395,464,457}, 4);
+        g.fillPolygon(new int[]{264,272,225,217}, new int[]{398,403,469,465}, 4);
+        g.fillPolygon(new int[]{167,192,194,169}, new int[]{473,466,477,483}, 4);
+        g.fillPolygon(new int[]{169,194,197,173}, new int[]{484,476,487,493}, 4);
+        g.fillPolygon(new int[]{227,232,255,247}, new int[]{484,476,493,500}, 4);
+        g.fillPolygon(new int[]{218,224,247,240}, new int[]{492,483,501,508}, 4);
+        g.fillPolygon(new int[]{144,153,145,134}, new int[]{503,508,563,560}, 4);
+        g.fillPolygon(new int[]{154,165,155,146}, new int[]{509,511,565,562}, 4);
+        g.fillPolygon(new int[]{197, 206,195,185}, new int[]{497,497,603,602}, 4);
+        g.fillPolygon(new int[]{206,215,205,196}, new int[]{494,497,604,603}, 4);
+        g.fillPolygon(new int[]{247,257,249,236,220,211,226,239}, new int[]{528,532,558,583,608,602,580,554}, 8);
+        g.fillPolygon(new int[]{273,379,382,275}, new int[]{498,476,486,509}, 4);
+        g.fillPolygon(new int[]{274,383,384,278}, new int[]{508,486,496,518}, 4);
+        g.fillPolygon(new int[]{354,362,386,376}, new int[]{357,356,461,465}, 4);
+        g.fillPolygon(new int[]{364,374,399,388}, new int[]{357,355,460,463}, 4);
+        g.fillPolygon(new int[]{491,498,410,403}, new int[]{356,362,470,462}, 4);
+        g.fillPolygon(new int[]{499,507,419,413}, new int[]{364,370,477,470}, 4);
+        g.fillPolygon(new int[]{510,518,535,550,561,565,565,565,552,555,550,549,540,526}, new int[]{366,361,384,410,436,464,493,521,520,494,440,439,412,390}, 14);
+        g.fillPolygon(new int[]{521,531,547,561,571,577,576,576,566,566,565,561,551,538}, new int[]{364,359,382,406,432,463,488,518,516,490,463,435,409,386}, 14);
+        g.fillPolygon(new int[]{393,403,414,404}, new int[]{493,490,511,517}, 4);
+        g.fillPolygon(new int[]{404,414,424,415}, new int[]{491,486,509,513}, 4);
+        g.fillPolygon(new int[]{278,283,339,333}, new int[]{532,524,582,589}, 4);
+        g.fillPolygon(new int[]{267,279,332,324}, new int[]{537,531,590,596}, 4);
+        g.fillPolygon(new int[]{152,157,176,168}, new int[]{598,592,612,617}, 4);
+        g.fillPolygon(new int[]{159,165,184,177}, new int[]{592,586,604,611}, 4);
+        g.fillPolygon(new int[]{413,420,409,399}, new int[]{538,539,620,618}, 4);
+        g.fillPolygon(new int[]{420,432,420,410}, new int[]{539, 539,621,620}, 4);
+        g.fillPolygon(new int[]{549,560,529,519}, new int[]{555,560,637,630}, 4);
+        g.fillPolygon(new int[]{561,570,539,529}, new int[]{559,564,642,635}, 4);
+        g.fillPolygon(new int[]{422,426,508,504}, new int[]{631,622,641,651}, 4);
+        g.fillPolygon(new int[]{420,422,504,502}, new int[]{641,632,651,662}, 4);
+        g.fillPolygon(new int[]{437,438,549,548}, new int[]{537,527,538,550}, 4);
+        g.fillPolygon(new int[]{438,440,553,551}, new int[]{528,515,527,539}, 4);
+        g.fillPolygon(new int[]{294,287,329,337}, new int[]{649,641,604,610}, 4);
+        g.fillPolygon(new int[]{303,295,335,343}, new int[]{656,648,611,618}, 4);
+        g.fillPolygon(new int[]{209,216,269,265}, new int[]{638,628,649,658}, 4);
+        g.fillPolygon(new int[]{213,219,272,269}, new int[]{629,618,638,648}, 4);
+        g.fillPolygon(new int[]{285,295,336,328}, new int[]{676,668,703,711}, 4);
+        g.fillPolygon(new int[]{293,301,342,335}, new int[]{669,659,695,704}, 4);
+        g.fillPolygon(new int[]{357,363,385,379}, new int[]{616,609,623,632}, 4);
+        g.fillPolygon(new int[]{364,369,392,386}, new int[]{610,597,615,623}, 4);
+        g.fillPolygon(new int[]{511,520,518,509}, new int[]{672,673,729,727}, 4);
+        g.fillPolygon(new int[]{522,532,532,519}, new int[]{673,672,729,728}, 4);
+        g.fillPolygon(new int[]{417, 427,439,457,477,500,495,472,448,428}, new int[]{654,648,674,695,712,725,735,720,702,678}, 10);
+        g.fillPolygon(new int[]{408,417,430,447,468,492,486,462,438,420}, new int[]{662,658,682,704,720,736,744,730,710,687}, 10);
+        g.fillPolygon(new int[]{128,136,113,103}, new int[]{593,596,758,755}, 4);
+        g.fillPolygon(new int[]{138,148,125,114}, new int[]{596,597,761,759}, 4);
+        g.fillPolygon(new int[]{190,200,266,256}, new int[]{648,644,765,768}, 4);
+        g.fillPolygon(new int[]{201,210,275,265}, new int[]{645,640,760,763}, 4);
+        g.fillPolygon(new int[]{523,532,536,527}, new int[]{761,761,815,815}, 4);
+        g.fillPolygon(new int[]{511,521,525,515}, new int[]{761,761,815,815}, 4);
+        g.fillPolygon(new int[]{127,130,156,184,211,239,265,270,242,211,183,154}, new int[]{781,772,782,790,790,788,779,788,796,800,799,792}, 12);
+        g.fillPolygon(new int[]{128,130,157,184,211,241,266,268,240,210,182,153}, new int[]{792,785,795,800,802,798,790,799,807,810,809,803}, 12);
+        g.fillPolygon(new int[]{293,294,345,343}, new int[]{797,789,804,812}, 4);
+        g.fillPolygon(new int[]{294,297,349,345}, new int[]{786,779,793,802}, 4);
+        g.fillPolygon(new int[]{296,289,325,332}, new int[]{766,760,721,727}, 4);
+        g.fillPolygon(new int[]{304,297,332,340}, new int[]{773,768,729,735}, 4);
+        g.fillPolygon(new int[]{351,356,427,421}, new int[]{727,718,759,767}, 4);
+        g.fillPolygon(new int[]{356,362,432,426}, new int[]{718,709,749,758}, 4);
+        g.fillPolygon(new int[]{376,373,424,428}, new int[]{807,798,781,789}, 4);
+        g.fillPolygon(new int[]{374,369,421,424}, new int[]{797,789,771,781}, 4);
+        g.fillPolygon(new int[]{456,452,504,508}, new int[]{776,768,749,758}, 4);
+        g.fillPolygon(new int[]{451,450,500,503}, new int[]{766,755,739,748}, 4);
+        g.fillPolygon(new int[]{453,460,480,504,501,475}, new int[]{789,782,798,811,820,805}, 6);
+        g.fillPolygon(new int[]{373,376,428,456,457,511,513,455,428,373}, new int[]{820,809,825,828,830,829,837,837,834,820}, 10);
     }
 
     /**
@@ -508,12 +599,42 @@ implements MouseListener
         //HAVE TO DRAW THE 5 TRAIN CARDS FOR ALL PLAYERS
         //This is not the method called to see if the new train
         //card is added when selected from the river
+        int rainbowCounter = 0;
         try {
             BufferedImage cardImage1 = ImageIO.read(gameBoard.river.get(0).getImagePath().toFile());
+            if(gameBoard.river.get(0).getColor().equals("rainbow")){
+                rainbowCounter ++;
+            }
             BufferedImage cardImage2 = ImageIO.read(gameBoard.river.get(1).getImagePath().toFile());
+            if(gameBoard.river.get(1).getColor().equals("rainbow")){
+                rainbowCounter ++;
+            }
             BufferedImage cardImage3 = ImageIO.read(gameBoard.river.get(2).getImagePath().toFile());
+            if(gameBoard.river.get(2).getColor().equals("rainbow")){
+                rainbowCounter ++;
+            }
             BufferedImage cardImage4 = ImageIO.read(gameBoard.river.get(3).getImagePath().toFile());
+            if(gameBoard.river.get(3).getColor().equals("rainbow")){
+                rainbowCounter ++;
+            }
             BufferedImage cardImage5 = ImageIO.read(gameBoard.river.get(4).getImagePath().toFile());
+            if(gameBoard.river.get(4).getColor().equals("rainbow")){
+                rainbowCounter ++;
+            }
+            //if the number of rainbow cards within the river equals or
+            //exceeds 3, the river is placed back into the deck, populated with
+            //new cards and the method is recurivly called to draw the new river
+            if(rainbowCounter >= 3){
+                for(int i = 0; i < gameBoard.river.size(); i ++){
+                    Card c = gameBoard.river.remove(i);
+                    trainDeck.addCard(c);
+                }
+                for(int i = 0; i <5; i ++){
+                    TrainCarCard cardToAdd = (TrainCarCard) trainDeck.drawCard();
+                    gameBoard.river.add(cardToAdd);
+                }
+                drawRiver(g);
+            }        
             Image one = cardImage1;
             Image two = cardImage2;
             Image three = cardImage3;
@@ -525,6 +646,7 @@ implements MouseListener
             g.drawImage(four, 940, 295, this);
             g.drawImage(five, 1025, 295, this);
         } catch (Exception e) { showStatus("EXCEPTION THROWN IN DRAWRIVER"); showStatus(e.toString()); }
+
     }
 
     /**
@@ -612,10 +734,6 @@ implements MouseListener
         }
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
-
-        //         while (true) {
-        //             playerTurn(playerList[currPlayer]);
-        //         }
     }
 
     //Used to test if there are any cards that will throw an error
@@ -646,8 +764,6 @@ implements MouseListener
     private void playerTurn(Player currentPlayer) {
         showStatus(currPlayer + "");
 
-        boolean purchaseRoute = false;
-
         // need to check somewhere if the decks are empty
         if (trainDeckDraw) {
             currentPlayer.drawTrainCarCard(trainDeck);
@@ -657,6 +773,7 @@ implements MouseListener
                 currPlayer = currPlayer % numPlayers;
             }
             trainDeckDraw = false;
+            trainRiverDraw = false;
         }
         if (trainRiverDraw) { // maybe checkboxes instead?
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
@@ -669,21 +786,19 @@ implements MouseListener
                         currPlayer = currPlayer % numPlayers;
                     }
                     trainRiverDraw = false;
+                    trainDeckDraw = false;
                 }
             }
             else {
                 currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
-                gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                gameBoard.river.add(clickedCard, (TrainCarCard) trainDeck.drawCard());
                 trainDrawCount++;
                 if(trainDrawCount%2 == 0) {
                     currPlayer++;
                     currPlayer = currPlayer % numPlayers;
                 }
                 trainRiverDraw = false;
-                //repaint(); //??
-                //clickedCard = 1; // clicks new card THEY CAN'T CLICK RAINBOWS NOW DO THAT IN GUI
-                //currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
-                //gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());   
+                trainDeckDraw = false;
             }
         }
         else if (destinationDeckDraw) {
@@ -699,8 +814,8 @@ implements MouseListener
             // somehow the GUI will get two cities
             //start temp
             City city1, city2;
-            city1 = CityList.getCity("Leeuwarden");
-            city2 = CityList.getCity("Sneek");
+            city1 = CityList.getCity(cityNameRouteOne);
+            city2 = CityList.getCity(cityNameRouteTwo);
             //end temp
             if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
@@ -732,9 +847,6 @@ implements MouseListener
                 }
             }
         }
-
-        //currPlayer++;
-        //currPlayer = currPlayer % numPlayers;
     }
 
     /**
@@ -743,16 +855,13 @@ implements MouseListener
     private void drawDestinationCardsInGame() {
         try {
             Graphics g = getGraphics();
-            // no loop
-            //for (int i=0; i<numPlayers; i++) {
 
             DestinationCard[] draw = new DestinationCard[4];
             for (int c=0; c<4; c++)
-                draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
+                draw[c] = (DestinationCard)destinationDeck.drawCard();
             // display the cards in draw
             for (int k = 0; k < draw.length; k++) {
                 // display the card
-                //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
                 BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
                 //Scales the destination cards
                 Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
@@ -814,9 +923,5 @@ implements MouseListener
         }
         catch (IOException e) {}
     }
-
-    // draw train cards from deck, or from river
-    // draw destination cards
-    // OR you can buy a route
 }
 
