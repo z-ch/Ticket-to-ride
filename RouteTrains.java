@@ -260,7 +260,7 @@ public class RouteTrains
         routeColors.add(Route.RouteColor.BLUE);
         routeCars.add(new Polygon(new int[]{273,379,382,275}, new int[]{498,476,486,509}, 4));
         citiesLinked.add(new String[] { "Utrecht", "Arnhem" });
-        routeColors.add(Route.RouteColor.WHITE)
+        routeColors.add(Route.RouteColor.WHITE);
         routeCars.add(new Polygon(new int[]{247,257,249,236,220,211,226,239}, new int[]{528,532,558,583,608,602,580,554}, 8));
         citiesLinked.add(new String[] { "Utrecht", "Rotterdam" });
         routeColors.add(Route.RouteColor.GRAY);
@@ -301,9 +301,6 @@ public class RouteTrains
         citiesLinked.add(new String[] { "DenHelder", "Haarlem" });
         routeColors.add(Route.RouteColor.BLUE);
     }
-    
-}
-
     
     /**
      * Gets the cities that were clicked on
