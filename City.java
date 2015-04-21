@@ -28,4 +28,9 @@ public class City
     public int compareTo(City c) {
         return this.getName().compareTo(c.getName());
     }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
 }
