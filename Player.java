@@ -8,15 +8,14 @@ import java.util.ArrayList;
 public class Player
 {
     public /*final*/ String color, name;
-    protected int cars, tokens;
+    private boolean bonus;
+    protected int cars, tokens, points;
     protected ArrayList<DestinationCard> destCards;
     protected ArrayList<TrainCarCard> trainCards;
     protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
-    
-
 
     public Player() {
-        cars = 40; tokens = 30; // fix this so name and color can be final
+        cars = 40; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
     /**
@@ -84,17 +83,30 @@ public class Player
     }
     
     public void addRoute(String cityOne, String cityTwo) {
-        if (hasRoute(cityOne,cityTwo) && !hasRoute(cityOne,cityTwo)) {
+        if (!hasRoute(cityOne,cityTwo)) {
             Route rte = new Route(cityOne, cityTwo);
             int cost = rte.getWeight();
-            if (tokens >= cost) 
+            if (tokens >= cost) {
+                cars -= rte.getLength();
                 tokens -= cost;
-            else ;// SUBTRACT 5 POINTS
+            }
+            else {
+                points -= 5;// SUBTRACT 5 POINTS
+                bonus = false;
+            }
             capturedRoutes.add(new Route(cityOne, cityTwo));
         }
     }
-    
+
     public void addRoute(City cityOne, City cityTwo) {
         addRoute(cityOne.getName(), cityTwo.getName());
+    }
+
+    public void addTokens(int t) {
+        tokens += t;
+    }
+
+    public boolean canGetBonus() {
+        return bonus;
     }
 }
