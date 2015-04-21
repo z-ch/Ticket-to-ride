@@ -12,13 +12,13 @@ public class Player
     protected ArrayList<DestinationCard> destCards;
     protected ArrayList<TrainCarCard> trainCards;
     protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
-    
 
 
     public Player() {
         cars = 40; tokens = 30; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
+
     /**
      * Constructor for objects of type Player
      * @param n name of Player
@@ -28,7 +28,7 @@ public class Player
         this();
         color = c; name = n;
     }
-    
+
     /**
      * Sets the name of the player
      * @param n Name of player
@@ -36,7 +36,7 @@ public class Player
     public void setN(String n) {
         name = n;
     }
-    
+
     /**
      * Sets the color of the player
      * @param c Color of player
@@ -56,7 +56,7 @@ public class Player
     }
 
     public void addDestinationCard(Card c) {
-        
+
         destCards.add((DestinationCard) c);
     }
 
@@ -74,26 +74,24 @@ public class Player
         // maybe add a instanceof check?
         trainCards.add((TrainCarCard) c);
     }
-    
+
     public boolean hasRoute(String cityOne, String cityTwo) {
         return this.capturedRoutes.contains(new Route(cityOne, cityTwo));
     }
-    
+
     public boolean hasRoute(City cityOne, City cityTwo) {
         return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
-    
+
     public void addRoute(String cityOne, String cityTwo) {
-        if (hasRoute(cityOne,cityTwo) && !hasRoute(cityOne,cityTwo)) {
-            Route rte = new Route(cityOne, cityTwo);
-            int cost = rte.getWeight();
-            if (tokens >= cost) 
-                tokens -= cost;
-            else ;// SUBTRACT 5 POINTS
-            capturedRoutes.add(new Route(cityOne, cityTwo));
-        }
+        Route rte = new Route(cityOne, cityTwo);
+        int cost = rte.getWeight();
+        if (tokens >= cost) 
+            tokens -= cost;
+        else ;// SUBTRACT 5 POINTS
+        capturedRoutes.add(new Route(cityOne, cityTwo));
     }
-    
+
     public void addRoute(City cityOne, City cityTwo) {
         addRoute(cityOne.getName(), cityTwo.getName());
     }
