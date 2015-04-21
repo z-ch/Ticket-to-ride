@@ -352,7 +352,7 @@ implements MouseListener
     public Polygon getRoutPoly() {
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
-                Polygon rout = routeTrains.getRoutPolygon(i);
+                Polygon rout = routeTrains.getRoutePolygon(i);
                 JOptionPane.showMessageDialog(this, "getRoutPoly()");
                 return rout;
             }
