@@ -431,7 +431,7 @@ implements MouseListener
         String str = "";
         for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
              str += playerList[currPlayer].getDestCard(i).toString() + "\n";
-        JOptionPane.showConfirmDialog(this, str);
+        JOptionPane.showMessageDialog(this, str);
     }
 
     /**
