@@ -51,10 +51,10 @@ public class RouteTrains
         citiesLinked.add(new String[] { "Groningen", "Leeuwarden" });
         routeColors.add(Route.RouteColor.ORANGE);
         routeCars.add(new Polygon(new int[]{453, 535, 533, 451}, new int[]{217, 228, 237, 226}, 4));
-        citiesLinked.add(new String[] { "Emden", "Lingen" });
+        citiesLinked.add(new String[] { "Emmen", "Lingen" });
         routeColors.add(Route.RouteColor.YELLOW);
         routeCars.add(new Polygon(new int[]{451, 533, 532, 450}, new int[]{228, 239, 249, 236}, 4));
-        citiesLinked.add(new String[] { "Emden", "Lingen" });
+        citiesLinked.add(new String[] { "Emmen", "Lingen" });
         routeColors.add(Route.RouteColor.GREEN);
         routeCars.add(new Polygon(new int[]{343, 364, 355, 333}, new int[]{160, 321, 322, 161}, 4));
         citiesLinked.add(new String[] { "Groningen ", "Zwolle" });
@@ -298,7 +298,19 @@ public class RouteTrains
         routeColors.add(Route.RouteColor.BLUE);
         routeCars.add(new Polygon(new int[]{113,120,157,149}, new int[]{369,365,468,471}, 4));        
         citiesLinked.add(new String[] { "DenHelder", "Haarlem" });
-        routeColors.add(Route.RouteColor.ORANGE);        
+        routeColors.add(Route.RouteColor.ORANGE);     
+        routeCars.add(new Polygon(new int[]{291,286,335,340}, new int[]{369,361,339,346}, 4));  
+        citiesLinked.add(new String[] { "Lelystad", "Zwolle" });
+        routeColors.add(Route.RouteColor.BLACK);        
+        routeCars.add(new Polygon(new int[]{295,292,340,344}, new int[]{380,372,348,357}, 4));  
+        citiesLinked.add(new String[] { "Lelystad", "Zwolle" });
+        routeColors.add(Route.RouteColor.RED);
+        routeCars.add(new Polygon(new int[]{379,379,490,490}, new int[]{347,337,341,351}, 4));  
+        citiesLinked.add(new String[] { "Zwolle", "Enschede" });
+        routeColors.add(Route.RouteColor.YELLOW);
+        routeCars.add(new Polygon(new int[]{380,379,490,491}, new int[]{336,326,330,340}, 4));  
+        citiesLinked.add(new String[] { "Zwolle", "Enschede" });
+        routeColors.add(Route.RouteColor.BLUE);
     }
 
     /**
