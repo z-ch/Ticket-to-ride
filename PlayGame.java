@@ -17,7 +17,7 @@ public class PlayGame extends JApplet
 implements MouseListener
 {
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
-    public Graph graph;
+    public Graph graph = new Graph();
     public RouteTrains routeTrains = new RouteTrains();
     protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
     protected BufferedImage backgroundImage2 = null;
@@ -217,6 +217,7 @@ implements MouseListener
             //actual board were being drawn correctly
             now = false;
             drawRiver(g);     //Draws the 5 train cards needed
+            
             //whatCardsIHave(g);
         }
         //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
@@ -233,14 +234,17 @@ implements MouseListener
             }
 
             //Check if the place clicked was on-top of a route
-            if(routeClicked() != null) {
+            if(routeClicked() != null && (trainDrawCount%2 == 0)) {
                 String[] cityRouteClickedOn = routeClicked();
                 cityNameRouteOne = cityRouteClickedOn[0];
                 cityNameRouteTwo = cityRouteClickedOn[1];
                 purchaseRoute = true;
-                JOptionPane.showMessageDialog(this, "Ok past routPurchase = true");
+                JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +cityNameRouteTwo+ " ( Color: " +getColorRoute() + " ) ");
                 playerTurn(playerList[currPlayer]);
-                JOptionPane.showMessageDialog(this, "Ok past playerTurn calling");
+                g.drawImage(img2, 0, 0, this);
+                showCards(g);
+                drawPlayerNameAndCars(g); 
+                drawRiver(g);     //Draws the 5 train cards needed
                 drawTrains(g);
             }
 
@@ -249,7 +253,8 @@ implements MouseListener
                 //showDestinationCards();   HAVE TO IMPLEMENT
                 g.setColor(Color.black);
                 g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));   
+                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+                showDestinationCards();
             }
 
             if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
@@ -331,6 +336,19 @@ implements MouseListener
     /// end pasted stuff
 
     /**
+     * Gets the route color
+     * @return the Color of the Route
+     */
+    public Route.RouteColor getColorRoute() {
+        for(int i = 0; i < routeTrains.routeCars.size(); i++) {
+            if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {               
+                return routeTrains.routeColors.get(i);
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Checks if the routes on the map were clicked
      * @return the cities of the route clicked, otherwise returns null
      */
@@ -338,7 +356,7 @@ implements MouseListener
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
                 String[] rout = routeTrains.citiesLinked(i);
-                JOptionPane.showMessageDialog(this, rout[0]+ " " +rout[1]);                
+                //JOptionPane.showMessageDialog(this, rout[0]+ " " +rout[1]);                
                 return rout;
             }
         }
@@ -353,7 +371,7 @@ implements MouseListener
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
                 Polygon rout = routeTrains.getRoutePolygon(i);
-                JOptionPane.showMessageDialog(this, "getRoutPoly()");
+                //JOptionPane.showMessageDialog(this, "getRoutPoly()");
                 return rout;
             }
         }
@@ -410,7 +428,10 @@ implements MouseListener
      * Shows the destination cards the current player has
      */
     private void showDestinationCards() {
-        //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
+        String str = "";
+        for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
+             str += playerList[currPlayer].getDestCard(i).toString() + "\n";
+        JOptionPane.showConfirmDialog(this, str);
     }
 
     /**
@@ -496,6 +517,17 @@ implements MouseListener
 
         g.setFont(new Font("TimesRoman", Font.BOLD, 25));
         g.drawString("YOUR HAND", 827, 465 );
+        
+        g.drawString("" + playerList[currPlayer].getTokens(), 858, 812);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 11));
+        g.drawString("TOKENS", 850, 775 );
+        
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 10));
+        g.drawString("Scoreboard: ", 700, 775 );
+        for(int i = 0; i < playerList.length; i++) {
+            g.drawString("" + playerList[i].name + " " +playerList[i].getPoints(), 700, 775 + (i+1)*11);
+        }
     }
 
     /**
@@ -503,7 +535,7 @@ implements MouseListener
      * @param g The graphics object for the applet
      */
     public void drawTrains(Graphics g) {
-        JOptionPane.showMessageDialog(this, "drawTrains()");
+        //JOptionPane.showMessageDialog(this, "drawTrains()");
         for(int i = 0; i < boughtRoutesPoly.size(); i++) {
             g.setColor(boughtRoutesPolyColor.get(i));
             g.fillPolygon(boughtRoutesPoly.get(i));
@@ -782,15 +814,19 @@ implements MouseListener
             City city1, city2;
             city1 = CityList.getCity(cityNameRouteOne);
             city2 = CityList.getCity(cityNameRouteTwo);
-            JOptionPane.showMessageDialog(this, "Bitch Im Here");
             //end temp
-            Route routeToBuy = new Route(city1.toString(),city2.toString());
-            if (graph.hasEdge(city1.getName(),city2.getName())) { // also make sure the edge isn't taken!
+            Route routeToBuy = new Route(cityNameRouteOne,cityNameRouteTwo);
+            //showStatus( " " + (new City("Amsterdam")).equals(new City("Amsterdam")));
+            
+           if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
+               && currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
                 Player otherOwner = null;
                 for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) {
+                        showStatus("playerHasRoute");
+                        JOptionPane.showMessageDialog(this, "");
                         ++ownerCount;
                         otherOwner = pr;
                     }
@@ -798,11 +834,10 @@ implements MouseListener
                     if (ownerCount > 0) {
                         // don't let them buy the route
                         JOptionPane.showMessageDialog(this, "Somebody already owns that route!");
-
                     }
                     else {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2);
+                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -812,16 +847,16 @@ implements MouseListener
                 else {
                     if (ownerCount == 0) {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2);
+                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
                         currPlayer = currPlayer % numPlayers;
                     }
-                    if (ownerCount == 1) {
+                    else if (ownerCount == 1) {
                         // buy route from owner
                         otherOwner.addTokens(routeToBuy.getWeight());
-                        currentPlayer.addRoute(city1,city2);
+                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;

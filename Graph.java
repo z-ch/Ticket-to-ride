@@ -10,7 +10,8 @@ import java.util.Collections;
  */
 public class Graph
 {
-    protected Hashtable<String, LinkedList<City>> adjMatrix = new Hashtable<>();
+    // RE ADD PROTECTED
+    /*protected*/ Hashtable<String, LinkedList<City>> adjMatrix = new Hashtable<>();
     public final int numCities;
 
     /**
@@ -24,7 +25,6 @@ public class Graph
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
                 new LinkedList<City>());
         }
-        adjMatrix.put("CityName", new LinkedList<City>());
         addEdge("Groningen", "Emden"); addEdge("Groningen", "Emden");
         addEdge("Groningen", "Emmen"); addEdge("Groningen", "Emmen");
         addEdge("Groningen", "Zwolle"); addEdge("Groningen", "Zwolle");
@@ -106,7 +106,8 @@ public class Graph
      * @return true if there is an edge, else false
      */
     public boolean hasEdge(String cityOne, String cityTwo) {
-        return adjMatrix.get(cityOne).contains(CityList.getCity(cityTwo));
+        //return adjMatrix.get(cityOne).contains(CityList.getCity(cityTwo));
+        return adjMatrix.get(cityOne).contains(new City(cityTwo));
     }
 
     public boolean isDouble(String cityOne, String cityTwo) {

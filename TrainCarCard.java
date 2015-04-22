@@ -37,4 +37,9 @@ public class TrainCarCard extends Card
     public String getColor() {
         return color;
     }
+    
+    @Override
+    public boolean equals(Object tcc) {
+        return tcc instanceof TrainCarCard && color.equals(((TrainCarCard) tcc).color);
+    }
 }
