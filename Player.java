@@ -80,16 +80,31 @@ public class Player
     }
 
     public boolean hasRoute(City cityOne, City cityTwo) {
-        return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
+        return this.hasRoute(cityOne.getName(), cityTwo.getName());
+        //return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
 
-    public void addRoute(String cityOne, String cityTwo) {
+    public void addRoute(String cityOne, String cityTwo, String rcolor, Deck d) {
         //if (!hasRoute(cityOne,cityTwo)) {
         Route rte = new Route(cityOne, cityTwo);
-        int cost = rte.getWeight();
-        if (tokens >= cost) {
-            cars -= rte.getLength();
-            tokens -= cost;
+        cars -= rte.getLength();
+        int cardsToGetRidOf = rte.getLength();
+        for (int i=0; i<trainCards.size() && cardsToGetRidOf > 0; i++)
+            if (trainCards.get(i).getColor().equals(rcolor)) {
+                d.addCard(trainCards.remove(i--));
+                --cardsToGetRidOf;
+        }
+        
+        if (cardsToGetRidOf > 0) {
+            for (int i=0; i<trainCards.size() && cardsToGetRidOf > 0; i++) {
+                if (trainCards.get(i).getColor().equals("rainbow")) {
+                    d.addCard(trainCards.remove(i--));
+                    --cardsToGetRidOf;
+                }
+            }
+        }
+        if (tokens >= rte.getWeight()) {
+            tokens -= rte.getWeight();
         }
         else {
             points -= 5;// SUBTRACT 5 POINTS
@@ -99,15 +114,43 @@ public class Player
         //}
     }
 
-    public void addRoute(City cityOne, City cityTwo) {
-        addRoute(cityOne.getName(), cityTwo.getName());
+    public void addRoute(City cityOne, City cityTwo, String rcolor, Deck d) {
+        addRoute(cityOne.getName(), cityTwo.getName(), rcolor, d);
     }
 
     public void addTokens(int t) {
         tokens += t;
     }
 
+    public int getCars() {
+        return cars;
+    }
+
+    public int getTrainCarsCards(String trainCarColor) {
+        int total = 0;
+        for (TrainCarCard tcc : trainCards)
+            if (trainCarColor.equals(tcc.getColor()) || tcc.getColor().equals("rainbow"))
+                ++total;
+        return total;
+    }
+
     public boolean canGetBonus() {
         return bonus;
+    }
+    
+    public int getTokens() {
+        return tokens;
+    }
+    
+    public int getPoints() {
+        return points;
+    }
+    
+    public DestinationCard getDestCard(int i) {
+        return destCards.get(i);
+    }
+    
+    public int getDestCardSize() {
+        return destCards.size();
     }
 }

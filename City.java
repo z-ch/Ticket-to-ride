@@ -8,7 +8,7 @@
 public class City
 {
     protected String name;
-    
+
     /**
      * Constructor for objects of class City
      * @param n name to set
@@ -16,7 +16,7 @@ public class City
     public City(String n) {
         name = n;
     }
-    
+
     /**
      * returns this City's name
      * @return this.name
@@ -24,13 +24,20 @@ public class City
     public String getName() {
         return name;
     }
-    
-    public int compareTo(City c) {
-        return this.getName().compareTo(c.getName());
-    }
-    
+
+    //     @Override
+    //     public int compareTo(Object c) {
+    //         if (!(c instanceof City) return 0;
+    //         return this.getName().compareTo((City c).getName());
+    //     }
+
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object c) {
+        return c instanceof City && this.name.equals(((City) c).name);
     }
 }
