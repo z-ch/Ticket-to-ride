@@ -9,10 +9,10 @@ import java.util.Collections;
 public class Route
 {
     public enum RouteColor 
-    {
-        YELLOW, ORANGE, GREEN, BLUE, RED, 
-        PINK, GRAY, WHITE, BLACK, PURPLE
-    }
+        {
+            YELLOW, ORANGE, GREEN, BLUE, RED, 
+            PINK, GRAY, WHITE, BLACK, PURPLE
+        }
     // cities is always in alphabetical order (String order)
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<RouteColor> colors = new ArrayList<RouteColor>();
@@ -29,17 +29,17 @@ public class Route
         String str = cities.get(0);
         if (str.equals("'sGravenhage")) {
             switch (cities.get(1)) {
-                case "Rotterdam": 
+            case "Rotterdam": 
                 weight = 1; length=1;
                 colors.add(RouteColor.ORANGE); 
                 colors.add(RouteColor.GREEN);
                 break;
-                case "Haarlem": 
+            case "Haarlem": 
                 weight = 2; length = 2;
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.PINK);
                 break;
-                case "Middelburg": 
+            case "Middelburg": 
                 weight = 4; length = 6;
                 colors.add(RouteColor.RED);
                 colors.add(RouteColor.YELLOW);
@@ -48,17 +48,17 @@ public class Route
         }
         else if (str.equals("'sHertogenbosch")) {
             switch (cities.get(1)) {
-                case "Breda": 
+            case "Breda": 
                 weight = 2; length = 2;
                 colors.add(RouteColor.ORANGE);
                 colors.add(RouteColor.WHITE);
                 break;
-                case "Eindhoven": 
+            case "Eindhoven": 
                 weight = 2; length = 1;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLUE);
                 break;
-                case "Utrecht":
+            case "Utrecht":
                 weight = 4; length = 3; 
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.RED);
@@ -68,17 +68,17 @@ public class Route
         else if (str.equals("Aarschot")) {
             weight = 1; // all have length 1
             switch (cities.get(1)) {
-                case "Antwerpen":
+            case "Antwerpen":
                 length = 2;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.YELLOW);
                 break;
-                case "Hasselt":
+            case "Hasselt":
                 length = 2;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.PINK);
                 break;
-                case "Liege":
+            case "Liege":
                 length = 5;
                 colors.add(RouteColor.RED);
                 break;
@@ -86,22 +86,22 @@ public class Route
         }        
         else if (str.equals("Amsterdam")) {
             switch (cities.get(1)) {
-                case "Utrecht":
+            case "Utrecht":
                 length = 1; weight = 1;
                 colors.add(RouteColor.ORANGE);
                 colors.add(RouteColor.PINK);
                 break;
-                case "Haarlem":
+            case "Haarlem":
                 length = 1; weight = 1;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLACK);
                 break;
-                case "Rotterdam":
+            case "Rotterdam":
                 length = 4; weight = 2;
                 colors.add(RouteColor.RED);
                 colors.add(RouteColor.BLUE);
                 break;
-                case "Lelystad":
+            case "Lelystad":
                 length = 3; weight = 3;
                 colors.add(RouteColor.YELLOW);
                 colors.add(RouteColor.WHITE);
@@ -110,17 +110,17 @@ public class Route
         }
         else if (str.equals("Antwerpen")) {
             switch (cities.get(1)) {
-                case "Turnhout":
+            case "Turnhout":
                 length = 2; weight = 2;
                 colors.add(RouteColor.RED);
                 colors.add(RouteColor.PINK);
                 break;
-                case "Middelburg":
+            case "Middelburg":
                 length = 5; weight = 3;
                 colors.add(RouteColor.ORANGE);
                 colors.add(RouteColor.GREEN);
                 break;
-                case "Rotterdam":
+            case "Rotterdam":
                 length = 5; weight = 4;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.WHITE);
@@ -129,22 +129,22 @@ public class Route
         }
         else if (str.equals("Arnhem")) {
             switch (cities.get(1)) {
-                case "Utrecht":
+            case "Utrecht":
                 length = 4; weight = 1;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.WHITE);
                 break;
-                case "Enschede":
+            case "Enschede":
                 length = 5; weight = 2;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLACK);
                 break;
-                case "Zwolle":
+            case "Zwolle":
                 length = 4; weight = 2;
                 colors.add(RouteColor.PINK);
                 colors.add(RouteColor.ORANGE);
                 break;
-                case "Nijmegen":
+            case "Nijmegen":
                 length = 1; weight = 3;
                 colors.add(RouteColor.YELLOW);
                 colors.add(RouteColor.RED);
@@ -153,12 +153,12 @@ public class Route
         }
         else if (str.equals("Breda")) {
             switch (cities.get(1)) {
-                case "Turnhout":
+            case "Turnhout":
                 length = 2; weight = 2;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.BLUE);
                 break;
-                case "Rotterdam":
+            case "Rotterdam":
                 length = 2; weight = 4;
                 colors.add(RouteColor.PINK);
                 colors.add(RouteColor.YELLOW);
@@ -167,17 +167,17 @@ public class Route
         }
         else if (str.equals("DenHelder")) {
             switch (cities.get(1)) {
-                case "Haarlem":
+            case "Haarlem":
                 length = 4; weight = 2;
                 colors.add(RouteColor.ORANGE);
                 colors.add(RouteColor.BLUE);
                 break;
-                case "Sneek":
+            case "Sneek":
                 length = 4; weight = 3;
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.RED);
                 break;
-                case "Waddeneilanden":
+            case "Waddeneilanden":
                 length = 5; weight = 4;
                 colors.add(RouteColor.PINK);
                 break;
@@ -185,17 +185,17 @@ public class Route
         }
         else if (str.equals("Duisburg")) {
             switch (cities.get(1)) {
-                case "Enschede":
+            case "Enschede":
                 length = 6; weight = 1;
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.ORANGE);
                 break;
-                case "Roermond":
+            case "Roermond":
                 length = 3; weight = 2;
                 colors.add(RouteColor.YELLOW);
                 colors.add(RouteColor.GREEN);
                 break;
-                case "Nijmegen":
+            case "Nijmegen":
                 length = 4; weight = 2;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.PINK);
@@ -204,17 +204,17 @@ public class Route
         }
         else if (str.equals("Eindhoven")) {
             switch (cities.get(1)) {
-                case "Maastricht":
+            case "Maastricht":
                 length = 4; weight = 2;
                 colors.add(RouteColor.PINK);
                 colors.add(RouteColor.YELLOW);
                 break;
-                case "Roermond":
+            case "Roermond":
                 length = 3; weight = 3;
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.RED);
                 break;
-                case "Nijmegen":
+            case "Nijmegen":
                 length = 3; weight = 3;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.ORANGE);
@@ -223,17 +223,17 @@ public class Route
         }
         else if (str.equals("Emden")) {
             switch (cities.get(1)) {
-                case "Lingen":
+            case "Lingen":
                 length = 6; weight = 1;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.GRAY);
                 break;
-                case "Groningen":
+            case "Groningen":
                 length = 3; weight = 3;
                 colors.add(RouteColor.GRAY);
                 colors.add(RouteColor.GRAY);
                 break;
-                case "Emmen":
+            case "Emmen":
                 length = 4; weight = 4;
                 colors.add(RouteColor.PINK);
                 break;
@@ -241,17 +241,17 @@ public class Route
         }
         else if (str.equals("Emmen")) {
             switch (cities.get(1)) {
-                case "Lingen":
+            case "Lingen":
                 length = 3; weight = 2;
                 colors.add(RouteColor.YELLOW);
                 colors.add(RouteColor.GREEN);
                 break;
-                case "Groningen":
+            case "Groningen":
                 length = 3; weight = 3;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.RED);
                 break;
-                case "Zwolle":
+            case "Zwolle":
                 length = 4; weight = 3;
                 colors.add(RouteColor.GRAY);
                 break;
@@ -259,12 +259,12 @@ public class Route
         }
         else if (str.equals("Enschede")) {
             switch (cities.get(1)) {
-                case "Zwolle":
+            case "Zwolle":
                 length = 4; weight = 1;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.YELLOW);
                 break;
-                case "Lingen":
+            case "Lingen":
                 length = 3; weight = 3;
                 colors.add(RouteColor.PINK);
                 colors.add(RouteColor.RED);
@@ -273,16 +273,16 @@ public class Route
         }
         else if (str.equals("Groningen")) {
             switch (cities.get(1)) {
-                case "Leeuwarden":
+            case "Leeuwarden":
                 length = 3; weight = 2;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.ORANGE);
                 break;
-                case "Waddeneilanden":
+            case "Waddeneilanden":
                 length = 6; weight = 4;
                 colors.add(RouteColor.YELLOW);
                 break;
-                case "Zwolle":
+            case "Zwolle":
                 length = 6; weight = 4;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.WHITE);
@@ -291,16 +291,16 @@ public class Route
         }
         else if (str.equals("Hasselt")) {
             switch (cities.get(1)) {
-                case "Liege":
+            case "Liege":
                 length = 2; weight = 1;
                 colors.add(RouteColor.GRAY);
                 break;
-                case "Maastricht":
+            case "Maastricht":
                 length = 2; weight = 2;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.RED);
                 break;
-                case "Turnhout":
+            case "Turnhout":
                 length = 3; weight = 3;
                 colors.add(RouteColor.YELLOW);
                 colors.add(RouteColor.ORANGE);
@@ -309,12 +309,12 @@ public class Route
         }
         else if (str.equals("Leeuwarden")) {
             switch (cities.get(1)) {
-                case "Sneek":
+            case "Sneek":
                 length = 1; weight = 1;
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.YELLOW);
                 break;
-                case "Waddeneilanden":
+            case "Waddeneilanden":
                 length = 3; weight = 3;
                 colors.add(RouteColor.GREEN);
                 break;
@@ -322,12 +322,12 @@ public class Route
         }
         else if (str.equals("Lelystad")) {
             switch (cities.get(1)) {
-                case "Sneek":
+            case "Sneek":
                 length = 4; weight = 3;
                 colors.add(RouteColor.GREEN);
                 colors.add(RouteColor.BLUE);
                 break;
-                case "Zwolle":
+            case "Zwolle":
                 length = 2; weight = 4;
                 colors.add(RouteColor.RED);
                 colors.add(RouteColor.BLACK);
@@ -336,7 +336,7 @@ public class Route
         }
         else if (str.equals("Liege")) {
             switch (cities.get(1)) {
-                case "Maastricht":
+            case "Maastricht":
                 length = 2; weight = 1;
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.WHITE);
@@ -345,7 +345,7 @@ public class Route
         }
         else if (str.equals("Maastricht")) {
             switch (cities.get(1)) {
-                case "Roermond":
+            case "Roermond":
                 length = 2; weight = 1;
                 colors.add(RouteColor.ORANGE);
                 colors.add(RouteColor.BLACK);
@@ -354,7 +354,7 @@ public class Route
         }
         else if (str.equals("Sneek")) {
             switch (cities.get(1)) {
-                case "Waddeneilanden":
+            case "Waddeneilanden":
                 length = 3; weight = 4;
                 colors.add(RouteColor.GRAY);
                 break;
@@ -367,15 +367,15 @@ public class Route
 
     public static String routeColorToString(RouteColor rc) {
         switch (rc) {
-            case YELLOW: return "yellow";
-            case ORANGE: return "orange";
-            case GREEN: return "green";
-            case BLUE: return "blue";
-            case RED: return "red";
-            case GRAY: return "gray";
-            case WHITE: return "white";
-            case BLACK: return "black";
-            case PURPLE:   return "purple";
+        case YELLOW: return "yellow";
+        case ORANGE: return "orange";
+        case GREEN: return "green";
+        case BLUE: return "blue";
+        case RED: return "red";
+        case GRAY: return "gray";
+        case WHITE: return "white";
+        case BLACK: return "black";
+        case PURPLE:   return "purple";
         }
         return "nosuchcolor";
     }

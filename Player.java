@@ -10,6 +10,7 @@ public class Player
 {
     public String color, name;
     private boolean bonus;
+    public boolean last = false;
     protected int cars, tokens, points;
     protected ArrayList<DestinationCard> destCards;
     protected ArrayList<TrainCarCard> trainCards;
@@ -64,8 +65,8 @@ public class Player
         destCards.add(c);
     }
 
-    public void addDestinationCard(Card c) {
-        destCards.add((DestinationCard) c);
+    public void addDestinationCard(DestinationCard c) {
+        destCards.add(c);
     }
 
     /**
