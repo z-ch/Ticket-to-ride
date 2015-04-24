@@ -207,7 +207,7 @@ implements MouseListener
     public void paint(Graphics g) {
         if (gameOver)
             return;
-        
+        int lastPlayer = currPlayer;
         //if (lastPaint)
             //endGame();
 
@@ -311,7 +311,7 @@ implements MouseListener
                 }
             }
         }
-        if (lastPaint) endGame();
+        if (lastPaint && lastPlayer != currPlayer) endGame();
 
     }
 
