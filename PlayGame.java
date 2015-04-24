@@ -52,6 +52,9 @@ implements MouseListener
     String cityNameRouteOne, cityNameRouteTwo;
     ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
     ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
+    Player lastPlayer = null;
+    boolean lastTurn = false;
+    boolean goingOneLastTime = true;
 
     public PlayGame() {
         createDestinationDeck();
@@ -197,98 +200,222 @@ implements MouseListener
     }
 
     /**
-     * Paint method for applet.
-     * 
+     * Paint method for applet.     * 
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g)
     {
-        if (startGame == 0){
-            gameOpening(g);
-            setUpGame(g);
-        }
-
-        if(now){
-            g.drawImage(img2, 0, 0, this);
-            //drawRiver(g); //Here will be the first five train cards drawn
-            showCards(g);            
-            drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
-            drawTrains(g); // This was used here to make sure the trains on the
-            //actual board were being drawn correctly
-            now = false;
-            drawRiver(g);     //Draws the 5 train cards needed
-            
-            //whatCardsIHave(g);
-        }
-        //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
-        if(click) {
-            click = false;
-            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175 && (trainDrawCount%2 == 0)) {
-                destinationDeckDraw = true;
-                playerTurn(playerList[currPlayer]);
+        if(!lastTurn) {
+            if (startGame == 0){
+                gameOpening(g);
+                setUpGame(g);
+            }
+            if(now){
                 g.drawImage(img2, 0, 0, this);
-                showCards(g);
-                drawPlayerNameAndCars(g); 
+                //drawRiver(g); //Here will be the first five train cards drawn
+                showCards(g);            
+                drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
+                drawTrains(g); // This was used here to make sure the trains on the
+                //actual board were being drawn correctly
+                now = false;
                 drawRiver(g);     //Draws the 5 train cards needed
-                drawTrains(g);
+                checkIfLastPlayer(playerList[currPlayer]);
+                checkIfGameIsAlmostOver();
+                //whatCardsIHave(g);
             }
-
-            //Check if the place clicked was on-top of a route
-            if(routeClicked() != null && (trainDrawCount%2 == 0)) {
-                String[] cityRouteClickedOn = routeClicked();
-                cityNameRouteOne = cityRouteClickedOn[0];
-                cityNameRouteTwo = cityRouteClickedOn[1];
-                purchaseRoute = true;
-                JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +cityNameRouteTwo+ " ( Color: " +getColorRoute() + " ) ");
-                playerTurn(playerList[currPlayer]);
-                g.drawImage(img2, 0, 0, this);
-                showCards(g);
-                drawPlayerNameAndCars(g); 
-                drawRiver(g);     //Draws the 5 train cards needed
-                drawTrains(g);
-            }
-
-            //Show the players current destination cards
-            if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
-                //showDestinationCards();   HAVE TO IMPLEMENT
-                g.setColor(Color.black);
-                g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
-                showDestinationCards();
-            }
-
-            if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
-                g.setColor(Color.red);
-                g.drawRect(911, 48, 202, 125);                
-                trainDeckDraw = true;
-                playerTurn(playerList[currPlayer]);
-                showCards(g);
-                drawRiver(g);     //Draws the 5 train cards needed
-                drawTrains(g);
-                if(trainDrawCount%2 == 0) {
-                    g.drawImage(img2, 0, 0, this); 
+            //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
+            if(click) {
+                click = false;
+                if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175 && (trainDrawCount%2 == 0)) {
+                    destinationDeckDraw = true;
+                    playerTurn(playerList[currPlayer]);
+                    g.drawImage(img2, 0, 0, this);
                     showCards(g);
                     drawPlayerNameAndCars(g); 
                     drawRiver(g);     //Draws the 5 train cards needed
                     drawTrains(g);
+                    checkIfLastPlayer(playerList[currPlayer]);
+                    checkIfGameIsAlmostOver();
                 }
-            }
 
-            if(riverClicked()) {
-                trainRiverDraw = true;
-                playerTurn(playerList[currPlayer]);
-                showCards(g);
-                drawRiver(g);     //Draws the 5 train cards needed
-                drawTrains(g);
-                if(trainDrawCount%2 == 0) {
-                    g.drawImage(img2, 0, 0, this); 
+                //Check if the place clicked was on-top of a route
+                if(routeClicked() != null && (trainDrawCount%2 == 0)) {
+                    String[] cityRouteClickedOn = routeClicked();
+                    cityNameRouteOne = cityRouteClickedOn[0];
+                    cityNameRouteTwo = cityRouteClickedOn[1];
+                    purchaseRoute = true;
+                    JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +cityNameRouteTwo+ " ( Color: " +getColorRoute() + " ) ");
+                    playerTurn(playerList[currPlayer]);
+                    g.drawImage(img2, 0, 0, this);
                     showCards(g);
                     drawPlayerNameAndCars(g); 
                     drawRiver(g);     //Draws the 5 train cards needed
                     drawTrains(g);
+                    checkIfLastPlayer(playerList[currPlayer]);
+                    checkIfGameIsAlmostOver();	
+                }
+
+                //Show the players current destination cards
+                if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
+                    //showDestinationCards();   HAVE TO IMPLEMENT
+                    g.setColor(Color.black);
+                    g.drawString("HERE", 950, 800);
+                    g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+                    showDestinationCards();
+                    checkIfLastPlayer(playerList[currPlayer]);
+                    checkIfGameIsAlmostOver();	
+                }
+
+                if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
+                    g.setColor(Color.red);
+                    g.drawRect(911, 48, 202, 125);                
+                    trainDeckDraw = true;
+                    playerTurn(playerList[currPlayer]);
+                    showCards(g);
+                    drawRiver(g);     //Draws the 5 train cards needed
+                    drawTrains(g);
+                    if(trainDrawCount%2 == 0) {
+                        g.drawImage(img2, 0, 0, this); 
+                        showCards(g);
+                        drawPlayerNameAndCars(g); 
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                        checkIfLastPlayer(playerList[currPlayer]);
+                        checkIfGameIsAlmostOver();
+                    }
+                }
+
+                if(riverClicked()) {
+                    trainRiverDraw = true;
+                    playerTurn(playerList[currPlayer]);
+                    showCards(g);
+                    drawRiver(g);     //Draws the 5 train cards needed
+                    drawTrains(g);
+                    if(trainDrawCount%2 == 0) {
+                        g.drawImage(img2, 0, 0, this); 
+                        showCards(g);
+                        drawPlayerNameAndCars(g); 
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                        checkIfLastPlayer(playerList[currPlayer]);
+                        checkIfGameIsAlmostOver();
+                    }
                 }
             }
-            //whatCardsIHave(g);
+        }
+        else{
+            if(goingOneLastTime) {
+                if(now){
+                    g.drawImage(img2, 0, 0, this);
+                    //drawRiver(g); //Here will be the first five train cards drawn
+                    showCards(g);            
+                    drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
+                    drawTrains(g); // This was used here to make sure the trains on the
+                    //actual board were being drawn correctly
+                    now = false;
+                    drawRiver(g);     //Draws the 5 train cards needed
+                    //whatCardsIHave(g);
+                }
+                //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
+                if(click) {
+                    click = false;
+                    if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175 && (trainDrawCount%2 == 0)) {
+                        destinationDeckDraw = true;
+                        playerTurn(playerList[currPlayer]);
+                        g.drawImage(img2, 0, 0, this);
+                        showCards(g);
+                        drawPlayerNameAndCars(g); 
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                    }
+
+                    //Check if the place clicked was on-top of a route
+                    if(routeClicked() != null && (trainDrawCount%2 == 0)) {
+                        String[] cityRouteClickedOn = routeClicked();
+                        cityNameRouteOne = cityRouteClickedOn[0];
+                        cityNameRouteTwo = cityRouteClickedOn[1];
+                        purchaseRoute = true;
+                        JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +cityNameRouteTwo+ " ( Color: " +getColorRoute() + " ) ");
+                        playerTurn(playerList[currPlayer]);
+                        g.drawImage(img2, 0, 0, this);
+                        showCards(g);
+                        drawPlayerNameAndCars(g); 
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                    }
+
+                    //Show the players current destination cards
+                    if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
+                        //showDestinationCards();   HAVE TO IMPLEMENT
+                        g.setColor(Color.black);
+                        g.drawString("HERE", 950, 800);
+                        g.setFont(new Font("TimesRoman", Font.BOLD, 12));
+                        showDestinationCards();
+                    }
+
+                    if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
+                        g.setColor(Color.red);
+                        g.drawRect(911, 48, 202, 125);                
+                        trainDeckDraw = true;
+                        playerTurn(playerList[currPlayer]);
+                        showCards(g);
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                        if(trainDrawCount%2 == 0) {
+                            g.drawImage(img2, 0, 0, this); 
+                            showCards(g);
+                            drawPlayerNameAndCars(g); 
+                            drawRiver(g);     //Draws the 5 train cards needed
+                            drawTrains(g);
+                        }
+                    }
+
+                    if(riverClicked()) {
+                        trainRiverDraw = true;
+                        playerTurn(playerList[currPlayer]);
+                        showCards(g);
+                        drawRiver(g);     //Draws the 5 train cards needed
+                        drawTrains(g);
+                        if(trainDrawCount%2 == 0) {
+                            g.drawImage(img2, 0, 0, this); 
+                            showCards(g);
+                            drawPlayerNameAndCars(g); 
+                            drawRiver(g);     //Draws the 5 train cards needed
+                            drawTrains(g);
+                        }
+                    }
+                }
+                goingOneLastTime = false;
+                g.drawImage(img2, 0, 0, this);
+                //drawRiver(g); //Here will be the first five train cards drawn
+                showCards(g);            
+                drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
+                drawTrains(g); // This was used here to make sure the trains on the
+                //actual board were being drawn correctly
+                now = false;
+                drawRiver(g);     //Draws the 5 train cards needed
+                g.setColor(new Color(102, 0, 0));
+                g.setFont(new Font("TimesRoman", Font.BOLD, 150));
+                g.drawString("GAME OVER", 200, 200);
+
+                for(int i = 0; i < playerList.length; i++) {
+                    playerList[i].addPoints(playerList[i].calclulateDestinationPoints());
+                }
+
+                //Gets the player with the max points
+                int max = -1000;
+                String maxPointsName = "";
+                for(int i = 0; i < playerList.length; i++) {
+                    if(playerList[i].getPoints() > max) {
+                        max = playerList[i].getPoints();
+                        maxPointsName = playerList[i].name;
+                    }
+                }
+
+                g.drawString(maxPointsName+ " has WON!", 200, 400);
+                drawPlayerNameAndCars(g);
+            }
+
         }
     }
 
@@ -347,7 +474,7 @@ implements MouseListener
         }
         return null;
     }
-    
+
     /**
      * Checks if the routes on the map were clicked
      * @return the cities of the route clicked, otherwise returns null
@@ -430,7 +557,7 @@ implements MouseListener
     private void showDestinationCards() {
         String str = "";
         for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
-             str += playerList[currPlayer].getDestCard(i).toString() + "\n";
+            str += playerList[currPlayer].getDestCard(i).toString() + "\n";
         JOptionPane.showMessageDialog(this, str);
     }
 
@@ -500,7 +627,8 @@ implements MouseListener
                 lookAtTen = 0;
             }
         }
-        g.setColor(new Color(102, 0, 0));
+        //g.setColor(new Color(102, 0, 0));
+        g.setColor(getCurPlayerColor());
         g.setFont(new Font("TimesRoman", Font.BOLD, 25));
         g.drawString("Player: " +playerList[currPlayer].name, 685, 240 );
 
@@ -517,16 +645,16 @@ implements MouseListener
 
         g.setFont(new Font("TimesRoman", Font.BOLD, 25));
         g.drawString("YOUR HAND", 827, 465 );
-        
+
         g.drawString("" + playerList[currPlayer].getTokens(), 858, 812);
         g.setFont(new Font("TimesRoman", Font.BOLD, 11));
         g.drawString("TOKENS", 850, 775 );
-        
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("TimesRoman", Font.BOLD, 10));
-        g.drawString("Scoreboard: ", 700, 775 );
+
+        g.setColor(new Color(102, 0,0));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 9));
+        g.drawString("Scoreboard: ", 735, 775 );
         for(int i = 0; i < playerList.length; i++) {
-            g.drawString("" + playerList[i].name + " " +playerList[i].getPoints(), 700, 775 + (i+1)*11);
+            g.drawString("" + playerList[i].name + ": " +playerList[i].getPoints(), 700, 770 + (i+1)*10);
         }
     }
 
@@ -584,6 +712,10 @@ implements MouseListener
             playerList[i].setC(player1Color);
             availableColors.remove(player1Color);
         }
+
+        for(int i = 0; i < numPlayers; i++) {
+            playerList[i].addPoints(i);
+        }
         return;
     }
 
@@ -630,7 +762,7 @@ implements MouseListener
                     TrainCarCard cardToAdd = (TrainCarCard) trainDeck.drawCard();
                     gameBoard.river.add(cardToAdd);
                 }
-                drawRiver(g);
+                drawRiver(g); return;
             }        
             Image one = cardImage1;
             Image two = cardImage2;
@@ -759,8 +891,6 @@ implements MouseListener
      */
 
     private void playerTurn(Player currentPlayer) {
-        showStatus(currPlayer + "");
-
         // need to check somewhere if the decks are empty
         if (trainDeckDraw) {
             currentPlayer.drawTrainCarCard(trainDeck);
@@ -776,7 +906,7 @@ implements MouseListener
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
                 if(trainDrawCount%2 == 0) {
                     currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
-                    gameBoard.river.add(clickedCard, (TrainCarCard) /*gameBoard.*/trainDeck.drawCard());
+                    gameBoard.river.add(clickedCard, (TrainCarCard) trainDeck.drawCard());
                     trainDrawCount = trainDrawCount + 2;
                     if(trainDrawCount%2 == 0) {
                         currPlayer++;
@@ -814,22 +944,19 @@ implements MouseListener
             City city1, city2;
             city1 = CityList.getCity(cityNameRouteOne);
             city2 = CityList.getCity(cityNameRouteTwo);
-            //end temp
             Route routeToBuy = new Route(cityNameRouteOne,cityNameRouteTwo);
-            //showStatus( " " + (new City("Amsterdam")).equals(new City("Amsterdam")));
-            
-           if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
-               && currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()) { // also make sure the edge isn't taken!
+
+            if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
+            && currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()) { // also make sure the edge isn't taken!
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
                 Player otherOwner = null;
                 for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) {
                         showStatus("playerHasRoute");
-                        JOptionPane.showMessageDialog(this, "");
                         ++ownerCount;
                         otherOwner = pr;
-                    }
+                }
                 if (!isDouble) {
                     if (ownerCount > 0) {
                         // don't let them buy the route
@@ -946,5 +1073,67 @@ implements MouseListener
         }
         catch (IOException e) {}
     }
-}
 
+    /**
+     * Starts counting until end of round so that the game can end
+     * if there is not enough cars to play
+     */
+    public void checkIfGameIsAlmostOver(){
+        if(playerList[currPlayer].getCars() < 3) {
+            lastPlayer = playerList[currPlayer];
+        }
+    }
+
+    /**
+     * Check if the last turn of the game is right now 
+     * @param p Player that might be having the last turn
+     * @param g The graphics object for the applet
+     */
+    public void checkIfLastPlayer(Player p) {
+        if(p == lastPlayer){
+            lastTurn = true;
+        }
+    }
+
+    /**
+     * Adds the bonus poinst to each player
+     */
+    public void addBonusPoints() {
+        ArrayList<Player> extraPoints = new ArrayList<Player>();
+        for(int i = 0; i < playerList.length; i++) {
+                extraPoints.add(playerList[i]);
+        }
+        
+        for(int i = 0; i < extraPoints.size(); i++) {
+            for(int j = 0; j < extraPoints.size()-1; j++) {
+                if(extraPoints.get(j).getTokens() < extraPoints.get(j+1).getTokens()) {
+                    Player temp = extraPoints.get(j);
+                    extraPoints.set(j, extraPoints.get(j+1));
+                    extraPoints.set(j+1, temp);
+                }
+            }
+        }
+        
+        int lastTokenCount = 1000;
+        int[] possibleBonuses;
+        if (numPlayers == 5) possibleBonuses = new int[] {55, 35, 20, 10, 0};
+        else if (numPlayers == 4) possibleBonuses = new int[] {55, 35, 20, 0};
+        else if (numPlayers == 3) possibleBonuses = new int[] {55, 35, 0};
+        else if (numPlayers == 2) possibleBonuses = new int[] {35, 0};
+        int currentPossibleBonus = 0; // index
+        int nextBonus = 0;
+        for (int i=0; i<extraPoints.size(); i++, nextBonus++) {
+            Player cp = extraPoints.get(i);
+            if (!cp.canGetBonus()) {
+                --nextBonus;
+                continue;
+            }
+            if (cp.getTokens() < lastTokenCount) {
+                lastTokenCount = cp.getTokens();
+                cp.addPoints(nextBonus);
+                currentPossibleBonus = nextBonus;
+            }
+            else cp.addPoints(currentPossibleBonus);
+        }
+    }
+}

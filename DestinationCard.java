@@ -46,7 +46,8 @@ public class DestinationCard extends Card
     public String toString() {
         return cities[0] + "-" + cities[1];
     }
-    //     public City[] getCities() {
-    //         return 
-    //     }
+    
+    public String[] getCities() {
+        return new String[] { cities[0], cities[1] };
+    }
 }
