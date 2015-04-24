@@ -360,21 +360,22 @@ public class Route
                 break;
             }
         }        
-        weight = -1; // should never happen
+        else {
+            weight = -1; //should never happen
+        }
     }
 
-    
     public static String routeColorToString(RouteColor rc) {
         switch (rc) {
-        case YELLOW: return "yellow";
-        case ORANGE: return "orange";
-        case GREEN: return "green";
-        case BLUE: return "blue";
-        case RED: return "red";
-        case GRAY: return "gray";
-        case WHITE: return "white";
-        case BLACK: return "black";
-        case PURPLE:   return "purple";
+            case YELLOW: return "yellow";
+            case ORANGE: return "orange";
+            case GREEN: return "green";
+            case BLUE: return "blue";
+            case RED: return "red";
+            case GRAY: return "gray";
+            case WHITE: return "white";
+            case BLACK: return "black";
+            case PURPLE:   return "purple";
         }
         return "nosuchcolor";
     }
