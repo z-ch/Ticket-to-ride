@@ -17,7 +17,7 @@ public class Player
     protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
 
     public Player() {
-        cars = 40; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
+        cars = 10; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
 
@@ -177,7 +177,7 @@ public class Player
         return destCards.size();
     }
 
-    public int calclulateDestinationPoints() {
+    public int calculateDestinationPoints() {
         int pointCount = 0;
         Graph g = new Graph();
         for (DestinationCard dc : destCards) {
@@ -189,6 +189,10 @@ public class Player
                 pointCount -= destValue;
         }
         return pointCount;
+    }
+    
+    public String getName() { 
+        return name;
     }
 
     public boolean canReach(String cityOne, String cityTwo, Graph g) {

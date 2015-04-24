@@ -52,11 +52,11 @@ implements MouseListener
     String cityNameRouteOne, cityNameRouteTwo;
     ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
     ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
-    Player lastPlayer = null;
-    boolean lastTurn = false;
-    boolean goingOneLastTime = true;
-    boolean lastPaint = false;
-    
+    private Player lastPlayer = null;
+    private boolean lastTurn = false;
+    private boolean goingOneLastTime = true;
+    private boolean lastPaint = false;
+    private boolean gameOver = false;
     public PlayGame() {
         createDestinationDeck();
     }
@@ -205,8 +205,11 @@ implements MouseListener
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g) {
-        if (lastPaint)
+        if (gameOver)
             return;
+        
+        //if (lastPaint)
+            //endGame();
 
         if (startGame == 0){
             gameOpening(g);
@@ -1033,5 +1036,15 @@ implements MouseListener
 
     private void endGame() {
         // END THE GAME
+        gameOver = true;
+        showStatus("GameOver");
+        String scoreString = "";
+        addBonusPoints();
+        for (Player pr : playerList)
+            pr.addPoints(pr.calculateDestinationPoints());
+
+        for (Player pr : playerList)
+            scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
+        JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
     }
 }
