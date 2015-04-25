@@ -23,13 +23,19 @@ public class DestinationCard extends Card
     
     /**
      * Constructor for DestinationCard class with path
-     * 
+     * @param c[] 2 element  array of cities
+     * @param p image path
      */
     public DestinationCard(String c[], int v, Path p) {
         this(c,v);
         imagePath = p;
     }
 
+    /**
+     * Constructor for DestinationCard class with String path
+     * @param c[] 2 element  array of cities
+     * @param p image path (String)
+     */
     public DestinationCard(String c[], int v, String p) {
         this(c,v);
         imagePath = (new File(p)).toPath();
@@ -42,11 +48,20 @@ public class DestinationCard extends Card
     public int getValue() {
         return value;
     }
-    
+
+    /**
+     * Returns string representation of this DestinationCard
+     * @return  string representation of this DestinationCard
+     *
+     */
     public String toString() {
         return cities[0] + "-" + cities[1];
     }
-    
+
+    /**
+     * gets a copy of this.cities
+     * @return a copy of this.cities
+     */
     public String[] getCities() {
         return new String[] { cities[0], cities[1] };
     }

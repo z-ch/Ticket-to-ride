@@ -25,17 +25,23 @@ public class City
         return name;
     }
 
-    //     @Override
-    //     public int compareTo(Object c) {
-    //         if (!(c instanceof City) return 0;
-    //         return this.getName().compareTo((City c).getName());
-    //     }
-
+    /**
+     * returns String representation of this City
+     * @return String representation of this City 
+     *         (only name)
+     */
     @Override
     public String toString() {
         return name;
     }
 
+    /**
+     * Checks to see if this city equals another city
+     * only checks if the city names are the same
+     * @param c Object to compare to
+     * @return true if this city has the same name as c,
+     *         false otherwise
+     */
     @Override
     public boolean equals(Object c) {
         return c instanceof City && this.name.equals(((City) c).name);

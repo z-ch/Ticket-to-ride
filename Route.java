@@ -8,11 +8,14 @@ import java.util.Collections;
  */
 public class Route
 {
+    /**
+     * enum for the colors that this route can be
+     */
     public enum RouteColor 
-        {
-            YELLOW, ORANGE, GREEN, BLUE, RED, 
-            PINK, GRAY, WHITE, BLACK, PURPLE
-        }
+    {
+        YELLOW, ORANGE, GREEN, BLUE, RED, 
+        PINK, GRAY, WHITE, BLACK, PURPLE
+    }
     // cities is always in alphabetical order (String order)
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<RouteColor> colors = new ArrayList<RouteColor>();
@@ -365,6 +368,11 @@ public class Route
         }
     }
 
+    /**
+     * Returns a String representation of RouteColors
+     * @param rc RouteColor to get the String of
+     * @return String representation of RouteColors
+     */    
     public static String routeColorToString(RouteColor rc) {
         switch (rc) {
         case YELLOW: return "yellow";

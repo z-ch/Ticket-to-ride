@@ -110,17 +110,31 @@ public class Graph
         return adjMatrix.get(cityOne).contains(new City(cityTwo));
     }
 
+    /**
+     * Checks if the route from city one to city two is double or not
+     * @param cityOne first city in route (String)
+     * @param cityTwo second city in route (String)
+     * @return true if this route is double, else false
+     */
     public boolean isDouble(String cityOne, String cityTwo) {
         int occurrences = Collections.frequency(adjMatrix.get(cityOne), CityList.getCity(cityTwo));
         return occurrences == 2;
     }
-
     
+    /**
+     * Checks if the route from city one to city two is double or not
+     * @param cityOne first city in route
+     * @param cityTwo second city in route
+     * @return true if this route is double, else false
+     */
     public boolean isDouble(City cityOne, City cityTwo) {
         return isDouble(cityOne.getName(), cityTwo.getName());
     }
 
 
+    /**
+     * just a test method
+     */
     public static void test() {
         Graph g = new Graph();
         System.out.println(g.hasEdge("Hasselt", "Liege") + "\n" + g.hasEdge("Hasselt","Amsterdam"));

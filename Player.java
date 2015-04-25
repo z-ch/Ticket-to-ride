@@ -16,6 +16,9 @@ public class Player
     protected ArrayList<TrainCarCard> trainCards;
     protected ArrayList<Route> capturedRoutes = new ArrayList<Route>();
 
+    /**
+     * Constructor for player objects.
+     */
     public Player() {
         cars = 10; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
@@ -65,6 +68,10 @@ public class Player
         destCards.add(c);
     }
 
+    /**
+     * Adds a DestinationCard to the player's hand.
+     * @param c DestinationCard to add
+     */
     public void addDestinationCard(DestinationCard c) {
         destCards.add(c);
     }
@@ -79,15 +86,29 @@ public class Player
         trainCards.add(c);
     }
 
+    /**
+     * Adds a TrainCarCard to the player's hand.
+     * @param c TrainCarCard to add
+     */
     public void addTrainCarCard(Card c) {
         // maybe add a instanceof check?
         trainCards.add((TrainCarCard) c);
     }
 
+    /**
+     * Checks if the player has a route from cityOne to cityTwo
+     * @param cityOne String name of first city
+     * @param cityOne String name of second city
+     */
     public boolean hasRoute(String cityOne, String cityTwo) {
         return this.capturedRoutes.contains(new Route(cityOne, cityTwo));
     }
 
+    /**
+     * Checks if the player has a route from cityOne to cityTwo
+     * @param cityOne first city
+     * @param cityOne second city
+     */
     public boolean hasRoute(City cityOne, City cityTwo) {
         return this.hasRoute(cityOne.getName(), cityTwo.getName());
         //return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
@@ -106,6 +127,13 @@ public class Player
         else points = points + 15;
     }
 
+    /**
+     * Adds a route from cityOne to cityTwo
+     * @param cityOne name of first City
+     * @param cityTwo name of second City
+     * @param rcolor String name of RouteColor
+     * @param d Deck to add the discarded cards back into
+     */
     public void addRoute(String cityOne, String cityTwo, String rcolor, Deck d) {
         //if (!hasRoute(cityOne,cityTwo)) {
         Route rte = new Route(cityOne, cityTwo);
@@ -136,19 +164,40 @@ public class Player
         capturedRoutes.add(new Route(cityOne, cityTwo));
         //}
     }
-
+    /**
+     * Adds a route from cityOne to cityTwo
+     * @param cityOne name of first City
+     * @param cityTwo name of second City
+     * @param rcolor String name of RouteColor
+     * @param d Deck to add the discarded cards back into
+     */
     public void addRoute(City cityOne, City cityTwo, String rcolor, Deck d) {
         addRoute(cityOne.getName(), cityTwo.getName(), rcolor, d);
     }
 
+    /**
+     * Adds tokens (when someone buys this Player's route
+     * @param t number of tokens to add
+     */
     public void addTokens(int t) {
         tokens += t;
     }
 
+    /**
+     * Gets the number of train cars this player owns
+     * @return the number of train cars this player owns
+     */
     public int getCars() {
         return cars;
     }
 
+    /**
+     * gets the number of train car cards of a given color
+     * that this player owns
+     * @param trainCarColor color to count
+     * @return number of cards of trainCarColor this player
+     *         has
+     */
     public int getTrainCarsCards(String trainCarColor) {
         int total = 0;
         for (TrainCarCard tcc : trainCards)
@@ -157,26 +206,56 @@ public class Player
         return total;
     }
 
+    /**
+     * checks if this player can recieve bonus points or not
+     * @return true if player can get bonus, false otherwise
+     *
+     */
     public boolean canGetBonus() {
         return bonus;
     }
 
+    /**
+     * gets the number of tokens this player has
+     * @return the number of tokens this player has
+     */
     public int getTokens() {
         return tokens;
     }
 
+    /**
+     * gets the number of points this player has
+     * @return the number of points this player has
+     */
     public int getPoints() {
         return points;
     }
 
+    /**
+     * gets the destination card at index i in players hand
+     * @param i the index to get the card from
+     * @return destination card at destCards's i'th index
+     */
     public DestinationCard getDestCard(int i) {
         return destCards.get(i);
     }
 
+    /**
+     * gets the number of destination cards
+     *  that this player has
+     * @return the number of destination cards that this player has
+     */
     public int getDestCardSize() {
         return destCards.size();
     }
 
+    /**
+     * calculates the score that this player would get
+     * from their completed destinations. does not alter
+     * their score.
+     * @return the score that this player would get from
+     *         their completed destinations. 
+     */
     public int calculateDestinationPoints() {
         int pointCount = 0;
         Graph g = new Graph();
@@ -190,11 +269,22 @@ public class Player
         }
         return pointCount;
     }
-    
+
+    /**
+     * gets this player's name
+     * @return this Player's name field
+     *
+     */
     public String getName() { 
         return name;
     }
 
+    /**
+     * Checks if this player owns routes such that s?he can reach
+     * cityTwo from cityOne (essentially dfs)
+     * @return true if player can reach cityTwo from cityOne,
+     *         false otherwise
+     */
     public boolean canReach(String cityOne, String cityTwo, Graph g) {
         if (g.hasEdge(cityOne, cityTwo)) return this.hasRoute(cityOne, cityTwo);
         LinkedList<City> adjacentCities = g.adjMatrix.get(cityOne);

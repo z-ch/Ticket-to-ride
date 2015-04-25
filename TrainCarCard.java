@@ -25,7 +25,13 @@ public class TrainCarCard extends Card
         this();
         color = c;
     }
-    
+
+    /**
+     * Constructor for TrainCarCard Class 
+     * @param c The color of the train car card
+     * @param p String representation of this TrainCarCard's
+     #        image path
+     */
     public TrainCarCard(String c, String p) {
         color = c; imagePath = (new File(p)).toPath();
     }
@@ -37,7 +43,13 @@ public class TrainCarCard extends Card
     public String getColor() {
         return color;
     }
-    
+
+    /**
+     * equals method for TrainCarCard objects
+     * @param tcc Object to compare to
+     * @return true if tcc is a TrainCarCard with
+     *         the same color as this
+     */
     @Override
     public boolean equals(Object tcc) {
         return tcc instanceof TrainCarCard && color.equals(((TrainCarCard) tcc).color);

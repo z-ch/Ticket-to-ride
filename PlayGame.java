@@ -57,6 +57,8 @@ implements MouseListener
     private boolean goingOneLastTime = true;
     private boolean lastPaint = false;
     private boolean gameOver = false;
+
+    // delete this?
     public PlayGame() {
         createDestinationDeck();
     }
@@ -91,7 +93,7 @@ implements MouseListener
 
     /**
      * Create all the destination cards
-     * TODO: line wrapping by adding method
+     * TODO: line wrapping 
      */
     private void createDestinationDeck(){
         destinationDeck = new Deck();
@@ -142,6 +144,12 @@ implements MouseListener
         addCardToDestinationDeck(new String[] {"Groningen", "Middelburg"}, 34,"images/Groningen-Middelburg.jpg");         
     }
 
+    /**
+     * Adds a card to the game's destination deck
+     * @param c names of cities in destination card
+     * @param scr score of destinationcard
+     * @param imgpth String represenation of imagepath
+     */
     private void addCardToDestinationDeck(String[] c, int scr, String imgpth) {
         destinationDeck.addCard(new DestinationCard(c, scr, imgpth));
     }
@@ -201,7 +209,7 @@ implements MouseListener
     }
 
     /**
-     * Paint method for applet.     * 
+     * Paint method for applet.
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g) {
@@ -760,8 +768,10 @@ implements MouseListener
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
-
-    //Used to test if there are any cards that will throw an error
+    
+    /**
+     * Used to test if there are any cards that will throw an error
+     */
     public static void test() {
         try {
             PlayGame pg = new PlayGame();
@@ -785,7 +795,6 @@ implements MouseListener
      * 
      * @param currentPlayer the player who's turn it is
      */
-
     private void playerTurn(Player currentPlayer) {
         // need to check somewhere if the decks are empty
         if (trainDeckDraw) {
@@ -1034,8 +1043,10 @@ implements MouseListener
         }
     }
 
+    /**
+     * ends the game and shows the scores
+     */
     private void endGame() {
-        // END THE GAME
         gameOver = true;
         showStatus("GameOver");
         String scoreString = "";
