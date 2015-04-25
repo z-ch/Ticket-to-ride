@@ -217,7 +217,7 @@ implements MouseListener
             return;
         int lastPlayer = currPlayer;
         //if (lastPaint)
-            //endGame();
+        //endGame();
 
         if (startGame == 0){
             gameOpening(g);
@@ -768,7 +768,7 @@ implements MouseListener
 
         catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
-    
+
     /**
      * Used to test if there are any cards that will throw an error
      */
@@ -1047,15 +1047,20 @@ implements MouseListener
      * ends the game and shows the scores
      */
     private void endGame() {
-        gameOver = true;
-        showStatus("GameOver");
-        String scoreString = "";
-        addBonusPoints();
-        for (Player pr : playerList)
-            pr.addPoints(pr.calculateDestinationPoints());
+        try {
+            gameOver = true;
+            showStatus("GameOver");
+            String scoreString = "";
+            addBonusPoints();
+            for (Player pr : playerList)
+                pr.addPoints(pr.calculateDestinationPoints());
 
-        for (Player pr : playerList)
-            scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
-        JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+            for (Player pr : playerList)
+                scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
+            JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+        }
+        catch (ArrayIndexOutOfBoundsException e) { showStatus("Array"); }
+        catch (NullPointerException e) { showStatus("null"); }
+        catch (Exception e) { showStatus(e.toString()); }
     }
 }

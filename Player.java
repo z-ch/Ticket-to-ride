@@ -20,7 +20,7 @@ public class Player
      * Constructor for player objects.
      */
     public Player() {
-        cars = 10; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
+        cars = 40; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
 
