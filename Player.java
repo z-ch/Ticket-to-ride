@@ -140,6 +140,8 @@ public class Player
         cars -= rte.getLength();
         int cardsToGetRidOf = rte.getLength();
         addRoutePoints(cardsToGetRidOf);
+        if (rcolor.equals("gray")) rcolor = getMaxTrainCarCardColor();
+        
         for (int i=0; i<trainCards.size() && cardsToGetRidOf > 0; i++)
             if (trainCards.get(i).getColor().equals(rcolor)) {
                 d.addCard(trainCards.remove(i--));
@@ -164,6 +166,7 @@ public class Player
         capturedRoutes.add(new Route(cityOne, cityTwo));
         //}
     }
+
     /**
      * Adds a route from cityOne to cityTwo
      * @param cityOne name of first City
@@ -292,5 +295,33 @@ public class Player
             if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(), cityTwo, g))
                 return true;
         return false;
+    }
+
+    public int getMaxTrainCarCards() {
+        ArrayList<TrainCarCard> tc = new ArrayList<>();
+        int max = 0, total = 0;
+        for (TrainCarCard color : tc) {
+            for (TrainCarCard tcc : trainCards) 
+                if (color.getColor().equals(tcc.getColor()))
+                    ++total;
+            if (total > max) max = total;
+        }
+        return max;
+    }
+    
+    public String getMaxTrainCarCardColor() {
+        ArrayList<TrainCarCard> tc = new ArrayList<>();
+        int max = 0, total = 0;
+        String colorstr = "";
+        for (TrainCarCard color : tc) {
+            for (TrainCarCard tcc : trainCards) 
+                if (color.getColor().equals(tcc.getColor()) || tcc.getColor().equals("rainbow"))
+                    ++total;
+            if (total > max) { 
+                max = total;
+                colorstr = color.getColor();
+            }
+        }
+        return colorstr;
     }
 }

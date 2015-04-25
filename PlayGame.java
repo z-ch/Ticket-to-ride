@@ -852,16 +852,24 @@ implements MouseListener
             Route routeToBuy = new Route(cityNameRouteOne,cityNameRouteTwo);
 
             if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
-            && currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()) { // also make sure the edge isn't taken!
+            && (currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()
+            ||  (Route.routeColorToString(getColorRoute()).equals("gray")))) { // gray color
+                //&&   currentPlayer.getMaxTrainCarCards() >= routeToBuy.getLength()))) { 
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
                 Player otherOwner = null;
+                String routeColor = Route.routeColorToString(getColorRoute());
+                if (Route.routeColorToString(getColorRoute()).equals("gray")) {
+                    // GUI set routeColor to whatever they want
+                    routeColor = "purple";
+                }
+                
                 for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) {
                         showStatus("playerHasRoute");
                         ++ownerCount;
                         otherOwner = pr;
-                }
+                    }
                 if (!isDouble) {
                     if (ownerCount > 0) {
                         // don't let them buy the route
@@ -869,7 +877,7 @@ implements MouseListener
                     }
                     else {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -879,7 +887,7 @@ implements MouseListener
                 else {
                     if (ownerCount == 0) {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -888,7 +896,7 @@ implements MouseListener
                     else if (ownerCount == 1) {
                         // buy route from owner
                         otherOwner.addTokens(routeToBuy.getWeight());
-                        currentPlayer.addRoute(city1,city2,Route.routeColorToString(getColorRoute()), trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
