@@ -117,14 +117,14 @@ implements MouseListener
         //addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"}, 15, "images/Enschede-Amsterdam.jpg");
         addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"}, 15, "images/Enschede-Eindhoven.jpg");
         addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"}, 15, "images/Leeuwarden-Haarlem.jpg");
-        addCardToDestinationDeck(new String[] {"Emden", "Waddeneilanden"}, 16, "images/Emden-Waddeneilanden.jpg");
+        addCardToDestinationDeck(new String[] {"Emden", "Waddensilanden"}, 16, "images/Emden-Waddensilanden.jpg");
         addCardToDestinationDeck(new String[] {"Sneek", "Utrecht"}, 16, "images/Sneek-Utrecht.jpg");
         addCardToDestinationDeck(new String[] {"Zwolle", "Rotterdam"}, 17, "images/Zwolle-Rotterdam.jpg");
         addCardToDestinationDeck(new String[] {"'sGravenhage", "Liege"}, 18, "images/'sGravenhage-Liege.jpg");
         addCardToDestinationDeck(new String[] {"Zwolle", "Maastricht"}, 18, "images/Zwolle-Maastricht.jpg");
         addCardToDestinationDeck(new String[] {"Amsterdam", "Antwerpen"}, 19, "images/Amsterdam-Antwerpen.jpg");
         addCardToDestinationDeck(new String[] {"Utrecht", "Middelburg"}, 19, "images/Utrecht-Middelburg.jpg");
-        addCardToDestinationDeck(new String[] {"Waddeneilanden", "'sGravenhage"}, 20, "images/Waddeneilanden-'sGravenhage.jpg");
+        addCardToDestinationDeck(new String[] {"Waddensilanden", "'sGravenhage"}, 20, "images/Waddensilanden-'sGravenhage.jpg");
         addCardToDestinationDeck(new String[] {"Amsterdam", "Maastricht"}, 20, "images/Amsterdam-Maastricht.jpg");
         addCardToDestinationDeck(new String[] {"Roermond", "Middelburg"}, 21, "images/Roermond-Middelburg.jpg");
         addCardToDestinationDeck(new String[] {"Groningen", "Amsterdam"}, 21, "images/Groningen-Amsterdam.jpg");
@@ -138,7 +138,7 @@ implements MouseListener
         addCardToDestinationDeck(new String[] {"Sneek", "Eindhoven"}, 26, "images/Sneek-Eindhoven.jpg");
         addCardToDestinationDeck(new String[] {"DenHelder", "Liege"}, 29, "images/DenHelder-Liege.jpg");
         addCardToDestinationDeck(new String[] {"Groningen", "Breda"}, 31, "images/Groningen-Breda.jpg");
-        addCardToDestinationDeck(new String[] {"Waddeneilanden", "Duisburg"}, 31, "images/Waddeneilanden-Duisburg.jpg");
+        addCardToDestinationDeck(new String[] {"Waddensilanden", "Duisburg"}, 31, "images/Waddensilanden-Duisburg.jpg");
         addCardToDestinationDeck(new String[] {"Leeuwarden", "Antwerpen"}, 32, "images/Leeuwarden-Antwerpen.jpg");
         addCardToDestinationDeck(new String[] {"Emmen", "Antwerpen"}, 33, "images/Emmen-Antwerpen.jpg");
         addCardToDestinationDeck(new String[] {"Groningen", "Middelburg"}, 34,"images/Groningen-Middelburg.jpg");         
@@ -269,7 +269,7 @@ implements MouseListener
                 drawRiver(g);     //Draws the 5 train cards needed
                 drawTrains(g);
                 checkIfLastPlayer(playerList[currPlayer]);
-                checkIfGameIsAlmostOver();	
+                checkIfGameIsAlmostOver();  
             }
 
             //Show the players current destination cards
@@ -280,7 +280,7 @@ implements MouseListener
                 g.setFont(new Font("TimesRoman", Font.BOLD, 12));
                 showDestinationCards();
                 checkIfLastPlayer(playerList[currPlayer]);
-                checkIfGameIsAlmostOver();	
+                checkIfGameIsAlmostOver();  
             }
 
             if(clickX >= 911 && clickY >=48 && clickX <= 1114 & clickY <= 173) {
@@ -308,6 +308,7 @@ implements MouseListener
                 showCards(g);
                 drawRiver(g);     //Draws the 5 train cards needed
                 drawTrains(g);
+                cardClickedhighLight(g);
                 if(trainDrawCount%2 == 0) {
                     g.drawImage(img2, 0, 0, this); 
                     showCards(g);
@@ -455,6 +456,31 @@ implements MouseListener
         return false;
     }
 
+    /**
+     * Highlights the river card clicked when the player clikced on the open
+     * train cards once
+     * @param g The graphics object for the applet
+     */
+    public void cardClickedhighLight(Graphics g) {
+        Color need = getCurPlayerColor();
+        g.setColor(need);
+        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
+            g.fillRect(685, 420, 79, 2);
+        }
+        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418) {
+            g.fillRect(770, 420, 79, 2);
+        }
+        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418) {
+            g.fillRect(855, 420, 79, 2);
+        }        
+        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418) {
+            g.fillRect(940, 420, 79, 2);
+        }
+        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418) {
+            g.fillRect(1025, 420, 79, 2);
+        }
+    }
+    
     /**
      * Shows the destination cards the current player has
      */

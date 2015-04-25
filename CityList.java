@@ -47,7 +47,7 @@ public class CityList
         citylist.put("Sneek", new City("Sneek"));
         citylist.put("Turnhout", new City("Turnhout"));
         citylist.put("Utrecht", new City("Utrecht"));
-        citylist.put("Waddeneilanden", new City("Waddeneilanden"));
+        citylist.put("Waddensilanden", new City("Waddensilanden"));
         citylist.put("Zwolle", new City("Zwolle"));
 
         // construct city array list
@@ -80,7 +80,7 @@ public class CityList
         cityArrayList.add(citylist.get("Sneek"));
         cityArrayList.add(citylist.get("Turnhout"));
         cityArrayList.add(citylist.get("Utrecht"));
-        cityArrayList.add(citylist.get("Waddeneilanden"));
+        cityArrayList.add(citylist.get("Waddensilanden"));
         cityArrayList.add(citylist.get("Zwolle"));
     }
     
