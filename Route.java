@@ -180,7 +180,7 @@ public class Route
                 colors.add(RouteColor.WHITE);
                 colors.add(RouteColor.RED);
                 break;
-            case "Waddeneilanden":
+            case "Waddensilanden":
                 length = 5; weight = 4;
                 colors.add(RouteColor.PINK);
                 break;
@@ -281,7 +281,7 @@ public class Route
                 colors.add(RouteColor.BLUE);
                 colors.add(RouteColor.ORANGE);
                 break;
-            case "Waddeneilanden":
+            case "Waddensilanden":
                 length = 6; weight = 4;
                 colors.add(RouteColor.YELLOW);
                 break;
@@ -317,8 +317,8 @@ public class Route
                 colors.add(RouteColor.BLACK);
                 colors.add(RouteColor.YELLOW);
                 break;
-            case "Waddeneilanden":
-                length = 3; weight = 3;
+            case "Waddensilanden":
+                length = 2; weight = 3;
                 colors.add(RouteColor.GREEN);
                 break;
             }
@@ -357,7 +357,7 @@ public class Route
         }
         else if (str.equals("Sneek")) {
             switch (cities.get(1)) {
-            case "Waddeneilanden":
+            case "Waddensilanden":
                 length = 3; weight = 4;
                 colors.add(RouteColor.GRAY);
                 break;

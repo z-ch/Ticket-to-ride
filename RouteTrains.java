@@ -57,10 +57,10 @@ public class RouteTrains
         citiesLinked.add(new String[] { "Emmen", "Lingen" });
         routeColors.add(Route.RouteColor.GREEN);
         routeCars.add(new Polygon(new int[]{343, 364, 355, 333}, new int[]{160, 321, 322, 161}, 4));
-        citiesLinked.add(new String[] { "Groningen ", "Zwolle" });
+        citiesLinked.add(new String[] { "Groningen", "Zwolle" });
         routeColors.add(Route.RouteColor.GREEN);
         routeCars.add(new Polygon(new int[]{332, 353, 343, 322}, new int[]{162, 323, 324, 163}, 4));
-        citiesLinked.add(new String[] { "Groningen ", "Zwolle" });
+        citiesLinked.add(new String[] { "Groningen", "Zwolle" });
         routeColors.add(Route.RouteColor.WHITE);
         routeCars.add(new Polygon(new int[]{426, 434, 373, 365}, new int[]{234, 239, 330, 325}, 4));
         citiesLinked.add(new String[] { "Emmen", "Zwolle" });

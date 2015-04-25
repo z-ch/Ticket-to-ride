@@ -271,9 +271,8 @@ public class Player
     }
 
     /**
-     * gets this player's name
+     * Gets this player's name
      * @return this Player's name field
-     *
      */
     public String getName() { 
         return name;
