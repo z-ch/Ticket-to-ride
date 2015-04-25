@@ -480,15 +480,52 @@ implements MouseListener
             g.fillRect(1025, 420, 79, 2);
         }
     }
-    
+
     /**
      * Shows the destination cards the current player has
      */
     private void showDestinationCards() {
-        String str = "";
-        for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
-            str += playerList[currPlayer].getDestCard(i).toString() + "\n";
-        JOptionPane.showMessageDialog(this, str);
+        try{
+            String str = "";
+            for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
+                str += playerList[currPlayer].getDestCard(i).toString() + "\n";
+            JOptionPane.showMessageDialog(this, str);
+
+            //             JLabel[] members = new JLabel[playerList[currPlayer].getDestCardSize()];
+            //             for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
+            //                 BufferedImage cardImage = ImageIO.read(((Card)playerList[currPlayer].getDestCard(i)).getImagePath().toFile());
+            //                 //Scales the destination cards
+            //                 Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
+            //                 ImageIcon icon = new ImageIcon(cardImageScaled);
+            //                 members[i] = new JLabel(icon,JLabel.LEFT);
+            //             }
+            //             ArrayList<Object> choices = new ArrayList<Object>();
+            //             for(int i = 0; i < members.length; i++) {
+            //                 choices.add(members[i]);
+            //             }
+            // 
+            //             JOptionPane.showConfirmDialog ( this,  choices,  "Here are your Destination Cards", JOptionPane.DEFAULT_OPTION); 
+            ImageIcon[] icon = new ImageIcon[playerList[currPlayer].getDestCardSize()];
+            JLabel[] members = new JLabel[playerList[currPlayer].getDestCardSize()];
+            for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
+                BufferedImage cardImage = ImageIO.read(((Card)playerList[currPlayer].getDestCard(i)).getImagePath().toFile());
+                Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
+                icon[i] = new ImageIcon(cardImageScaled);
+                members[i] = new JLabel(icon[i],JLabel.HORIZONTAL);
+            }
+            //ImageIcon icon = new ImageIcon(cardImageScaled);
+            //             JOptionPane.showMessageDialog(
+            //                 null,
+            //                 "Hello world",
+            //                 "Hello", JOptionPane.INFORMATION_MESSAGE,
+            //                 icon);
+            JOptionPane.showMessageDialog(
+                null,
+                members,
+                "Hello", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(IOException e) { showStatus(e.toString()); }
+        //choice= JOptionPane.showOptionDialog(null, "Here are your Destination Cards", playerList[currPlayer].getName()+ " Destination Cards:", JOptionPane.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE, new ImageIcon("mog.gif"), members, members[4]);
     }
 
     /**
@@ -633,8 +670,7 @@ implements MouseListener
             playerList[i].setN(numPlayerName);
         }
 
-        for(int i = 0; i < numPlayers; i++) {
-            //String inputValue = JOptionPane.showInputDialog("Please choose a color"); 
+        for(int i = 0; i < numPlayers; i++) { 
             String player1Color = (String) JOptionPane.showInputDialog(
                     null, "What color what you like to be",
                     "Message to " + name[i], JOptionPane.QUESTION_MESSAGE, null,
@@ -879,23 +915,35 @@ implements MouseListener
 
             if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
             && (currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()
-            ||  (Route.routeColorToString(getColorRoute()).equals("gray")))) { // gray color
-                //&&   currentPlayer.getMaxTrainCarCards() >= routeToBuy.getLength()))) { 
+                || (Route.routeColorToString(getColorRoute()).equals("gray")))) { // gray color
+                //&& currentPlayer.getMaxTrainCarCards() >= routeToBuy.getLength()))) { 
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
                 Player otherOwner = null;
                 String routeColor = Route.routeColorToString(getColorRoute());
                 if (Route.routeColorToString(getColorRoute()).equals("gray")) {
                     // GUI set routeColor to whatever they want
-                    routeColor = "purple";
+                    ArrayList<String> cardColors = new ArrayList<String>(Arrays.asList(
+                                "GREEN", "YELLOW", "RED", "BLUE", "BLACK", "ORANGE", "PURPLE", "WHITE"));
+                    while (currentPlayer.getTrainCarsCards(routeColor) < routeToBuy.getLength()) {   
+                        String cardColorUsed = (String) JOptionPane.showInputDialog(
+                                null, "What color would you like to use?",
+                                "Message to " + playerList[currPlayer].getName(), JOptionPane.QUESTION_MESSAGE, null,
+                                cardColors.toArray(), cardColors.get(0));
+                        routeColor = cardColorUsed.toLowerCase();
+                        if (currentPlayer.getTrainCarsCards(routeColor) < routeToBuy.getLength())
+                            JOptionPane.showMessageDialog(this, 
+                                "You don't have enough of those Cards!\nPress cancel in the next window\nto do something else");
+                    }
+
                 }
-                
+
                 for (Player pr : playerList)
                     if (pr.hasRoute(city1, city2)) {
                         showStatus("playerHasRoute");
                         ++ownerCount;
                         otherOwner = pr;
-                    }
+                }
                 if (!isDouble) {
                     if (ownerCount > 0) {
                         // don't let them buy the route
