@@ -265,7 +265,7 @@ public class Player
         for (DestinationCard dc : destCards) {
             int destValue = dc.getValue();
             String[] cities = dc.getCities();
-            if (canReach(cities[0], cities[1], g)) 
+            if (canReach(cities[0], cities[1], g, new ArrayList<City>())) 
                 pointCount += destValue;
             else
                 pointCount -= destValue;
@@ -287,12 +287,15 @@ public class Player
      * @return true if player can reach cityTwo from cityOne,
      *         false otherwise
      */
-    public boolean canReach(String cityOne, String cityTwo, Graph g) {
+    public boolean canReach(String cityOne, String cityTwo, Graph g, ArrayList<City> checkedCities) {
         if (g.hasEdge(cityOne, cityTwo)) return this.hasRoute(cityOne, cityTwo);
         LinkedList<City> adjacentCities = g.adjMatrix.get(cityOne);
-        for (City c : adjacentCities)
-            if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(), cityTwo, g))
+        for (City c : adjacentCities) {
+            if (checkedCities.contains(c)) continue;
+            checkedCities.add(c);
+            if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(), cityTwo, g, checkedCities))
                 return true;
+        }
         return false;
     }
 

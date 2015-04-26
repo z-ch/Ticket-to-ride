@@ -32,29 +32,31 @@ implements MouseListener
     private Board gameBoard = new Board();
     protected Image img, img2;
     protected Image backDestCard;
-    int startGame = 0;
-    boolean paintDest = false;
+    private int startGame = 0;
+    private boolean paintDest = false;
     private Image[] firstDest= new Image[5];
     private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
-    int currPlayer = 0;
-    boolean now = false;
-    int clickX, clickY;
-    boolean click = false;
-    boolean destinationDeckDraw = false; 
-    boolean chooseDestClicked = true;
-    boolean trainDeckDraw = false;
-    boolean trainRiverDraw = false;
-    boolean purchaseRoute = false;
-    int trainDrawCount = 0;
-    int clickedCard;   //0-4 inclusive
-    String cityNameRouteOne, cityNameRouteTwo;
-    ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
-    ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
+    private int currPlayer = 0;
+    private boolean now = false;
+    private int clickX, clickY;
+    private boolean click = false;
+    private boolean destinationDeckDraw = false; 
+    private boolean chooseDestClicked = true;
+    private boolean trainDeckDraw = false;
+    private boolean trainRiverDraw = false;
+    private boolean purchaseRoute = false;
+    private int trainDrawCount = 0;
+    private int clickedCard;   //0-4 inclusive
+    private String cityNameRouteOne, cityNameRouteTwo;
+    private ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
+    private ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
     private Player lastPlayer = null;
     private boolean lastTurn = false;
     private boolean goingOneLastTime = true;
+    private boolean lastJOPShown = false;
+    private boolean finalScoresCalculated = false;
     private boolean lastPaint = false;
     private boolean gameOver = false;
 
@@ -213,8 +215,25 @@ implements MouseListener
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g) {
-        if (gameOver)
+        if (gameOver) {
             return;
+            //             if (lastJOPShown)
+            //                 return;
+            //             else {
+            //                 if (!finalScoresCalculated) {
+            //                     addBonusPoints();
+            //                     for (Player pr : playerList)
+            //                         pr.addPoints(pr.calculateDestinationPoints());
+            //                     finalScoresCalculated = true;
+            //                 }
+            //                 String scoreString = "";
+            //                 for (Player pr : playerList)
+            //                     scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
+            //                 lastJOPShown = true;
+            //                 JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+            //                 
+            //             }
+        }
         int lastPlayer = currPlayer;
         //if (lastPaint)
         //endGame();
@@ -1136,10 +1155,11 @@ implements MouseListener
             addBonusPoints();
             for (Player pr : playerList)
                 pr.addPoints(pr.calculateDestinationPoints());
-
+            finalScoresCalculated = true;
             for (Player pr : playerList)
                 scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
             JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+            lastJOPShown = true;
         }
         catch (ArrayIndexOutOfBoundsException e) { showStatus("Array"); }
         catch (NullPointerException e) { showStatus("null"); }
