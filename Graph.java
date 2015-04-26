@@ -5,13 +5,15 @@ import java.util.Collections;
 /**
  * Graph class.
  * 
- * @author (your name) 
+ * @author (Koushik P, Zach S, Ryan W, Theresa S, 
+ * Andi E) 
  * @version 3.24.15
  */
 public class Graph
 {
     // RE ADD PROTECTED
-    /*protected*/ Hashtable<String, LinkedList<City>> adjMatrix = new Hashtable<>();
+    /*protected*/ Hashtable<String, LinkedList<City>> adjMatrix 
+            = new Hashtable<>();
     public final int numCities;
 
     /**
@@ -55,18 +57,23 @@ public class Graph
         addEdge("Arnhem", "Nijmegen"); addEdge("Arnhem", "Nijmegen");
         addEdge("Amsterdam", "Rotterdam"); addEdge("Amsterdam", "Rotterdam");
         addEdge("Rotterdam", "Utrecht");
-        addEdge("Utrecht", "'sHertogenbosch"); addEdge("Utrecht", "'sHertogenbosch");
+        addEdge("Utrecht", "'sHertogenbosch"); 
+        addEdge("Utrecht", "'sHertogenbosch");
         addEdge("Nijmegen", "Duisburg"); addEdge("Nijmegen", "Duisburg");
         addEdge("Nijmegen","Eindhoven"); addEdge("Nijmegen","Eindhoven");
         addEdge("Duisburg", "Roermond"); addEdge("Duisburg", "Roermond"); 
         addEdge("Eindhoven", "Roermond"); addEdge("Eindhoven", "Roermond");
         addEdge("Eindhoven", "Maastricht"); addEdge("Eindhoven", "Maastricht");
-        addEdge("Eindhoven", "'sHertogenbosch"); addEdge("Eindhoven", "'sHertogenbosch");
-        addEdge("'sHertogenbosch", "Breda");  addEdge("'sHertogenbosch", "Breda");
+        addEdge("Eindhoven", "'sHertogenbosch");
+        addEdge("Eindhoven", "'sHertogenbosch");
+        addEdge("'sHertogenbosch", "Breda"); 
+        addEdge("'sHertogenbosch", "Breda");
         addEdge("Breda", "Rotterdam"); addEdge("Breda", "Rotterdam"); 
         addEdge("Breda", "Turnhout"); addEdge("Breda", "Turnhout");
-        addEdge("'sGravenhage", "Rotterdam"); addEdge("'sGravenhage", "Rotterdam");
-        addEdge("'sGravenhage", "Middelburg"); addEdge("'sGravenhage", "Middelburg");
+        addEdge("'sGravenhage", "Rotterdam"); 
+        addEdge("'sGravenhage", "Rotterdam");
+        addEdge("'sGravenhage", "Middelburg");
+        addEdge("'sGravenhage", "Middelburg");
         addEdge("Middelburg", "Antwerpen"); addEdge("Middelburg", "Antwerpen");
         addEdge("Antwerpen", "Rotterdam"); addEdge("Antwerpen", "Rotterdam");
         addEdge("Roermond", "Maastricht"); addEdge("Roermond", "Maastricht"); 
@@ -96,7 +103,8 @@ public class Graph
         //             adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
         //             System.out.print("Got cityOne from CityList, ");
         //             System.out.println("OK");
-        //         } catch (NullPointerException e) { System.out.println("AAAHHHH"); }
+        //         } catch (NullPointerException e) 
+        //{ System.out.println("AAAHHHH"); }
     }
 
     /**
@@ -117,7 +125,8 @@ public class Graph
      * @return true if this route is double, else false
      */
     public boolean isDouble(String cityOne, String cityTwo) {
-        int occurrences = Collections.frequency(adjMatrix.get(cityOne), CityList.getCity(cityTwo));
+        int occurrences = Collections.frequency(adjMatrix.get(cityOne), 
+                CityList.getCity(cityTwo));
         return occurrences == 2;
     }
     
@@ -137,7 +146,9 @@ public class Graph
      */
     public static void test() {
         Graph g = new Graph();
-        System.out.println(g.hasEdge("Hasselt", "Liege") + "\n" + g.hasEdge("Hasselt","Amsterdam"));
-        System.out.println(g.isDouble("Hasselt","Liege") + "\n" + g.isDouble("Hasselt", "Maastricht"));
+        System.out.println(g.hasEdge("Hasselt", "Liege") + "\n" +
+                g.hasEdge("Hasselt","Amsterdam"));
+        System.out.println(g.isDouble("Hasselt","Liege") + "\n" +
+                g.isDouble("Hasselt", "Maastricht"));
     }
 }

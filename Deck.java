@@ -3,7 +3,8 @@ import java.util.Random;
 /**
  * Deck Object containing a List of Cards
  * 
- * @author (your name) 
+ * @author (Koushik P, Zach S, 
+ * Ryan W, Theresa S, Andi E) 
  * @version 3.22.2015
  */
 public class Deck
