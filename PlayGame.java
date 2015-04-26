@@ -32,29 +32,31 @@ implements MouseListener
     private Board gameBoard = new Board();
     protected Image img, img2;
     protected Image backDestCard;
-    int startGame = 0;
-    boolean paintDest = false;
+    private int startGame = 0;
+    private boolean paintDest = false;
     private Image[] firstDest= new Image[5];
     private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
-    int currPlayer = 0;
-    boolean now = false;
-    int clickX, clickY;
-    boolean click = false;
-    boolean destinationDeckDraw = false; 
-    boolean chooseDestClicked = true;
-    boolean trainDeckDraw = false;
-    boolean trainRiverDraw = false;
-    boolean purchaseRoute = false;
-    int trainDrawCount = 0;
-    int clickedCard;   //0-4 inclusive
-    String cityNameRouteOne, cityNameRouteTwo;
-    ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
-    ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
+    private int currPlayer = 0;
+    private boolean now = false;
+    private int clickX, clickY;
+    private boolean click = false;
+    private boolean destinationDeckDraw = false; 
+    private boolean chooseDestClicked = true;
+    private boolean trainDeckDraw = false;
+    private boolean trainRiverDraw = false;
+    private boolean purchaseRoute = false;
+    private int trainDrawCount = 0;
+    private int clickedCard;   //0-4 inclusive
+    private String cityNameRouteOne, cityNameRouteTwo;
+    private ArrayList<Polygon> boughtRoutesPoly = new ArrayList<Polygon>();
+    private ArrayList<Color> boughtRoutesPolyColor = new ArrayList<Color>();
     private Player lastPlayer = null;
     private boolean lastTurn = false;
     private boolean goingOneLastTime = true;
+    private boolean lastJOPShown = false;
+    private boolean finalScoresCalculated = false;
     private boolean lastPaint = false;
     private boolean gameOver = false;
 
@@ -105,7 +107,7 @@ implements MouseListener
         addCardToDestinationDeck(new String[] {"Liege", "Duisburg"}, 12, "images/Liege-Duisburg.jpg");
         addCardToDestinationDeck(new String[] {"Haarlem", "Breda"}, 12, "images/Haarlem-Breda.jpg");
         addCardToDestinationDeck(new String[] {"Rotterdam", "Antwerpen"}, 13, "images/Rotterdam-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "Nijemgen"}, 13, "images/Amsterdam-Nijemgen.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Nijmegen"}, 13, "images/Amsterdam-Nijemgen.jpg");
         addCardToDestinationDeck(new String[] {"Emmen", "Lelystad"}, 13, "images/Emmen-Lelystad.jpg");
         addCardToDestinationDeck(new String[] {"Lingen", "Duisburg"}, 14, "images/Lingen-Duisburg.jpg");
         addCardToDestinationDeck(new String[] {"'sGravenhage", "Antwerpen"}, 14, "images/'sGravenhage-Antwerpen.jpg");
@@ -132,7 +134,7 @@ implements MouseListener
         addCardToDestinationDeck(new String[] {"Utrecht", "Hasselt"}, 22, "images/Utrecht-Hasselt.jpg");
         addCardToDestinationDeck(new String[] {"Emden", "Utrecht"}, 22, "images/Emden-Utrecht.jpg");
         addCardToDestinationDeck(new String[] {"Duisburg", "Rotterdam"}, 23, "images/Duisburg-Rotterdam.jpg");
-        addCardToDestinationDeck(new String[] {"Leeuwarden", "'sHerlogenbosch"}, 24, "images/Leeuwarden-'sHerlogenbosch.jpg");
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "'sHertogenbosch"}, 24, "images/Leeuwarden-'sHerlogenbosch.jpg");
         addCardToDestinationDeck(new String[] {"Lelystad", "Aarschot"}, 24, "images/Lelystad-Aarschot.jpg");
         addCardToDestinationDeck(new String[] {"Lingen", "'sGravenhage"}, 26, "images/Lingen-'sGravenhage.jpg");
         addCardToDestinationDeck(new String[] {"Sneek", "Eindhoven"}, 26, "images/Sneek-Eindhoven.jpg");
@@ -213,8 +215,25 @@ implements MouseListener
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g) {
-        if (gameOver)
+        if (gameOver) {
             return;
+            //             if (lastJOPShown)
+            //                 return;
+            //             else {
+            //                 if (!finalScoresCalculated) {
+            //                     addBonusPoints();
+            //                     for (Player pr : playerList)
+            //                         pr.addPoints(pr.calculateDestinationPoints());
+            //                     finalScoresCalculated = true;
+            //                 }
+            //                 String scoreString = "";
+            //                 for (Player pr : playerList)
+            //                     scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
+            //                 lastJOPShown = true;
+            //                 JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+            //                 
+            //             }
+        }
         int lastPlayer = currPlayer;
         //if (lastPaint)
         //endGame();
@@ -276,8 +295,6 @@ implements MouseListener
             if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
                 //showDestinationCards();   HAVE TO IMPLEMENT
                 g.setColor(Color.black);
-                g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
                 showDestinationCards();
                 checkIfLastPlayer(playerList[currPlayer]);
                 checkIfGameIsAlmostOver();  
@@ -387,8 +404,7 @@ implements MouseListener
     public String[] routeClicked() {
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
-                String[] rout = routeTrains.citiesLinked(i);
-                //JOptionPane.showMessageDialog(this, rout[0]+ " " +rout[1]);                
+                String[] rout = routeTrains.citiesLinked(i);               
                 return rout;
             }
         }
@@ -403,7 +419,6 @@ implements MouseListener
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
                 Polygon rout = routeTrains.getRoutePolygon(i);
-                //JOptionPane.showMessageDialog(this, "getRoutPoly()");
                 return rout;
             }
         }
@@ -464,19 +479,24 @@ implements MouseListener
     public void cardClickedhighLight(Graphics g) {
         Color need = getCurPlayerColor();
         g.setColor(need);
-        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
+        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(685, 420, 79, 2);
         }
-        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418) {
+        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(770, 420, 79, 2);
         }
-        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418) {
+        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(855, 420, 79, 2);
         }        
-        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418) {
+        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(940, 420, 79, 2);
         }
-        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418) {
+        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(1025, 420, 79, 2);
         }
     }
@@ -485,45 +505,27 @@ implements MouseListener
      * Shows the destination cards the current player has
      */
     private void showDestinationCards() {
+        //HAVE TO SEE IF THIS WILL WORK IF THE COMMENTS ARE TAKEN
         try{
-            String str = "";
-            for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
-                str += playerList[currPlayer].getDestCard(i).toString() + "\n";
-            JOptionPane.showMessageDialog(this, str);
 
-            //             JLabel[] members = new JLabel[playerList[currPlayer].getDestCardSize()];
-            //             for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
-            //                 BufferedImage cardImage = ImageIO.read(((Card)playerList[currPlayer].getDestCard(i)).getImagePath().toFile());
-            //                 //Scales the destination cards
-            //                 Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
-            //                 ImageIcon icon = new ImageIcon(cardImageScaled);
-            //                 members[i] = new JLabel(icon,JLabel.LEFT);
-            //             }
-            //             ArrayList<Object> choices = new ArrayList<Object>();
-            //             for(int i = 0; i < members.length; i++) {
-            //                 choices.add(members[i]);
-            //             }
-            // 
-            //             JOptionPane.showConfirmDialog ( this,  choices,  "Here are your Destination Cards", JOptionPane.DEFAULT_OPTION); 
             ImageIcon[] icon = new ImageIcon[playerList[currPlayer].getDestCardSize()];
             JLabel[] members = new JLabel[playerList[currPlayer].getDestCardSize()];
             for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
                 BufferedImage cardImage = ImageIO.read(((Card)playerList[currPlayer].getDestCard(i)).getImagePath().toFile());
                 Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                 icon[i] = new ImageIcon(cardImageScaled);
-                members[i] = new JLabel(icon[i],JLabel.HORIZONTAL);
+                members[i] = new JLabel(icon[i],JLabel.LEADING );
             }
-            //ImageIcon icon = new ImageIcon(cardImageScaled);
-            //             JOptionPane.showMessageDialog(
-            //                 null,
-            //                 "Hello world",
-            //                 "Hello", JOptionPane.INFORMATION_MESSAGE,
-            //                 icon);
-            JOptionPane.showMessageDialog(
-                null,
-                members,
-                "Hello", JOptionPane.INFORMATION_MESSAGE);
-        }
+
+            JOptionPane.showOptionDialog(this,
+                "YOUR DESTINATION CARDS",
+                "YOUR DESTINATION CARDS",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.PLAIN_MESSAGE,
+                null,     //do not use a custom Icon
+                members,  //the titles of buttons
+                members[0]); //default button title
+        } 
         catch(IOException e) { showStatus(e.toString()); }
         //choice= JOptionPane.showOptionDialog(null, "Here are your Destination Cards", playerList[currPlayer].getName()+ " Destination Cards:", JOptionPane.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE, new ImageIcon("mog.gif"), members, members[4]);
     }
@@ -992,7 +994,6 @@ implements MouseListener
     private void drawDestinationCardsInGame() {
         try {
             Graphics g = getGraphics();
-
             DestinationCard[] draw = new DestinationCard[4];
             for (int c=0; c<4; c++)
                 draw[c] = (DestinationCard)destinationDeck.drawCard();
@@ -1008,7 +1009,9 @@ implements MouseListener
             g.drawImage(firstDest[0], 640, 40, this);
             g.drawImage(firstDest[1], 980, 40, this);
             g.drawImage(firstDest[2], 640, 470, this);
-            g.drawImage(firstDest[3], 980, 470, this);
+            g.drawImage(firstDest[3], 980, 470, this);            
+            
+            drawTrains(g);
 
             JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
             JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
@@ -1136,10 +1139,11 @@ implements MouseListener
             addBonusPoints();
             for (Player pr : playerList)
                 pr.addPoints(pr.calculateDestinationPoints());
-
+            finalScoresCalculated = true;
             for (Player pr : playerList)
                 scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
             JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
+            lastJOPShown = true;
         }
         catch (ArrayIndexOutOfBoundsException e) { showStatus("Array"); }
         catch (NullPointerException e) { showStatus("null"); }
