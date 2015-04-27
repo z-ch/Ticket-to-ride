@@ -1,8 +1,10 @@
 import java.nio.file.Path;
 /**
- * Abstract class Card
+ * Super class containing methods and variables used in both 
+ * destination cards and train car card
  * 
- * @author (your name here)
+ * @author (Koushik P, Zach S,
+ * Ryan W, Theresa S, Andi E)
  * @version 3.27.2015
  */
 public abstract class Card

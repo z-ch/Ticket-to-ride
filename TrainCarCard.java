@@ -1,9 +1,10 @@
 import java.io.File;
 import java.nio.file.*;
 /**
- * Write a description of class TrainCarCard here.
+ * Models a train car card
  * 
- * @author (your name) 
+ * @author (Koushik P, Zach S, Ryan W, 
+ * Theresa S, Andi E) 
  * @version 3.22.2015
  */
 public class TrainCarCard extends Card
@@ -52,6 +53,7 @@ public class TrainCarCard extends Card
      */
     @Override
     public boolean equals(Object tcc) {
-        return tcc instanceof TrainCarCard && color.equals(((TrainCarCard) tcc).color);
+        return tcc instanceof TrainCarCard && color
+                .equals(((TrainCarCard) tcc).color);
     }
 }

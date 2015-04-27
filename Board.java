@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 /**
- * Write a description of class Board here....
+ * Class board creates a deck of destination cards,
+ * and an arraylist representing the river of train car 
+ * cards
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Koushik P, Zach S,
+ * Ryan W, Theresa S, Andi E) 
+ * @version (3.24.15)
  */
 public class Board
 {
