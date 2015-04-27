@@ -1,10 +1,9 @@
 import java.nio.file.Path;
 import java.io.File;
 /**
- * DestinationCard models a destination card 
+ * DestinationCard class
  * 
- * @author (Koushik P, Zach S,
- * Ryan W, Theresa S, Andi E) 
+ * @author (your name) 
  * @version 3.22.2015
  */
 public class DestinationCard extends Card

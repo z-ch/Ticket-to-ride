@@ -1,11 +1,9 @@
 import java.util.Hashtable;
 import java.util.ArrayList;
 /**
- * Class CityList is a list of all 
- * cities needed for the graph in ticket to ride. 
+ * Write a description of class CityList here.
  * 
- * @author (Koushik P,
- * Zach S, Ryan W, Theresa S, Andi E) 
+ * @author (your name) 
  * @version 3.24.15
  */
 public class CityList
