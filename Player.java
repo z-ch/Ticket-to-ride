@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 /**
- * Models a player for the game
+ * Write a description of class Player here.
  * 
- * @author (Koushik P, Zach S, Ryan W, Theresa S, 
- * Andi E) 
+ * @author (your name) 
  * @version 3.22.2015
  */
 public class Player
@@ -21,8 +20,7 @@ public class Player
      * Constructor for player objects.
      */
     public Player() {
-        cars = 40; tokens = 30; points = 0; bonus = true; 
-// fix this so name and color can be final
+        cars = 40; tokens = 30; points = 0; bonus = true; // fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
 
@@ -113,8 +111,7 @@ public class Player
      */
     public boolean hasRoute(City cityOne, City cityTwo) {
         return this.hasRoute(cityOne.getName(), cityTwo.getName());
-        //return this.capturedRoutes.
-        //contains(new Route(cityOne.getName(), cityTwo.getName()));
+        //return this.capturedRoutes.contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
 
     /**
@@ -137,8 +134,7 @@ public class Player
      * @param rcolor String name of RouteColor
      * @param d Deck to add the discarded cards back into
      */
-    public void addRoute(String cityOne, String cityTwo, String rcolor,
-            Deck d) {
+    public void addRoute(String cityOne, String cityTwo, String rcolor, Deck d) {
         //if (!hasRoute(cityOne,cityTwo)) {
         Route rte = new Route(cityOne, cityTwo);
         cars -= rte.getLength();
@@ -208,8 +204,7 @@ public class Player
     public int getTrainCarsCards(String trainCarColor) {
         int total = 0;
         for (TrainCarCard tcc : trainCards)
-            if (trainCarColor.equals(tcc.getColor()) ||
-                    tcc.getColor().equals("rainbow"))
+            if (trainCarColor.equals(tcc.getColor()) || tcc.getColor().equals("rainbow"))
                 ++total;
         return total;
     }
@@ -292,15 +287,13 @@ public class Player
      * @return true if player can reach cityTwo from cityOne,
      *         false otherwise
      */
-    public boolean canReach(String cityOne, String cityTwo, Graph g,
-            ArrayList<City> checkedCities) {
+    public boolean canReach(String cityOne, String cityTwo, Graph g, ArrayList<City> checkedCities) {
         if (g.hasEdge(cityOne, cityTwo)) return this.hasRoute(cityOne, cityTwo);
         LinkedList<City> adjacentCities = g.adjMatrix.get(cityOne);
         for (City c : adjacentCities) {
             if (checkedCities.contains(c)) continue;
             checkedCities.add(c);
-            if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(),
-                    cityTwo, g, checkedCities))
+            if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(), cityTwo, g, checkedCities))
                 return true;
         }
         return false;
@@ -324,8 +317,7 @@ public class Player
         String colorstr = "";
         for (TrainCarCard color : tc) {
             for (TrainCarCard tcc : trainCards) 
-                if (color.getColor().equals(tcc.getColor()) || 
-                        tcc.getColor().equals("rainbow"))
+                if (color.getColor().equals(tcc.getColor()) || tcc.getColor().equals("rainbow"))
                     ++total;
             if (total > max) { 
                 max = total;

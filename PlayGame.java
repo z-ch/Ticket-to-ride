@@ -8,10 +8,9 @@ import java.nio.file.*;
 import java.util.*;
 import java.awt.event.*;
 /**
- * Class contains methods for the setup of game, gameplay and graphics.
+ * PlayGame class.
  * 
- * @author (Koushik P, Zach S, Ryan W, Theresa S, 
- * Andi E) 
+ * @author (your name) 
  * @version 3.27.2015
  */
 public class PlayGame extends JApplet 
@@ -20,7 +19,7 @@ implements MouseListener
     public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
     public Graph graph = new Graph();
     public RouteTrains routeTrains = new RouteTrains();
-    protected BufferedImage backgroundImage = null; 
+    protected BufferedImage backgroundImage = null; //protected BufferedImage boardImage = null;
     protected BufferedImage backgroundImage2 = null;
     protected BufferedImage cardBack = null;
     private int numPlayers = 0;
@@ -36,8 +35,7 @@ implements MouseListener
     private int startGame = 0;
     private boolean paintDest = false;
     private Image[] firstDest= new Image[5];
-    private ArrayList<String> availableColors = new ArrayList<String>(Arrays
-            .asList(
+    private ArrayList<String> availableColors = new ArrayList<String>(Arrays.asList(
                 "GREEN", "YELLOW", "RED", "BLUE", "BLACK"));
     protected Player[] playerList;
     private int currPlayer = 0;
@@ -63,9 +61,6 @@ implements MouseListener
     private boolean gameOver = false;
 
     // delete this?
-    /**
-     * Constructor for class PlayGame
-     */
     public PlayGame() {
         createDestinationDeck();
     }
@@ -100,97 +95,55 @@ implements MouseListener
 
     /**
      * Create all the destination cards
+     * TODO: line wrapping 
      */
     private void createDestinationDeck(){
         destinationDeck = new Deck();
-        addCardToDestinationDeck(new String[] {"Breda", "Eindhoven"}, 7,
-                "images/Breda-Eindhoven.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "'sGravenhage"}, 9,
-                "images/Amsterdam-'sGravenhage.jpg");
-        addCardToDestinationDeck(new String[] {"Arnhem", "'sHertogenbosch"}, 10,
-                "images/Arnhem-'sHertogenbosch.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "Rotterdam"}, 10, 
-                "images/Amsterdam-Rotterdam.jpg");
-        addCardToDestinationDeck(new String[] {"Rotterdam", "Turnhout"}, 12,
-                "images/Rotterdam-Turnhout.jpg");
-        addCardToDestinationDeck(new String[] {"Liege", "Duisburg"}, 12,
-                "images/Liege-Duisburg.jpg");
-        addCardToDestinationDeck(new String[] {"Haarlem", "Breda"}, 12,
-                "images/Haarlem-Breda.jpg");
-        addCardToDestinationDeck(new String[] {"Rotterdam", "Antwerpen"}, 13,
-                "images/Rotterdam-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "Nijmegen"}, 13,
-                "images/Amsterdam-Nijemgen.jpg");
-        addCardToDestinationDeck(new String[] {"Emmen", "Lelystad"}, 13,
-                "images/Emmen-Lelystad.jpg");
-        addCardToDestinationDeck(new String[] {"Lingen", "Duisburg"}, 14, 
-                "images/Lingen-Duisburg.jpg");
-        addCardToDestinationDeck(new String[] {"'sGravenhage", "Antwerpen"}, 14,
-                "images/'sGravenhage-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Groningen", "Enschede"}, 14,
-                "images/Groningen-Enschede.jpg");
-        addCardToDestinationDeck(new String[] {"Zwolle", "Haarlem"}, 14, 
-                "images/Zwolle-Haarlem.jpg");
-        addCardToDestinationDeck(new String[] {"Arnhem", "'sGravenhage"}, 14,
-                "images/Arnhem-'sGravenhage.jpg");
-        addCardToDestinationDeck(new String[] {"DenHelder", "Rotterdam"}, 14,
-                "images/DenHelder-Rotterdam.jpg");
-        
-        
-        addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"},
-                15, "images/Enschede-Eindhoven.jpg");
-        addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"},
-                15, "images/Leeuwarden-Haarlem.jpg");
-        addCardToDestinationDeck(new String[] {"Emden", "Waddensilanden"},
-                16, "images/Emden-Waddensilanden.jpg");
-        addCardToDestinationDeck(new String[] {"Sneek", "Utrecht"}, 16,
-                "images/Sneek-Utrecht.jpg");
-        addCardToDestinationDeck(new String[] {"Zwolle", "Rotterdam"}, 17,
-                "images/Zwolle-Rotterdam.jpg");
-        addCardToDestinationDeck(new String[] {"'sGravenhage", "Liege"}, 18,
-                "images/'sGravenhage-Liege.jpg");
-        addCardToDestinationDeck(new String[] {"Zwolle", "Maastricht"}, 18,
-                "images/Zwolle-Maastricht.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "Antwerpen"}, 19,
-                "images/Amsterdam-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Utrecht", "Middelburg"}, 19,
-                "images/Utrecht-Middelburg.jpg");
-        addCardToDestinationDeck(new String[] {"Waddensilanden",
-            "'sGravenhage"}, 20, "images/Waddensilanden-'sGravenhage.jpg");
-        addCardToDestinationDeck(new String[] {"Amsterdam", "Maastricht"}, 20,
-                "images/Amsterdam-Maastricht.jpg");
-        addCardToDestinationDeck(new String[] {"Roermond", "Middelburg"}, 21,
-                "images/Roermond-Middelburg.jpg");
-        addCardToDestinationDeck(new String[] {"Groningen", "Amsterdam"}, 21,
-                "images/Groningen-Amsterdam.jpg");
-        addCardToDestinationDeck(new String[] {"Nijmegen", "Antwerpen"}, 21,
-                "images/Nijmegen-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Utrecht", "Hasselt"}, 22,
-                "images/Utrecht-Hasselt.jpg");
-        addCardToDestinationDeck(new String[] {"Emden", "Utrecht"}, 22,
-                "images/Emden-Utrecht.jpg");
-        addCardToDestinationDeck(new String[] {"Duisburg", "Rotterdam"}, 23,
-                "images/Duisburg-Rotterdam.jpg");
-        addCardToDestinationDeck(new String[] {"Leeuwarden", "'sHertogenbosch"},
-                24, "images/Leeuwarden-'sHerlogenbosch.jpg");
-        addCardToDestinationDeck(new String[] {"Lelystad", "Aarschot"}, 24,
-                "images/Lelystad-Aarschot.jpg");
-        addCardToDestinationDeck(new String[] {"Lingen", "'sGravenhage"}, 26,
-                "images/Lingen-'sGravenhage.jpg");
-        addCardToDestinationDeck(new String[] {"Sneek", "Eindhoven"}, 26,
-                "images/Sneek-Eindhoven.jpg");
-        addCardToDestinationDeck(new String[] {"DenHelder", "Liege"}, 29,
-                "images/DenHelder-Liege.jpg");
-        addCardToDestinationDeck(new String[] {"Groningen", "Breda"}, 31,
-                "images/Groningen-Breda.jpg");
-        addCardToDestinationDeck(new String[] {"Waddensilanden", "Duisburg"},
-                31, "images/Waddensilanden-Duisburg.jpg");
-        addCardToDestinationDeck(new String[] {"Leeuwarden", "Antwerpen"}, 32,
-                "images/Leeuwarden-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Emmen", "Antwerpen"}, 33,
-                "images/Emmen-Antwerpen.jpg");
-        addCardToDestinationDeck(new String[] {"Groningen", "Middelburg"}, 34,
-                "images/Groningen-Middelburg.jpg");         
+        addCardToDestinationDeck(new String[] {"Breda", "Eindhoven"}, 7, "images/Breda-Eindhoven.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "'sGravenhage"}, 9, "images/Amsterdam-'sGravenhage.jpg");
+        addCardToDestinationDeck(new String[] {"Arnhem", "'sHertogenbosch"}, 10, "images/Arnhem-'sHertogenbosch.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Rotterdam"}, 10, "images/Amsterdam-Rotterdam.jpg");
+        addCardToDestinationDeck(new String[] {"Rotterdam", "Turnhout"}, 12, "images/Rotterdam-Turnhout.jpg");
+        addCardToDestinationDeck(new String[] {"Liege", "Duisburg"}, 12, "images/Liege-Duisburg.jpg");
+        addCardToDestinationDeck(new String[] {"Haarlem", "Breda"}, 12, "images/Haarlem-Breda.jpg");
+        addCardToDestinationDeck(new String[] {"Rotterdam", "Antwerpen"}, 13, "images/Rotterdam-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Nijmegen"}, 13, "images/Amsterdam-Nijemgen.jpg");
+        addCardToDestinationDeck(new String[] {"Emmen", "Lelystad"}, 13, "images/Emmen-Lelystad.jpg");
+        addCardToDestinationDeck(new String[] {"Lingen", "Duisburg"}, 14, "images/Lingen-Duisburg.jpg");
+        addCardToDestinationDeck(new String[] {"'sGravenhage", "Antwerpen"}, 14, "images/'sGravenhage-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Groningen", "Enschede"}, 14, "images/Groningen-Enschede.jpg");
+        addCardToDestinationDeck(new String[] {"Zwolle", "Haarlem"}, 14, "images/Zwolle-Haarlem.jpg");
+        addCardToDestinationDeck(new String[] {"Arnhem", "'sGravenhage"}, 14, "images/Arnhem-'sGravenhage.jpg");
+        addCardToDestinationDeck(new String[] {"DenHelder", "Rotterdam"}, 14, "images/DenHelder-Rotterdam.jpg");
+        // need to scan next file
+        //addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"}, 15, "images/Enschede-Amsterdam.jpg");
+        addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"}, 15, "images/Enschede-Eindhoven.jpg");
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"}, 15, "images/Leeuwarden-Haarlem.jpg");
+        addCardToDestinationDeck(new String[] {"Emden", "Waddensilanden"}, 16, "images/Emden-Waddensilanden.jpg");
+        addCardToDestinationDeck(new String[] {"Sneek", "Utrecht"}, 16, "images/Sneek-Utrecht.jpg");
+        addCardToDestinationDeck(new String[] {"Zwolle", "Rotterdam"}, 17, "images/Zwolle-Rotterdam.jpg");
+        addCardToDestinationDeck(new String[] {"'sGravenhage", "Liege"}, 18, "images/'sGravenhage-Liege.jpg");
+        addCardToDestinationDeck(new String[] {"Zwolle", "Maastricht"}, 18, "images/Zwolle-Maastricht.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Antwerpen"}, 19, "images/Amsterdam-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Utrecht", "Middelburg"}, 19, "images/Utrecht-Middelburg.jpg");
+        addCardToDestinationDeck(new String[] {"Waddensilanden", "'sGravenhage"}, 20, "images/Waddensilanden-'sGravenhage.jpg");
+        addCardToDestinationDeck(new String[] {"Amsterdam", "Maastricht"}, 20, "images/Amsterdam-Maastricht.jpg");
+        addCardToDestinationDeck(new String[] {"Roermond", "Middelburg"}, 21, "images/Roermond-Middelburg.jpg");
+        addCardToDestinationDeck(new String[] {"Groningen", "Amsterdam"}, 21, "images/Groningen-Amsterdam.jpg");
+        addCardToDestinationDeck(new String[] {"Nijmegen", "Antwerpen"}, 21, "images/Nijmegen-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Utrecht", "Hasselt"}, 22, "images/Utrecht-Hasselt.jpg");
+        addCardToDestinationDeck(new String[] {"Emden", "Utrecht"}, 22, "images/Emden-Utrecht.jpg");
+        addCardToDestinationDeck(new String[] {"Duisburg", "Rotterdam"}, 23, "images/Duisburg-Rotterdam.jpg");
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "'sHertogenbosch"}, 24, "images/Leeuwarden-'sHerlogenbosch.jpg");
+        addCardToDestinationDeck(new String[] {"Lelystad", "Aarschot"}, 24, "images/Lelystad-Aarschot.jpg");
+        addCardToDestinationDeck(new String[] {"Lingen", "'sGravenhage"}, 26, "images/Lingen-'sGravenhage.jpg");
+        addCardToDestinationDeck(new String[] {"Sneek", "Eindhoven"}, 26, "images/Sneek-Eindhoven.jpg");
+        addCardToDestinationDeck(new String[] {"DenHelder", "Liege"}, 29, "images/DenHelder-Liege.jpg");
+        addCardToDestinationDeck(new String[] {"Groningen", "Breda"}, 31, "images/Groningen-Breda.jpg");
+        addCardToDestinationDeck(new String[] {"Waddensilanden", "Duisburg"}, 31, "images/Waddensilanden-Duisburg.jpg");
+        addCardToDestinationDeck(new String[] {"Leeuwarden", "Antwerpen"}, 32, "images/Leeuwarden-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Emmen", "Antwerpen"}, 33, "images/Emmen-Antwerpen.jpg");
+        addCardToDestinationDeck(new String[] {"Groningen", "Middelburg"}, 34,"images/Groningen-Middelburg.jpg");         
     }
 
     /**
@@ -229,44 +182,26 @@ implements MouseListener
         // provide any initialisation necessary for your JApplet
 
         try {
-            backgroundImage = 
-                    ImageIO.read(new File("images/finishedBoard.png"));
+            backgroundImage = ImageIO.read(new File("images/finishedBoard.png"));
             backgroundImage2 = ImageIO.read(new File("images/sample3.png"));
             cardBack = ImageIO.read(new File("images/cardback.jpg"));
-           
-            img = backgroundImage.getScaledInstance(1220, 915,
-                    Image.SCALE_SMOOTH);
-            img2 = backgroundImage2.getScaledInstance(1220, 915,
-                    Image.SCALE_SMOOTH);
-            backDestCard = cardBack.getScaledInstance(79, 50,
-                    Image.SCALE_SMOOTH);
+            //img = backgroundImage.getScaledInstance(860, 645, Image.SCALE_SMOOTH);
+            img = backgroundImage.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            img2 = backgroundImage2.getScaledInstance(1220, 915, Image.SCALE_SMOOTH);
+            backDestCard = cardBack.getScaledInstance(79, 50, Image.SCALE_SMOOTH);
+            //boardImage = ImageIO.read(new File("images/board.jpg"));            
         } catch (IOException e) {
         }
     }
-    
-    /**
-     * @param e an event that indicates a mouse action has occured.
-     */
+
     public void mouseEntered( MouseEvent e ) { }
 
-    /**
-     * @param e an event that indicates a mouse action has occured.
-     */
     public void mouseExited( MouseEvent e ) { }
-    
-    /**
-     * @param e an event that indicates a mouse action has occured.
-     */
+
     public void mousePressed( MouseEvent e ) { }
-    
-    /**
-     * @param e an event that indicates a mouse action has occured.
-     */
+
     public void mouseReleased( MouseEvent e ) { }
-    
-    /**
-     * @param e an event that indicates a mouse action has occured.
-     */
+
     public void mouseClicked( MouseEvent e ) {
         clickX = e.getX();
         clickY = e.getY();
@@ -288,17 +223,14 @@ implements MouseListener
             //                 if (!finalScoresCalculated) {
             //                     addBonusPoints();
             //                     for (Player pr : playerList)
-            //                     pr.addPoints(pr.calculateDestinationPoints()
-                                        //);
+            //                         pr.addPoints(pr.calculateDestinationPoints());
             //                     finalScoresCalculated = true;
             //                 }
             //                 String scoreString = "";
             //                 for (Player pr : playerList)
-            //                     scoreString += pr.getName() + ": " + 
-            //                      pr.getPoints() + "\n";
+            //                     scoreString += pr.getName() + ": " + pr.getPoints() + "\n";
             //                 lastJOPShown = true;
-            //                 JOptionPane.showMessageDialog(this, "GAME OVER\n"
-                                //+ scoreString);
+            //                 JOptionPane.showMessageDialog(this, "GAME OVER\n" + scoreString);
             //                 
             //             }
         }
@@ -318,7 +250,7 @@ implements MouseListener
             g.drawImage(img2, 0, 0, this);
             //drawRiver(g); //Here will be the first five train cards drawn
             showCards(g);            
-            drawPlayerNameAndCars(g);        
+            drawPlayerNameAndCars(g);        //This to represent the players cars being drawn to board
             drawTrains(g); // This was used here to make sure the trains on the
             //actual board were being drawn correctly
             now = false;
@@ -327,11 +259,10 @@ implements MouseListener
             checkIfGameIsAlmostOver();
             //whatCardsIHave(g);
         }
-        
+        //HAVE TO SEE IF THE DEST CARD IS CLICKED IF IT WILL GO TO THE RIGHT PLAYER
         if(click) {
             click = false;
-            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 
-                    175 && (trainDrawCount%2 == 0)) {
+            if(clickX >= 678 && clickY >= 47 && clickX <= 881 && clickY <= 175 && (trainDrawCount%2 == 0)) {
                 destinationDeckDraw = true;
                 playerTurn(playerList[currPlayer]);
                 g.drawImage(img2, 0, 0, this);
@@ -349,9 +280,7 @@ implements MouseListener
                 cityNameRouteOne = cityRouteClickedOn[0];
                 cityNameRouteTwo = cityRouteClickedOn[1];
                 purchaseRoute = true;
-                JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +
-                        cityNameRouteTwo+
-                        " ( Color: " +getColorRoute() + " ) ");
+                JOptionPane.showMessageDialog(this, cityNameRouteOne+ " - " +cityNameRouteTwo+ " ( Color: " +getColorRoute() + " ) ");
                 playerTurn(playerList[currPlayer]);
                 g.drawImage(img2, 0, 0, this);
                 showCards(g);
@@ -363,12 +292,9 @@ implements MouseListener
             }
 
             //Show the players current destination cards
-            if(clickX >= 930 && clickY >= 780 && clickX <= 
-                    1009 && clickY <= 830) {
+            if(clickX >= 930 && clickY >= 780 && clickX <= 1009 && clickY <= 830) {
                 //showDestinationCards();   HAVE TO IMPLEMENT
                 g.setColor(Color.black);
-                g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
                 showDestinationCards();
                 checkIfLastPlayer(playerList[currPlayer]);
                 checkIfGameIsAlmostOver();  
@@ -416,14 +342,10 @@ implements MouseListener
     }
 
     //TEST FOR CARDS I HAVE : DESTINATION CARDS
-    /**
-     * @param  g   the Graphics object for this applet
-     */
     private void whatCardsIHave(Graphics g) {
         g.drawString("Player: " +playerList[currPlayer].name, 700, 320 );
         for(int i = 0; i < playerList[currPlayer].destCards.size(); i++) {
-            g.drawString("" +playerList[currPlayer].destCards.get(i).toString(),
-                    700, 350 + i*15 );
+            g.drawString("" +playerList[currPlayer].destCards.get(i).toString(), 700, 350 + i*15 );
         }
     }
 
@@ -442,22 +364,19 @@ implements MouseListener
 
     /**
      * Returns parameter information about this JApplet. 
-     * Returns information about the parameters than are understood 
-     * by this JApplet.
+     * Returns information about the parameters than are understood by this JApplet.
      * An applet should override this method to return an array of Strings 
      * describing these parameters. 
      * Each element of the array should be a set of three Strings containing 
      * the name, the type, and a description.
      *
-     * @return a String[] representation of 
-     * parameter information about this JApplet
+     * @return a String[] representation of parameter information about this JApplet
      */
     public String[][] getParameterInfo()
     {
         // provide parameter information about the applet
         String paramInfo[][] = {
-                {"firstParameter",    "1-10",   
-                    "description of first parameter"},
+                {"firstParameter",    "1-10",    "description of first parameter"},
                 {"status", "boolean", "description of second parameter"},
                 {"images",   "url",     "description of third parameter"}
             };
@@ -471,7 +390,7 @@ implements MouseListener
      */
     public Route.RouteColor getColorRoute() {
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
-            if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
+            if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {               
                 return routeTrains.routeColors.get(i);
             }
         }
@@ -485,8 +404,7 @@ implements MouseListener
     public String[] routeClicked() {
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
-                String[] rout = routeTrains.citiesLinked(i);
-                //JOptionPane.showMessageDialog(this, rout[0]+ " " +rout[1]);
+                String[] rout = routeTrains.citiesLinked(i);               
                 return rout;
             }
         }
@@ -501,7 +419,6 @@ implements MouseListener
         for(int i = 0; i < routeTrains.routeCars.size(); i++) {
             if(routeTrains.routeCars.get(i).contains(clickX, clickY)) {
                 Polygon rout = routeTrains.getRoutePolygon(i);
-                //JOptionPane.showMessageDialog(this, "getRoutPoly()");
                 return rout;
             }
         }
@@ -535,23 +452,19 @@ implements MouseListener
             clickedCard = 0;
             return true;
         }
-        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY 
-                <= 418) {
+        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418) {
             clickedCard = 1;
             return true;
         }
-        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY 
-                <= 418) {
+        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418) {
             clickedCard = 2;
             return true;
         }
-        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY 
-                <= 418) {
+        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418) {
             clickedCard = 3;
             return true;
         }
-        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY 
-                <= 418) {
+        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418) {
             clickedCard = 4;
             return true;
         }
@@ -566,23 +479,24 @@ implements MouseListener
     public void cardClickedhighLight(Graphics g) {
         Color need = getCurPlayerColor();
         g.setColor(need);
-        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
+        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(685, 420, 79, 2);
         }
-        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY 
-                <= 418) {
+        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(770, 420, 79, 2);
         }
-        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY 
-                <= 418) {
+        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(855, 420, 79, 2);
         }        
-        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY 
-                <= 418) {
+        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(940, 420, 79, 2);
         }
-        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY 
-                <= 418) {
+        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(1025, 420, 79, 2);
         }
     }
@@ -591,62 +505,29 @@ implements MouseListener
      * Shows the destination cards the current player has
      */
     private void showDestinationCards() {
+        //HAVE TO SEE IF THIS WILL WORK IF THE COMMENTS ARE TAKEN
         try{
-            String str = "";
-            for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++)
-                str += playerList[currPlayer].getDestCard(i).toString() + "\n";
-            JOptionPane.showMessageDialog(this, str);
 
-            //             JLabel[] members = new JLabel[playerList[currPlayer].
-            //getDestCardSize()];
-            //             for (int i=0; i<playerList[currPlayer]
-            //.getDestCardSize(); i++) {
-            //                 BufferedImage cardImage = ImageIO.
-            //read(((Card)playerList[currPlayer].getDestCard(i))
-            //.getImagePath().toFile());
-            //                 //Scales the destination cards
-            //                 Image cardImageScaled = cardImage.
-            //getScaledInstance(150, 240, Image.SCALE_SMOOTH);
-            //                 ImageIcon icon = new ImageIcon(cardImageScaled);
-            //                 members[i] = new JLabel(icon,JLabel.LEFT);
-            //             }
-            //             ArrayList<Object> choices = new ArrayList<Object>();
-            //             for(int i = 0; i < members.length; i++) {
-            //                 choices.add(members[i]);
-            //             }
-            // 
-            //             JOptionPane.showConfirmDialog ( this,  choices,
-            //"Here are your Destination Cards", JOptionPane.DEFAULT_OPTION); 
-            ImageIcon[] icon = new ImageIcon[playerList[currPlayer]
-                    .getDestCardSize()];
-            JLabel[] members = new JLabel[playerList[currPlayer]
-                    .getDestCardSize()];
+            ImageIcon[] icon = new ImageIcon[playerList[currPlayer].getDestCardSize()];
+            JLabel[] members = new JLabel[playerList[currPlayer].getDestCardSize()];
             for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
-                BufferedImage cardImage = ImageIO.
-                        read(((Card)playerList[currPlayer]
-                                .getDestCard(i)).getImagePath().toFile());
-                Image cardImageScaled = cardImage.getScaledInstance(150, 240,
-                        Image.SCALE_SMOOTH);
+                BufferedImage cardImage = ImageIO.read(((Card)playerList[currPlayer].getDestCard(i)).getImagePath().toFile());
+                Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                 icon[i] = new ImageIcon(cardImageScaled);
-                members[i] = new JLabel(icon[i],JLabel.HORIZONTAL);
+                members[i] = new JLabel(icon[i],JLabel.LEADING );
             }
-            //ImageIcon icon = new ImageIcon(cardImageScaled);
-            //             JOptionPane.showMessageDialog(
-            //                 null,
-            //                 "Hello world",
-            //                 "Hello", JOptionPane.INFORMATION_MESSAGE,
-            //                 icon);
-            JOptionPane.showMessageDialog(
-                null,
-                members,
-                "Hello", JOptionPane.INFORMATION_MESSAGE);
-        }
+
+            JOptionPane.showOptionDialog(this,
+                "YOUR DESTINATION CARDS",
+                "YOUR DESTINATION CARDS",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.PLAIN_MESSAGE,
+                null,     //do not use a custom Icon
+                members,  //the titles of buttons
+                members[0]); //default button title
+        } 
         catch(IOException e) { showStatus(e.toString()); }
-        //choice= JOptionPane.showOptionDialog(null, 
-        //"Here are your Destination Cards", playerList[currPlayer]
-        //.getName()+ " Destination Cards:", JOptionPane
-        //.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE,
-        //new ImageIcon("mog.gif"), members, members[4]);
+        //choice= JOptionPane.showOptionDialog(null, "Here are your Destination Cards", playerList[currPlayer].getName()+ " Destination Cards:", JOptionPane.DEFAULT_OPTION,JOptionPane.QUESTION_MESSAGE, new ImageIcon("mog.gif"), members, members[4]);
     }
 
     /**
@@ -742,8 +623,7 @@ implements MouseListener
         g.setFont(new Font("TimesRoman", Font.PLAIN, 9));
         g.drawString("Scoreboard: ", 735, 775 );
         for(int i = 0; i < playerList.length; i++) {
-            g.drawString("" + playerList[i].name + ": " +playerList[i]
-                    .getPoints(), 700, 770 + (i+1)*10);
+            g.drawString("" + playerList[i].name + ": " +playerList[i].getPoints(), 700, 770 + (i+1)*10);
         }
     }
 
@@ -775,8 +655,7 @@ implements MouseListener
      */
     private void getGameOptions() {
         while (numPlayers < 2 || numPlayers > 5) {
-            String numPlayerString = JOptionPane.
-                    showInputDialog("Input Number of players (2-5)");
+            String numPlayerString = JOptionPane.showInputDialog("Input Number of players (2-5)");
             numPlayers = Integer.parseInt(numPlayerString);
             playerList = new Player[numPlayers];
             for (int i=0; i<numPlayers; i++)
@@ -785,12 +664,10 @@ implements MouseListener
 
         name = new String[numPlayers];
         //playerTrainCarCardHands = new ArrayList[numPlayers];
-        //playerDestinationCardHands = 
-        //new ArrayList<DestinationCard>[numPlayers];
+        //playerDestinationCardHands = new ArrayList<DestinationCard>[numPlayers];
 
         for(int i = 0; i < numPlayers; i++) {
-            String numPlayerName = JOptionPane.
-                    showInputDialog("Input Name of Player " +(i+1));
+            String numPlayerName = JOptionPane.showInputDialog("Input Name of Player " +(i+1));
             name[i] = numPlayerName;
             playerList[i].setN(numPlayerName);
         }
@@ -821,28 +698,23 @@ implements MouseListener
         //card is added when selected from the river
         int rainbowCounter = 0;
         try {
-            BufferedImage cardImage1 = ImageIO.read(gameBoard.river.get(0)
-                    .getImagePath().toFile());
+            BufferedImage cardImage1 = ImageIO.read(gameBoard.river.get(0).getImagePath().toFile());
             if(gameBoard.river.get(0).getColor().equals("rainbow")){
                 rainbowCounter ++;
             }
-            BufferedImage cardImage2 = ImageIO.read(gameBoard.river.get(1)
-                    .getImagePath().toFile());
+            BufferedImage cardImage2 = ImageIO.read(gameBoard.river.get(1).getImagePath().toFile());
             if(gameBoard.river.get(1).getColor().equals("rainbow")){
                 rainbowCounter ++;
             }
-            BufferedImage cardImage3 = ImageIO.read(gameBoard.river.get(2)
-                    .getImagePath().toFile());
+            BufferedImage cardImage3 = ImageIO.read(gameBoard.river.get(2).getImagePath().toFile());
             if(gameBoard.river.get(2).getColor().equals("rainbow")){
                 rainbowCounter ++;
             }
-            BufferedImage cardImage4 = ImageIO.read(gameBoard.river.get(3)
-                    .getImagePath().toFile());
+            BufferedImage cardImage4 = ImageIO.read(gameBoard.river.get(3).getImagePath().toFile());
             if(gameBoard.river.get(3).getColor().equals("rainbow")){
                 rainbowCounter ++;
             }
-            BufferedImage cardImage5 = ImageIO.read(gameBoard.river.get(4)
-                    .getImagePath().toFile());
+            BufferedImage cardImage5 = ImageIO.read(gameBoard.river.get(4).getImagePath().toFile());
             if(gameBoard.river.get(4).getColor().equals("rainbow")){
                 rainbowCounter ++;
             }
@@ -855,7 +727,7 @@ implements MouseListener
                     trainDeck.addCard(c);
                 }
                 for(int i = 0; i <5; i ++){
-                    TrainCarCard cardToAdd = (TrainCarCard)trainDeck.drawCard();
+                    TrainCarCard cardToAdd = (TrainCarCard) trainDeck.drawCard();
                     gameBoard.river.add(cardToAdd);
                 }
                 drawRiver(g); return;
@@ -870,8 +742,7 @@ implements MouseListener
             g.drawImage(three, 855, 295, this);
             g.drawImage(four, 940, 295, this);
             g.drawImage(five, 1025, 295, this);
-        } catch (Exception e) { showStatus(
-                "EXCEPTION THROWN IN DRAWRIVER"); showStatus(e.toString()); }
+        } catch (Exception e) { showStatus("EXCEPTION THROWN IN DRAWRIVER"); showStatus(e.toString()); }
 
     }
 
@@ -888,16 +759,14 @@ implements MouseListener
 
                 DestinationCard[] draw = new DestinationCard[5];
                 for (int c=0; c<5; c++)
-                    draw[c] = (DestinationCard) destinationDeck.drawCard();
+                    draw[c] = (DestinationCard) /*board.*/destinationDeck.drawCard();
                 // display the cards in draw
                 for (int k = 0; k < draw.length; k++) {
                     // display the card
-                    BufferedImage cardImage =
-                            ImageIO.read(draw[k].getImagePath().toFile());
+                    //JOptionPane.showConfirmDialog(this, draw[k].getImagePath());
+                    BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
                     //Scales the destination cards
-                    Image cardImageScaled = 
-                            cardImage.getScaledInstance(150,
-                                    240, Image.SCALE_SMOOTH);
+                    Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                     firstDest[k] = cardImageScaled;
                 }                
 
@@ -907,21 +776,11 @@ implements MouseListener
                 g.drawImage(firstDest[3], 980, 470, this);
                 g.drawImage(firstDest[4], 800, 280, this);
 
-                JCheckBox   card1 = new JCheckBox(draw[0].getImagePath()
-                        .toString().replace("images","").replace(".jpg","")
-                        .replace("\\",""));
-                JCheckBox   card2 = new JCheckBox(draw[1].getImagePath()
-                        .toString().replace("images","").replace(".jpg","")
-                        .replace("\\",""));
-                JCheckBox   card3 = new JCheckBox(draw[2].getImagePath()
-                        .toString().replace("images","").replace(".jpg","")
-                        .replace("\\",""));
-                JCheckBox   card4 = new JCheckBox(draw[3].getImagePath()
-                        .toString().replace("images","").replace(".jpg","")
-                        .replace("\\",""));
-                JCheckBox   card5 = new JCheckBox(draw[4].getImagePath()
-                        .toString().replace("images","").replace(".jpg","")
-                        .replace("\\",""));
+                JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+                JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+                JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+                JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+                JCheckBox   card5 = new JCheckBox(draw[4].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
                 String msg = "Choose your destination cards " + name[i]; 
 
                 Object[] choices = {msg, card1, card2, card3, card4, card5};
@@ -929,12 +788,8 @@ implements MouseListener
                 int numSelectedCards = 0; boolean selected[] = new boolean[5];
                 while (numSelectedCards < 3) {
                     numSelectedCards = 0;
-                    int n = JOptionPane.showConfirmDialog ( this,  choices,
-                            "Choose 3 or more Cards, " + name[i],
-                            JOptionPane.YES_NO_OPTION); 
-                    selected = new boolean[] { card1.isSelected(),
-                        card2.isSelected(), card3.isSelected(),
-                        card4.isSelected(), card5.isSelected() };
+                    int n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 3 or more Cards, " + name[i], JOptionPane.YES_NO_OPTION); 
+                    selected = new boolean[] { card1.isSelected(), card2.isSelected(), card3.isSelected(), card4.isSelected(), card5.isSelected() };
                     for (boolean b : selected)
                         if (b)
                             ++numSelectedCards;
@@ -946,7 +801,7 @@ implements MouseListener
                         playerList[i].addDestinationCard(draw[bool]);
                     }
                     else {
-                        destinationDeck.addCard(draw[bool]);    
+                        destinationDeck.addCard(draw[bool]);    //Adds back the cards into the deck
                     }
                 }
 
@@ -966,7 +821,7 @@ implements MouseListener
 
                 rainbowCount = 0;
                 for(int i = 0; i < 5; i++) {
-                    TrainCarCard cardToAdd = (TrainCarCard)trainDeck.drawCard();
+                    TrainCarCard cardToAdd = (TrainCarCard) trainDeck.drawCard();
                     if (cardToAdd.getColor().equals("rainbow")) ++rainbowCount;
                     gameBoard.river.add(cardToAdd);    
                 }
@@ -975,7 +830,7 @@ implements MouseListener
             //JOptionPane.showConfirmDialog(this, name[i] + ", choose cards");
         }
 
-        catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString());}
+        catch (Exception e) {JOptionPane.showConfirmDialog(this, e.toString()); }
     }
 
     /**
@@ -988,8 +843,7 @@ implements MouseListener
             if (pg.destinationDeck.cards == null) System.out.println("cards");
             for (Card c : pg.destinationDeck.cards) {
                 System.out.print(c.getImagePath() + " ");
-                BufferedImage cardImage = 
-                        ImageIO.read(c.getImagePath().toFile());
+                BufferedImage cardImage = ImageIO.read(c.getImagePath().toFile());
                 System.out.println("OK");
             }
             System.out.println("ALL OK");
@@ -1020,10 +874,8 @@ implements MouseListener
         if (trainRiverDraw) { // maybe checkboxes instead?
             if (gameBoard.river.get(clickedCard).getColor().equals("rainbow")) {
                 if(trainDrawCount%2 == 0) {
-                    currentPlayer.addTrainCarCard(gameBoard.river
-                            .remove(clickedCard));
-                    gameBoard.river.add(clickedCard, 
-                            (TrainCarCard) trainDeck.drawCard());
+                    currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                    gameBoard.river.add(clickedCard, (TrainCarCard) trainDeck.drawCard());
                     trainDrawCount = trainDrawCount + 2;
                     if(trainDrawCount%2 == 0) {
                         currPlayer++;
@@ -1034,10 +886,8 @@ implements MouseListener
                 }
             }
             else {
-                currentPlayer.addTrainCarCard(gameBoard.river
-                        .remove(clickedCard));
-                gameBoard.river.add(clickedCard, 
-                        (TrainCarCard) trainDeck.drawCard());
+                currentPlayer.addTrainCarCard(gameBoard.river.remove(clickedCard));
+                gameBoard.river.add(clickedCard, (TrainCarCard) trainDeck.drawCard());
                 trainDrawCount++;
                 if(trainDrawCount%2 == 0) {
                     currPlayer++;
@@ -1065,40 +915,27 @@ implements MouseListener
             city2 = CityList.getCity(cityNameRouteTwo);
             Route routeToBuy = new Route(cityNameRouteOne,cityNameRouteTwo);
 
-            if (graph.hasEdge(city1.getName(),city2.getName()) && 
-                    !currentPlayer.hasRoute(city1,city2) 
-            && (currentPlayer.getTrainCarsCards(Route
-                    .routeColorToString(getColorRoute())) 
-                    >= routeToBuy.getLength()
-                || (Route.routeColorToString(getColorRoute())
-                        .equals("gray")))) { // gray color
-                 
+            if (graph.hasEdge(city1.getName(),city2.getName()) && !currentPlayer.hasRoute(city1,city2) 
+            && (currentPlayer.getTrainCarsCards(Route.routeColorToString(getColorRoute())) >= routeToBuy.getLength()
+                || (Route.routeColorToString(getColorRoute()).equals("gray")))) { // gray color
+                //&& currentPlayer.getMaxTrainCarCards() >= routeToBuy.getLength()))) { 
                 boolean isDouble = graph.isDouble(city1, city2);
                 int ownerCount = 0;
                 Player otherOwner = null;
                 String routeColor = Route.routeColorToString(getColorRoute());
                 if (Route.routeColorToString(getColorRoute()).equals("gray")) {
                     // GUI set routeColor to whatever they want
-                    ArrayList<String> cardColors = 
-                            new ArrayList<String>(Arrays.asList(
-                                "GREEN", "YELLOW", "RED", "BLUE",
-                                    "BLACK", "ORANGE", "PURPLE", "WHITE"));
-                    while (currentPlayer.getTrainCarsCards(routeColor)
-                            < routeToBuy.getLength()) {   
-                        String cardColorUsed = 
-                                (String) JOptionPane.showInputDialog(
+                    ArrayList<String> cardColors = new ArrayList<String>(Arrays.asList(
+                                "GREEN", "YELLOW", "RED", "BLUE", "BLACK", "ORANGE", "PURPLE", "WHITE"));
+                    while (currentPlayer.getTrainCarsCards(routeColor) < routeToBuy.getLength()) {   
+                        String cardColorUsed = (String) JOptionPane.showInputDialog(
                                 null, "What color would you like to use?",
-                                "Message to " + playerList[currPlayer]
-                                        .getName(),
-                                JOptionPane.QUESTION_MESSAGE, null,
+                                "Message to " + playerList[currPlayer].getName(), JOptionPane.QUESTION_MESSAGE, null,
                                 cardColors.toArray(), cardColors.get(0));
                         routeColor = cardColorUsed.toLowerCase();
-                        if (currentPlayer.getTrainCarsCards(routeColor)
-                                < routeToBuy.getLength())
+                        if (currentPlayer.getTrainCarsCards(routeColor) < routeToBuy.getLength())
                             JOptionPane.showMessageDialog(this, 
-                                "You don't have enough of those Cards!"
-                                        + "\nPress cancel in the next "
-                                        + "window\nto do something else");
+                                "You don't have enough of those Cards!\nPress cancel in the next window\nto do something else");
                     }
 
                 }
@@ -1112,13 +949,11 @@ implements MouseListener
                 if (!isDouble) {
                     if (ownerCount > 0) {
                         // don't let them buy the route
-                        JOptionPane.showMessageDialog(this, 
-                                "Somebody already owns that route!");
+                        JOptionPane.showMessageDialog(this, "Somebody already owns that route!");
                     }
                     else {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2,routeColor,
-                                trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -1128,8 +963,7 @@ implements MouseListener
                 else {
                     if (ownerCount == 0) {
                         // buy route from bank
-                        currentPlayer.addRoute(city1,city2,routeColor, 
-                                trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -1138,8 +972,7 @@ implements MouseListener
                     else if (ownerCount == 1) {
                         // buy route from owner
                         otherOwner.addTokens(routeToBuy.getWeight());
-                        currentPlayer.addRoute(city1,city2,routeColor,
-                                trainDeck);
+                        currentPlayer.addRoute(city1,city2,routeColor, trainDeck);
                         boughtRoutesPoly.add(getRoutPoly());
                         boughtRoutesPolyColor.add(getCurPlayerColor());
                         currPlayer++;
@@ -1147,8 +980,7 @@ implements MouseListener
                     }
                     else {
                         // don't let them buy the route
-                        JOptionPane.showMessageDialog(this,
-                                "Somebody already owns those routes!");
+                        JOptionPane.showMessageDialog(this, "Somebody already owns those routes!");
                     }
                 }
             }
@@ -1162,34 +994,29 @@ implements MouseListener
     private void drawDestinationCardsInGame() {
         try {
             Graphics g = getGraphics();
-
             DestinationCard[] draw = new DestinationCard[4];
             for (int c=0; c<4; c++)
                 draw[c] = (DestinationCard)destinationDeck.drawCard();
             // display the cards in draw
             for (int k = 0; k < draw.length; k++) {
                 // display the card
-                BufferedImage cardImage = ImageIO.read(draw[k]
-                        .getImagePath().toFile());
+                BufferedImage cardImage = ImageIO.read(draw[k].getImagePath().toFile());
                 //Scales the destination cards
-                Image cardImageScaled = cardImage.getScaledInstance(150, 240,
-                        Image.SCALE_SMOOTH);
+                Image cardImageScaled = cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                 firstDest[k] = cardImageScaled;
             }
             g.drawImage(img, 0 ,0, this);
             g.drawImage(firstDest[0], 640, 40, this);
             g.drawImage(firstDest[1], 980, 40, this);
             g.drawImage(firstDest[2], 640, 470, this);
-            g.drawImage(firstDest[3], 980, 470, this);
+            g.drawImage(firstDest[3], 980, 470, this);            
+            
+            drawTrains(g);
 
-            JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString()
-                    .replace("images","").replace(".jpg","").replace("\\",""));
-            JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString()
-                    .replace("images","").replace(".jpg","").replace("\\",""));
-            JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString()
-                    .replace("images","").replace(".jpg","").replace("\\",""));
-            JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString()
-                    .replace("images","").replace(".jpg","").replace("\\",""));
+            JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+            JCheckBox   card2 = new JCheckBox(draw[1].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+            JCheckBox   card3 = new JCheckBox(draw[2].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
+            JCheckBox   card4 = new JCheckBox(draw[3].getImagePath().toString().replace("images","").replace(".jpg","").replace("\\",""));
             String msg;
             if(currPlayer-1 == -1) {
                 msg = "Choose your destination cards " + name[numPlayers-1];
@@ -1204,17 +1031,12 @@ implements MouseListener
                 numSelectedCards = 0;
                 int n;
                 if(currPlayer-1 == -1) {
-                    n = JOptionPane.showConfirmDialog ( this,  choices,
-                            "Choose 1 or more Cards, " + name[numPlayers-1],
-                            JOptionPane.YES_NO_OPTION); 
+                    n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[numPlayers-1], JOptionPane.YES_NO_OPTION); 
                 }
                 else {
-                    n = JOptionPane.showConfirmDialog ( this,  choices,
-                            "Choose 1 or more Cards, " + name[currPlayer-1],
-                            JOptionPane.YES_NO_OPTION); 
+                    n = JOptionPane.showConfirmDialog ( this,  choices,  "Choose 1 or more Cards, " + name[currPlayer-1], JOptionPane.YES_NO_OPTION); 
                 }
-                selected = new boolean[] { card1.isSelected(),
-                    card2.isSelected(), card3.isSelected(),card4.isSelected() };
+                selected = new boolean[] { card1.isSelected(), card2.isSelected(), card3.isSelected(), card4.isSelected() };
                 for (boolean b : selected)
                     if (b)
                         ++numSelectedCards;
@@ -1231,7 +1053,7 @@ implements MouseListener
                     }
                 }
                 else {
-                    destinationDeck.addCard(draw[bool]);    
+                    destinationDeck.addCard(draw[bool]);    //Adds back the cards into the deck
                 }
             }
             // loop none
@@ -1275,8 +1097,7 @@ implements MouseListener
 
         for(int i = 0; i < extraPoints.size(); i++) {
             for(int j = 0; j < extraPoints.size()-1; j++) {
-                if(extraPoints.get(j).getTokens() < 
-                        extraPoints.get(j+1).getTokens()) {
+                if(extraPoints.get(j).getTokens() < extraPoints.get(j+1).getTokens()) {
                     Player temp = extraPoints.get(j);
                     extraPoints.set(j, extraPoints.get(j+1));
                     extraPoints.set(j+1, temp);

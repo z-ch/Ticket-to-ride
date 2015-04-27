@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 /**
- * Class Route creates a route object consisting of two cities, 
- * colors required for the route and point weighting for the routes.
+ * Write a description of class Route here.
  * 
- * @author (Koushik P, Zach S, Ryan W,
- * Theresa S, Andi E) 
- * @version (3.22.2015)
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Route
 {
@@ -18,7 +16,6 @@ public class Route
         YELLOW, ORANGE, GREEN, BLUE, RED, 
         PINK, GRAY, WHITE, BLACK, PURPLE
     }
-    
     // cities is always in alphabetical order (String order)
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<RouteColor> colors = new ArrayList<RouteColor>();
@@ -358,6 +355,14 @@ public class Route
                 break;
             }
         }
+        else if (str.equals("Rotterdam")) {
+            switch (cities.get(1)) {
+            case "Utrecht":
+                length = 3; weight = 3;
+                colors.add(RouteColor.GRAY);
+                break;
+            }
+        }  
         else if (str.equals("Sneek")) {
             switch (cities.get(1)) {
             case "Waddensilanden":
@@ -399,9 +404,7 @@ public class Route
      */
     @Override
     public boolean equals(Object r) {
-        return r instanceof Route && this.cities.contains(((Route) r)
-                .cities.get(0)) && this.cities
-                        .contains(((Route) r).cities.get(1));
+        return r instanceof Route && this.cities.contains(((Route) r).cities.get(0)) && this.cities.contains(((Route) r).cities.get(1));
     }
 
     /**

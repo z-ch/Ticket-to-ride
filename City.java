@@ -1,10 +1,8 @@
 
 /**
- * Class city creates a city 
- * object consisting of the names of the various cities
+ * City class
  * 
- * @author (Koushik P, 
- * Zach S, Ryan W, Theresa S, Andi E) 
+ * @author (your name) 
  * @version 3.22.2015
  */
 public class City
