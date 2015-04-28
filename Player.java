@@ -22,7 +22,6 @@ public class Player
      */
     public Player() {
         cars = 40; tokens = 30; points = 0; bonus = true; 
-// fix this so name and color can be final
         destCards = new ArrayList<>(); trainCards = new ArrayList<>();
     }
 
@@ -65,7 +64,6 @@ public class Player
      * @param d Deck of DestinationCards
      */
     public void drawDestinationCard(Deck d) {
-        // maybe add a instanceof check?
         DestinationCard c = (DestinationCard) d.drawCard();
         destCards.add(c);
     }
@@ -83,7 +81,6 @@ public class Player
      * @param d Deck of TrainCarCards
      */
     public void drawTrainCarCard(Deck d) {
-        // maybe add a instanceof check?
         TrainCarCard c = (TrainCarCard) d.drawCard();
         trainCards.add(c);
     }
@@ -93,7 +90,6 @@ public class Player
      * @param c TrainCarCard to add
      */
     public void addTrainCarCard(Card c) {
-        // maybe add a instanceof check?
         trainCards.add((TrainCarCard) c);
     }
 
@@ -113,8 +109,6 @@ public class Player
      */
     public boolean hasRoute(City cityOne, City cityTwo) {
         return this.hasRoute(cityOne.getName(), cityTwo.getName());
-        //return this.capturedRoutes.
-        //contains(new Route(cityOne.getName(), cityTwo.getName()));
     }
 
     /**
@@ -138,14 +132,13 @@ public class Player
      * @param d Deck to add the discarded cards back into
      */
     public void addRoute(String cityOne, String cityTwo, String rcolor,
-            Deck d) {
-        //if (!hasRoute(cityOne,cityTwo)) {
+    Deck d) {
         Route rte = new Route(cityOne, cityTwo);
         cars -= rte.getLength();
         int cardsToGetRidOf = rte.getLength();
         addRoutePoints(cardsToGetRidOf);
         if (rcolor.equals("gray")) rcolor = getMaxTrainCarCardColor();
-        
+
         for (int i=0; i<trainCards.size() && cardsToGetRidOf > 0; i++)
             if (trainCards.get(i).getColor().equals(rcolor)) {
                 d.addCard(trainCards.remove(i--));
@@ -209,7 +202,7 @@ public class Player
         int total = 0;
         for (TrainCarCard tcc : trainCards)
             if (trainCarColor.equals(tcc.getColor()) ||
-                    tcc.getColor().equals("rainbow"))
+            tcc.getColor().equals("rainbow"))
                 ++total;
         return total;
     }
@@ -293,19 +286,25 @@ public class Player
      *         false otherwise
      */
     public boolean canReach(String cityOne, String cityTwo, Graph g,
-            ArrayList<City> checkedCities) {
+    ArrayList<City> checkedCities) {
         if (g.hasEdge(cityOne, cityTwo)) return this.hasRoute(cityOne, cityTwo);
         LinkedList<City> adjacentCities = g.adjMatrix.get(cityOne);
         for (City c : adjacentCities) {
             if (checkedCities.contains(c)) continue;
             checkedCities.add(c);
             if (this.hasRoute(cityOne, c.getName()) && canReach(c.getName(),
-                    cityTwo, g, checkedCities))
+                cityTwo, g, checkedCities))
                 return true;
         }
         return false;
     }
 
+    /**
+     * Gets the total of the maximum train car
+     * color
+     * @return the total of the max train car
+     *  color that this player has
+     */
     public int getMaxTrainCarCards() {
         ArrayList<TrainCarCard> tc = new ArrayList<>();
         int max = 0, total = 0;
@@ -317,7 +316,13 @@ public class Player
         }
         return max;
     }
-    
+
+    /**
+     * Gets the color of color of the max train cars
+     *  this player owns
+     * @return the color of color of the max train cars
+     *  this player owns
+     */
     public String getMaxTrainCarCardColor() {
         ArrayList<TrainCarCard> tc = new ArrayList<>();
         int max = 0, total = 0;
@@ -325,7 +330,7 @@ public class Player
         for (TrainCarCard color : tc) {
             for (TrainCarCard tcc : trainCards) 
                 if (color.getColor().equals(tcc.getColor()) || 
-                        tcc.getColor().equals("rainbow"))
+                tcc.getColor().equals("rainbow"))
                     ++total;
             if (total > max) { 
                 max = total;

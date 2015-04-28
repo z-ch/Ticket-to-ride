@@ -16,7 +16,6 @@ public class RouteTrains
     protected ArrayList<String[]> citiesLinked = new ArrayList<String[]>();
     protected String[] trainCarRoutes = new String[2];
     protected ArrayList<Route.RouteColor> routeColors = new ArrayList<>();
-    //routeColors.add(Route.RouteColor.YELLOW);
     /**
      * Constructor for objects of class RouteTrains
      */
@@ -25,8 +24,6 @@ public class RouteTrains
             102, 211, 210}, 4));
         citiesLinked.add(new String[] { "Emden", "Emmen" });
         routeColors.add(Route.RouteColor.PURPLE);
-        //trainCarRoutes[0] = "Emden"; trainCarRoutes[1] = "Emmen";
-        //citiesLinked.add(trainCarRoutes);
         routeCars.add(new Polygon(new int[]{453, 458,  484, 506, 525, 541, 553,
             558, 548, 543, 531, 518, 499, 477}, new int[]{92, 83, 97, 115, 136,
                 161, 188, 216, 218, 191, 167, 143, 123, 105}, 14));

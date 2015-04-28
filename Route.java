@@ -358,6 +358,14 @@ public class Route
                 break;
             }
         }
+        else if (str.equals("Rotterdam")) {
+            switch (cities.get(1)) {
+            case "Utrecht":
+                length = 3; weight = 3;
+                colors.add(RouteColor.GRAY);
+                break;
+            }
+        }   
         else if (str.equals("Sneek")) {
             switch (cities.get(1)) {
             case "Waddensilanden":
@@ -367,7 +375,7 @@ public class Route
             }
         }        
         else {
-            weight = -1; //should never happen
+            weight = -1; 
         }
     }
 

@@ -17,7 +17,7 @@ import java.awt.event.*;
 public class PlayGame extends JApplet 
 implements MouseListener
 {
-    public Deck destinationDeck, trainDeck; // TODO: put these in the board!!!
+    public Deck destinationDeck, trainDeck; 
     public Graph graph = new Graph();
     public RouteTrains routeTrains = new RouteTrains();
     protected BufferedImage backgroundImage = null; 
@@ -26,10 +26,6 @@ implements MouseListener
     private int numPlayers = 0;
     protected String[] colors;
     protected String[] name;
-    // maybe not have these next two ?? since they're in player
-    //private ArrayList<TrainCarCard>[] playerTrainCarCardHands;
-    //private ArrayList<DestinationCard>[] playerDestinationCardHands;
-    // private ArrayList<TrainCarCard> river = new ArrayList<>(); // 
     private Board gameBoard = new Board();
     protected Image img, img2;
     protected Image backDestCard;
@@ -62,7 +58,6 @@ implements MouseListener
     private boolean lastPaint = false;
     private boolean gameOver = false;
 
-    // delete this?
     /**
      * Constructor for class PlayGame
      */
@@ -135,7 +130,8 @@ implements MouseListener
             "images/Arnhem-'sGravenhage.jpg");
         addCardToDestinationDeck(new String[] {"DenHelder", "Rotterdam"}, 14,
             "images/DenHelder-Rotterdam.jpg");
-
+        addCardToDestinationDeck(new String[] {"Enschede", "Amsterdam"},
+            15, "images/Enschede-Amsterdam.jpg");
         addCardToDestinationDeck(new String[] {"Enschede", "Eindhoven"},
             15, "images/Enschede-Eindhoven.jpg");
         addCardToDestinationDeck(new String[] {"Leeuwarden", "Haarlem"},
@@ -209,8 +205,6 @@ implements MouseListener
         gameBoard = new Board();
     }
 
-    //// begin pasted stuff
-
     /**
      * Called by the browser or applet viewer to inform this JApplet that it
      * has been loaded into the system. It is always called before the first 
@@ -281,29 +275,8 @@ implements MouseListener
     public void paint(Graphics g) {
         if (gameOver) {
             return;
-            //             if (lastJOPShown)
-            //                 return;
-            //             else {
-            //                 if (!finalScoresCalculated) {
-            //                     addBonusPoints();
-            //                     for (Player pr : playerList)
-            //                     pr.addPoints(pr.calculateDestinationPoints()
-            //);
-            //                     finalScoresCalculated = true;
-            //                 }
-            //                 String scoreString = "";
-            //                 for (Player pr : playerList)
-            //                     scoreString += pr.getName() + ": " + 
-            //                      pr.getPoints() + "\n";
-            //                 lastJOPShown = true;
-            //                 JOptionPane.showMessageDialog(this, "GAME OVER\n"
-            //+ scoreString);
-            //                 
-            //             }
         }
         int lastPlayer = currPlayer;
-        //if (lastPaint)
-        //endGame();
 
         if (startGame == 0){
             gameOpening(g);
@@ -315,16 +288,13 @@ implements MouseListener
 
         if(now){
             g.drawImage(img2, 0, 0, this);
-            //drawRiver(g); //Here will be the first five train cards drawn
             showCards(g);            
             drawPlayerNameAndCars(g);        
-            drawTrains(g); // This was used here to make sure the trains on the
-            //actual board were being drawn correctly
+            drawTrains(g); 
             now = false;
             drawRiver(g);     //Draws the 5 train cards needed
             checkIfLastPlayer(playerList[currPlayer]);
             checkIfGameIsAlmostOver();
-            //whatCardsIHave(g);
         }
 
         if(click) {
@@ -334,15 +304,13 @@ implements MouseListener
                 destinationDeckDraw = true;
                 playerTurn(playerList[currPlayer]);
                 g.drawImage(img2, 0, 0, this);
+                drawTrains(g);
                 showCards(g);
                 drawPlayerNameAndCars(g); 
-                drawRiver(g);     //Draws the 5 train cards needed
-                drawTrains(g);
+                drawRiver(g);     //Draws the 5 train cards needed                
                 checkIfLastPlayer(playerList[currPlayer]);
                 checkIfGameIsAlmostOver();
             }
-
-            //Check if the place clicked was on-top of a route
             if(routeClicked() != null && (trainDrawCount%2 == 0)) {
                 String[] cityRouteClickedOn = routeClicked();
                 cityNameRouteOne = cityRouteClickedOn[0];
@@ -364,10 +332,7 @@ implements MouseListener
             //Show the players current destination cards
             if(clickX >= 930 && clickY >= 780 && clickX <= 
             1009 && clickY <= 830) {
-                //showDestinationCards();   HAVE TO IMPLEMENT
                 g.setColor(Color.black);
-                g.drawString("HERE", 950, 800);
-                g.setFont(new Font("TimesRoman", Font.BOLD, 12));
                 showDestinationCards();
                 checkIfLastPlayer(playerList[currPlayer]);
                 checkIfGameIsAlmostOver();  
@@ -411,19 +376,6 @@ implements MouseListener
             }
         }
         if (lastPaint && lastPlayer != currPlayer) endGame();
-
-    }
-
-    //TEST FOR CARDS I HAVE : DESTINATION CARDS
-    /**
-     * @param  g   the Graphics object for this applet
-     */
-    private void whatCardsIHave(Graphics g) {
-        g.drawString("Player: " +playerList[currPlayer].name, 700, 320 );
-        for(int i = 0; i < playerList[currPlayer].destCards.size(); i++) {
-            g.drawString("" +playerList[currPlayer].destCards.get(i).toString(),
-                700, 350 + i*15 );
-        }
     }
 
     /**
@@ -462,7 +414,6 @@ implements MouseListener
             };
         return paramInfo;
     }
-    /// end pasted stuff
 
     /**
      * Gets the route color
@@ -565,23 +516,29 @@ implements MouseListener
     public void cardClickedhighLight(Graphics g) {
         Color need = getCurPlayerColor();
         g.setColor(need);
-        if(clickX >= 685 && clickY >= 295 && clickX <= 764 && clickY <= 418) {
+        if(clickX >= 685 && clickY >= 295 
+        && clickX <= 764 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(685, 420, 79, 2);
         }
-        else if(clickX >= 770 && clickY >= 295 && clickX <= 849 && clickY 
-        <= 418) {
+        else if(clickX >= 770 && clickY >= 295 
+        && clickX <= 849 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(770, 420, 79, 2);
         }
-        else if(clickX >= 855 && clickY >= 295 && clickX <= 934 && clickY 
-        <= 418) {
+        else if(clickX >= 855 && clickY >= 295 
+        && clickX <= 934 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(855, 420, 79, 2);
-        }        
-        else if(clickX >= 940 && clickY >= 295 && clickX <= 1019 && clickY 
-        <= 418) {
+        }
+        else if(clickX >= 940 && clickY >= 295 
+        && clickX <= 1019 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(940, 420, 79, 2);
         }
-        else if(clickX >= 1025 && clickY >= 295 && clickX <= 1104 && clickY 
-        <= 418) {
+        else if(clickX >= 1025 && clickY >= 295 
+        && clickX <= 1104 && clickY <= 418 &&
+        !(gameBoard.river.get(clickedCard).getColor().equals("rainbow"))) {
             g.fillRect(1025, 420, 79, 2);
         }
     }
@@ -708,7 +665,6 @@ implements MouseListener
 
     /**
      * Gets user input to set up the game (number of players, etc)
-     * TODO get the player hands working
      */
     private void getGameOptions() {
         while (numPlayers < 2 || numPlayers > 5) {
@@ -1100,15 +1056,15 @@ implements MouseListener
         //HAVE TO SEE IF THIS WILL WORK IF THE COMMENTS ARE TAKEN
         try{
             ImageIcon[] icon = 
-              new ImageIcon[playerList[currPlayer].getDestCardSize()];
+                new ImageIcon[playerList[currPlayer].getDestCardSize()];
             JLabel[] members = 
-              new JLabel[playerList[currPlayer].getDestCardSize()];
+                new JLabel[playerList[currPlayer].getDestCardSize()];
             for (int i=0; i<playerList[currPlayer].getDestCardSize(); i++) {
                 BufferedImage cardImage = ImageIO.read(
-                  ((Card)playerList[currPlayer].getDestCard(i)).
-                    getImagePath().toFile());
+                        ((Card)playerList[currPlayer].getDestCard(i)).
+                        getImagePath().toFile());
                 Image cardImageScaled = 
-                  cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
+                    cardImage.getScaledInstance(150, 240, Image.SCALE_SMOOTH);
                 icon[i] = new ImageIcon(cardImageScaled);
                 members[i] = new JLabel(icon[i],JLabel.LEADING );
             }
@@ -1149,6 +1105,7 @@ implements MouseListener
             g.drawImage(firstDest[1], 980, 40, this);
             g.drawImage(firstDest[2], 640, 470, this);
             g.drawImage(firstDest[3], 980, 470, this);
+            drawTrains(g);
 
             JCheckBox   card1 = new JCheckBox(draw[0].getImagePath().toString()
                     .replace("images","").replace(".jpg","").replace("\\",""));
@@ -1233,7 +1190,7 @@ implements MouseListener
     }
 
     /**
-     * Adds the bonus poinst to each player
+     * Adds the bonus points to each player
      */
     public void addBonusPoints() {
         ArrayList<Player> extraPoints = new ArrayList<Player>();
@@ -1258,6 +1215,7 @@ implements MouseListener
         else if (numPlayers == 4) possibleBonuses = new int[] {55, 35, 20, 0};
         else if (numPlayers == 3) possibleBonuses = new int[] {55, 35, 0};
         else if (numPlayers == 2) possibleBonuses = new int[] {35, 0};
+        else possibleBonuses = new int[] {0};
         int currentPossibleBonus = 0; // index
         int nextBonus = 0;
         for (int i=0; i<extraPoints.size(); i++, nextBonus++) {
@@ -1268,10 +1226,11 @@ implements MouseListener
             }
             if (cp.getTokens() < lastTokenCount) {
                 lastTokenCount = cp.getTokens();
-                cp.addPoints(nextBonus);
+                cp.addPoints(possibleBonuses[nextBonus]);
                 currentPossibleBonus = nextBonus;
             }
             else cp.addPoints(currentPossibleBonus);
+
         }
     }
 

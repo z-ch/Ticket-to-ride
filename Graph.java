@@ -11,8 +11,7 @@ import java.util.Collections;
  */
 public class Graph
 {
-    // RE ADD PROTECTED
-    /*protected*/ Hashtable<String, LinkedList<City>> adjMatrix 
+    Hashtable<String, LinkedList<City>> adjMatrix 
             = new Hashtable<>();
     public final int numCities;
 
@@ -22,7 +21,6 @@ public class Graph
     public Graph()
     {
         numCities = 29+1;
-        // fill hashtable with empty LinkedLists
         for (int i=0; i<numCities; i++) {
             adjMatrix.put(CityList.getCityFromArrayList(i).getName(), 
                 new LinkedList<City>());
@@ -93,18 +91,8 @@ public class Graph
      * @param cityTwo second city
      */
     private void addEdge(String cityOne, String cityTwo) {
-        //System.out.println(cityOne + " " + cityTwo);
         adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
         adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
-        //         try {
-        //             System.out.print(cityOne + " " + cityTwo + " ");
-        //             adjMatrix.get(cityOne).add(CityList.getCity(cityTwo));
-        //             System.out.print("Got cityTwo from CityList, ");
-        //             adjMatrix.get(cityTwo).add(CityList.getCity(cityOne));
-        //             System.out.print("Got cityOne from CityList, ");
-        //             System.out.println("OK");
-        //         } catch (NullPointerException e) 
-        //{ System.out.println("AAAHHHH"); }
     }
 
     /**
@@ -114,7 +102,6 @@ public class Graph
      * @return true if there is an edge, else false
      */
     public boolean hasEdge(String cityOne, String cityTwo) {
-        //return adjMatrix.get(cityOne).contains(CityList.getCity(cityTwo));
         return adjMatrix.get(cityOne).contains(new City(cityTwo));
     }
 

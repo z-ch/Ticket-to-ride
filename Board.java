@@ -20,6 +20,5 @@ public class Board
      */
     public Board()
     {
-        //destination
     }
 }
